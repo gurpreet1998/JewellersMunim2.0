@@ -1,0 +1,56 @@
+name: $(buildName)
+trigger:
+  branches:
+    include:
+      - dev
+      - main
+
+variables:
+- name: srcDir
+  value: ./src
+- name: buildDir
+  value: ./build
+- name: revision
+  value: $[ counter(format('{0}.{1}', variables['major'], variables['minor']), 1000) ]
+- name: version
+  value: $[ format('{0}.{1}.{2}', variables['major'], variables['minor'], variables['revision']) ]
+- name: buildTime
+  value: $[ format('{0:yyyyMMddHHmm}', pipeline.startTime) ] #:yyyy-MM-dd-HH:mm:ss
+- name: buildName
+  value: $[ format('Web_{0}_{1}', variables['version'], variables['buildTime']) ]
+
+jobs:
+- job: web_build
+  dependsOn: []
+  displayName: Building Choice Pays Web
+  continueOnError: false
+  pool:
+    vmImage: vs2017-win2016
+
+  steps:
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      verbose: false
+
+  - task: Npm@1
+    displayName: npm run build
+    inputs:
+      command: custom
+      workingDir: $(srcDir)
+      verbose: false
+      customCommand: run build
+      publishRegistry: useFeed
+      publishFeed: e4b51158-0e6a-414c-9be7-f53cb32e60d0
+
+  - task: ArchiveFiles@2
+    displayName: Archive build directory
+    inputs:
+      rootFolderOrFile: $(buildDir)
+      includeRootFolder: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact web
+    inputs:
+      artifactName: web
+      pathToPublish: $(Build.ArtifactStagingDirectory)
