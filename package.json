@@ -1,0 +1,97 @@
+{
+  "homepage": ".",
+  "name": "choicepaysweb",
+  "version": "3.0.0-alpha1",
+  "private": true,
+  "dependencies": {
+    "@azure/msal-browser": "^2.19.0",
+    "@azure/msal-react": "^1.1.2",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@tinymce/tinymce-react": "^3.13.0",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.3",
+    "classnames": "^2.3.1",
+    "dayjs": "^1.10.6",
+    "dotenv": "^10.0.0",
+    "echarts": "^5.1.2",
+    "echarts-for-react": "^3.0.1",
+    "fuse.js": "^6.4.6",
+    "is_js": "^0.9.0",
+    "moment": "^2.29.1",
+    "msal": "^1.4.15",
+    "npm": "^8.3.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0",
+    "react-datepicker": "^4.2.1",
+    "react-datetime": "^3.0.4",
+    "react-dom": "^17.0.2",
+    "react-dropzone": "^11.3.4",
+    "react-hook-form": "^7.19.5",
+    "react-lottie": "^1.2.3",
+    "react-number-format": "^4.8.0",
+    "react-router-dom": "^5.2.0",
+    "react-router-hash-link": "^2.4.3",
+    "react-scripts": "4.0.3",
+    "react-scrollspy": "^3.4.3",
+    "react-select": "^5.1.0",
+    "react-slick": "^0.28.1",
+    "react-table": "^7.7.0",
+    "react-toastify": "^7.0.4",
+    "react-window": "^1.8.6",
+    "simplebar-react": "^2.3.5",
+    "slick-carousel": "^1.8.1",
+    "uuid": "^8.3.2",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build && cp ./build/index.html ./build/404.html",
+    "deploy": "echo https://portal.choicepays.com > ./build/CNAME -d build",
+    "build:css": "webpack --config webpack.config.js",
+    "watch:css": "webpack --config webpack.config.js --watch"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "css-loader": "^4.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.24.0",
+    "mini-css-extract-plugin": "^0.11.3",
+    "prettier": "^2.3.2",
+    "sass": "^1.38.0",
+    "sass-loader": "^10.1.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^4.6.0",
+    "webpack-fix-style-only-entries": "^0.6.1"
+  }
+}

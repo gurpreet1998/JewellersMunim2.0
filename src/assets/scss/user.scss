@@ -1,0 +1,35 @@
+@import '~bootstrap/scss/_functions';
+@import 'theme/functions';
+
+@import '~bootstrap/scss/mixins';
+@import 'theme/mixins';
+
+@import 'user-variables';
+@import 'theme/variables';
+@import '~bootstrap/scss/variables';
+
+//
+//
+// user.scss
+//
+// Place your own theme CSS or SCSS rules below this line, these rules will override any Bootstrap and theme variables.
+.bg-off-white {
+  background-position: center;
+  background-color: $off-white;
+}
+
+.login-bg {
+  background-color: $off-white;
+}
+
+.login-card-shadow {
+  box-shadow: rgba(65, 69, 88, 0.1) 0 7px 14px 10px,
+    rgba(0, 0, 0, 0.07) 0 3px 6px 0;
+}
+
+.font-base {
+  font-family: $font-family-base;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+}
