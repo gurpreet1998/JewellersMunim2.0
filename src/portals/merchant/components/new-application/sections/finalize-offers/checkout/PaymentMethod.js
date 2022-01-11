@@ -24,9 +24,9 @@ const PaymentMethod = ({ payableTotal, loanOfferId, loanAppId }) => {
   const { offersDispatch } = useContext(OfferContext);
   const { register, handleSubmit } = useForm();
 
-  const interestRate = parseFloat(
-    selectedOffers.reduce((acc, offer) => offer.intrestRate, 0) || 20.99
-  );
+  // const interestRate = parseFloat(
+  //   selectedOffers.reduce((acc, offer) => offer.intrestRate, 0) || 20.99
+  // );
 
   const monthlyPayment = parseFloat(
     selectedOffers.reduce((acc, offer) => offer.monthlyPayment, 0) || 0
