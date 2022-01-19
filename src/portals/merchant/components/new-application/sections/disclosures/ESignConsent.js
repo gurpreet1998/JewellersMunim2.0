@@ -12,7 +12,7 @@ const ESignConsent = ({ register, errors }) => {
         style={{ maxHeight: '14rem' }}
       >
         <div className={'h6'}>Choice Payment Services, Inc. E-Sign Consent</div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           Choice Payment Services, Inc. and its affiliates and third-party
           service providers (“Choice”) may need to provide you with certain
           communications, notices, agreements, billing statements, or
@@ -23,11 +23,11 @@ const ESignConsent = ({ register, errors }) => {
           the use of electronic signatures in our relationship with you
           (“Consent”). If you choose not to agree to this Consent or you
           withdraw your consent, you may be restricted from using the Services.
-        </p>
+        </div>
         <div className={'h6'}>
           Electronic Delivery of Communications and Use of Electronic Signatures
         </div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           Under this Consent, Choice may provide all Communications
           electronically by email, by text message, or by making them accessible
           via Choice websites or applications. Communications include, but are
@@ -38,9 +38,9 @@ const ESignConsent = ({ register, errors }) => {
           confirmations, (3) periodic statements and history, (4) and all
           federal and state tax statements and documents. We may also use
           electronic signatures and obtain them from you.
-        </p>
+        </div>
         <div className={'h6'}>System Requirements</div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           To access and retain the electronic Communications, you will need the
           following:
           <ul>
@@ -109,17 +109,17 @@ const ESignConsent = ({ register, errors }) => {
               to print them.
             </li>
           </ul>
-        </p>
+        </div>
         <div className={'h6'}>Changes to Hardware or Software Requirements</div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           If our hardware or software requirements change, and that change would
           create a material risk that you would not be able to access or retain
           your Electronic Records, we will give you notice of the revised
           hardware and/or software requirements. Continuing to use Electronic
           Services after receiving notice of the change is reaffirmation of your
           consent.
-        </p>
-        <p className={'fs--1 pt-1 mb-2'}>
+        </div>
+        <div className={'fs--1 pt-1 mb-2'}>
           If you cannot accommodate the new hardware or software requirements
           you will be able to withdraw from utilizing electronic communications,
           disclosures and other processes covered by this consent at no charge.
@@ -128,9 +128,9 @@ const ESignConsent = ({ register, errors }) => {
           or software equipment at a later time that will allow you to utilize
           our electronic communication services, you will be required to renew
           your consent at that time.
-        </p>
+        </div>
         <div className={'h6'}>Paper Delivery of Communications</div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           You have the right to receive Communications in paper form. To request
           a paper copy of any Communication at no charge, please write to Choice
           Payment Services, Inc., 224 West Washington, Suite 103 Sequim, WA
@@ -140,24 +140,24 @@ const ESignConsent = ({ register, errors }) => {
           requesting a paper copy of any Communication, in and of itself, will
           not be treated as withdrawal of consent to receive electronic
           Communications.
-        </p>
+        </div>
         <div className={'h6'}>
           Withdrawal of Consent to Electronic Communications
         </div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           You may withdraw your consent to receive electronic Communications at
           any time, by writing to the Choice Address above. Any withdrawal of
           your consent will be effective after a reasonable period of time for
           processing your request, and Choice will confirm your withdrawal of
           consent and its effective date in writing (either electronically or in
           paper form).
-        </p>
+        </div>
         <div className={'h6'}>Updating Your Email Address</div>
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           You can change your email address by writing to the Choice Address.
           You may also be able to change your email address yourself through our
           consumer portal.
-        </p>
+        </div>
       </SimpleBarReact>
       <h5 className="me-3 pt-3 fs--1">
         I Confirm that I have read the eSign Consent:

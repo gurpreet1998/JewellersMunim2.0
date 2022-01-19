@@ -11,25 +11,32 @@ export default class Loan extends React.Component {
     super(props);
     this.state = { data: props.data };
   }
+
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       this.setState({ data: [...this.props.data] });
     }
   }
+
   render() {
+    var total = 0;
     const columns = [
       {
-        accessor: 'paymentAmount',
-        Header: 'Payment Amount'
+        accessor: 'depositID',
+        Header: 'Deposit ID'
       },
       {
-        accessor: 'loan',
+        accessor: 'loanNumber',
         Header: 'Loan#',
         headerProps: { className: 'pe-4' }
       },
       {
         accessor: 'date',
         Header: 'Date'
+      },
+      {
+        accessor: 'paymentAmount',
+        Header: 'Payment Amt.'
       },
       {
         accessor: 'none',
@@ -40,6 +47,11 @@ export default class Loan extends React.Component {
         }
       }
     ];
+    if (this.state.data.length > 0) {
+      for (let i = 0; i < this.state.data.length; i++) {
+        total += this.state.data[i].paymentAmount;
+      }
+    }
     return (
       <AdvanceTableWrapper
         columns={columns}
@@ -65,6 +77,7 @@ export default class Loan extends React.Component {
               }}
             />
           </Card.Body>
+          <Card.Footer>Total Amount: $ {total}</Card.Footer>
         </Card>
       </AdvanceTableWrapper>
     );

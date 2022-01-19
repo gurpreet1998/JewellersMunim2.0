@@ -68,7 +68,7 @@ export const accountingPortalRoutes = {
           active: true
         },
         {
-          name: 'Unmatched ACH Deposits',
+          name: 'CP+ Lender',
           to: '/portal/accounting/reconciliations/unmatched-ach',
           active: true
         },

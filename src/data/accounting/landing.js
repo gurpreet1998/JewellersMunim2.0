@@ -33,99 +33,7 @@ export const loanStatusTodaysStatements = {
       Header: 'Date of Next Payment'
     }
   ],
-  data: [
-    {
-      id: 1,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 2,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 3,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 4,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 5,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 6,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    },
-    {
-      id: 7,
-      loanId: '34445541',
-      disputeDescription: 'Jane Doe',
-      disputeCriticality: '11/01/2021',
-      disputeCategory: '11/30/2021',
-      serviceAmount: '$9,500.00',
-      loanAmount: '$9,500.00',
-      appType: 'TBD/ Placeholder',
-      appStatus: 'CP+ Offers',
-      salesAgent: 'Jim Fisher',
-      location: 'Brain Balance- Henderson'
-    }
-  ]
+  data: []
 };
 
 export const dailyACHPaymentExceptions = {
@@ -597,3 +505,28 @@ export const accountingStatsData = [
   //   caretColor: 'danger'
   // }
 ];
+
+export const LoanDetailsTable = {
+  merchant: "Macy's",
+  borrower: 'John Smith',
+  perferredName: 'John',
+  authorizedParty: 'Maria Chavis',
+  location: "Macy's",
+  currentAmountDue: 450.0,
+  currentPrinciple: 0,
+  nextDueDate: '09/12/2020'
+};
+
+export const LoanInformationTable = {
+  orignationDate: '09/12/2020',
+  originalLoanAmount: 4500,
+  originalTermMonth: '6 Months',
+  monthlyPaymentAmount: 120,
+  pastDueDate: '22/1/2022',
+  APR: '1.2%',
+  interestRate: '14%',
+  dailyInterestAmount: '$24.6',
+  interestPaidToDate: '$301.55',
+  interestDays: 106,
+  currentInterestOwed: '4.6%'
+};

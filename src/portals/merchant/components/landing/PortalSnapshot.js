@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Card, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { Card, Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import Slider from 'react-slick';
 import {
-  isIterableArray,
   getCurrentMonth,
+  isIterableArray,
   numberFormatter
 } from 'helpers/utils';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import NumberFormat from 'react-number-format';
+import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
@@ -130,10 +131,8 @@ class PortalSnapshot extends Component {
     fetch(`${API_URI}/Loan/GetMerchantDataMonthWise?merchantId=1`)
       .then(res => res.json())
       .then(data => {
-        let temp1 = { ...this.state.portalSnapshotNewApps };
-        temp1 = data;
-        this.setState({ portalSnapshotNewApps: temp1 });
-        // console.log(this.state.portalSnapshotNewApps);
+        // let temp1 = { ...this.state.portalSnapshotNewApps };
+        this.setState({ portalSnapshotNewApps: data });
       });
   }
   render() {
@@ -148,10 +147,14 @@ class PortalSnapshot extends Component {
             <Row className="justify-content-center">
               <Col xs={12}>
                 <Slider {...settings}>
-                  {isIterableArray(portalSnapshotNewApps) &&
+                  {portalSnapshotNewApps.length > 0 ? (
+                    isIterableArray(portalSnapshotNewApps) &&
                     portalSnapshotNewApps.map((item, index) => (
                       <SnapshotItem {...item} key={index} />
-                    ))}
+                    ))
+                  ) : (
+                    <LoadingSpinner messageText={'Loading...'} />
+                  )}
                 </Slider>
               </Col>
             </Row>

@@ -5,6 +5,7 @@ import Flex from 'components/common/Flex';
 import IconItem from 'components/common/icon/IconItem';
 import { MerchantLoanData } from '_services/loan';
 import { numberFormatter } from 'helpers/utils';
+import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
 
 const LoanStats = () => {
   let avgLoanAmt = MerchantLoanData().avgLoanAmount;
@@ -36,28 +37,32 @@ const LoanStats = () => {
                 iconClass="fs--2"
                 className="me-2 shadow-none"
               />
-              <h6 className="mb-0 flex-1">Avg Loan Amount</h6>
+              <h6 className="mb-0 flex-1 fs-lg--2">Avg Amount</h6>
             </Flex>
             <Flex className="my-3">
-              <OverlayTrigger
-                placement="bottom"
-                overlay={
-                  <Tooltip id="fullAvgLoanAmt">
-                    <NumberFormat
-                      value={avgLoanAmt}
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                    />
-                  </Tooltip>
-                }
-              >
-                <p className="font-sans-serif lh-1 fs-3 fs-sm-4 pe-2">
-                  ${numberFormatter(avgLoanAmt)}
-                </p>
-              </OverlayTrigger>
+              {avgLoanAmt !== undefined ? (
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={
+                    <Tooltip id="fullAvgLoanAmt">
+                      <NumberFormat
+                        value={avgLoanAmt}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    </Tooltip>
+                  }
+                >
+                  <p className="font-sans-serif lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
+                    ${numberFormatter(avgLoanAmt, 2)}
+                  </p>
+                </OverlayTrigger>
+              ) : (
+                <LoadingSpinner />
+              )}
             </Flex>
           </Col>
           <Col
@@ -78,19 +83,23 @@ const LoanStats = () => {
                 iconClass="fs--2"
                 className="me-2 shadow-none"
               />
-              <h6 className="mb-0 flex-1">Loan Count</h6>
+              <h6 className="mb-0 flex-1 fs-lg--2">Loan Count</h6>
             </Flex>
             <Flex className="my-3">
-              <p className="font-sans-serif lh-1 fs-3 fs-sm-4 pe-2">
-                {numberFormatter(merchantLoanCount, 0)}
-              </p>
+              {merchantLoanCount !== undefined ? (
+                <p className="font-sans-serif lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
+                  {numberFormatter(merchantLoanCount, 0)}
+                </p>
+              ) : (
+                <LoadingSpinner />
+              )}
             </Flex>
           </Col>
           <Col
             xxl={4}
             lg={6}
             sm={4}
-            className={'border-lg-end border-xxl-0  ps-4'}
+            className={'border-lg-end border-xxl-0 ps-4'}
           >
             <Flex justifyContent="center" alignItems="center" className="my-3">
               <IconItem
@@ -102,28 +111,32 @@ const LoanStats = () => {
                 iconClass="fs--2"
                 className="me-2 shadow-none"
               />
-              <h6 className="mb-0 flex-1">Total Loan Funded</h6>
+              <h6 className="mb-0 flex-1 fs-lg--2">Total Funded</h6>
             </Flex>
             <Flex className="my-3">
-              <OverlayTrigger
-                placement="bottom"
-                overlay={
-                  <Tooltip id="fullTotalFundedAmt">
-                    <NumberFormat
-                      value={totalFundedAmount}
-                      displayType={'text'}
-                      thousandSeparator={true}
-                      prefix={'$'}
-                      decimalScale={2}
-                      fixedDecimalScale={true}
-                    />
-                  </Tooltip>
-                }
-              >
-                <p className="font-sans-serif lh-1 fs-3 fs-sm-4 pe-2">
-                  ${numberFormatter(totalFundedAmount, 1)}
-                </p>
-              </OverlayTrigger>
+              {totalFundedAmount !== undefined ? (
+                <OverlayTrigger
+                  placement="bottom"
+                  overlay={
+                    <Tooltip id="fullTotalFundedAmt">
+                      <NumberFormat
+                        value={totalFundedAmount}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    </Tooltip>
+                  }
+                >
+                  <p className="font-sans-serif lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
+                    ${numberFormatter(totalFundedAmount, 1)}
+                  </p>
+                </OverlayTrigger>
+              ) : (
+                <LoadingSpinner />
+              )}
             </Flex>
           </Col>
         </Row>

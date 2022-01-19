@@ -12,15 +12,15 @@ const ApplicationDisclosure = ({ register, errors }) => {
         className={'border border-500 bg-100 rounded-1 px-3 py-2'}
         style={{ maxHeight: '14rem' }}
       >
-        <p className={'fs--1 pt-1 mb-2'}>
+        <div className={'fs--1 pt-1 mb-2'}>
           Information submitted on this website may be evaluated for separate
           loan programs by different lenders. The ChoicePays Plus installment
           loans are originated by Medallion Bank, a Utah-chartered bank, member
           FDIC. Choice Payment Services, as the servicer for works with
           Medallion Bank to originate installment loans made by Medallion Bank
           by using the Choice Pay Services platform.
-        </p>
-        <p className={'fs--1 pt-1 mb-2'}>
+        </div>
+        <div className={'fs--1 pt-1 mb-2'}>
           You authorize us to obtain credit bureau reports, employment, and
           income information about you that we will use when considering your
           application for credit. You also authorize us to obtain credit bureau
@@ -30,15 +30,15 @@ const ApplicationDisclosure = ({ register, errors }) => {
           products and services. If you ask, we will tell you the name and
           address of the credit bureau from which we obtained a report about
           you.
-        </p>
-        <p className={'fs--1 pt-1 mb-2'}>
+        </div>
+        <div className={'fs--1 pt-1 mb-2'}>
           The Annual Percentage Rate (APR) is the cost of credit as a yearly
           rate which may include an origination fee of up to 2% of the loan
           amount, due upon loan closing. The APR offered will depend on your
           credit score, income, debt payment obligations, loan amount, loan
           term, credit usage history and other factors.{' '}
-        </p>
-        <p className={'fs--1 pt-1 mb-2'}>
+        </div>
+        <div className={'fs--1 pt-1 mb-2'}>
           By entering your email address, you are opting in to receive updates,
           notifications and special offers from Choice Payment Services, LLC
           ("Choice") and its affiliates, agents, service providers or assignees
@@ -61,8 +61,8 @@ const ApplicationDisclosure = ({ register, errors }) => {
           retail installment sales agreement with them. You agree to notify any
           particular Lender or Creditor directly if you no longer want to
           receive communications from them.
-        </p>
-        <p className={'fs--1 pt-1 mb-2'}>
+        </div>
+        <div className={'fs--1 pt-1 mb-2'}>
           The data and other information you may provide Choice is not, and is
           not treated as, an application for a loan, credit or a request to be
           pre-approved, pre-qualified or any similar concept. Choice does not
@@ -85,12 +85,12 @@ const ApplicationDisclosure = ({ register, errors }) => {
           interest rate lock-in agreement. Lenders and Creditors may not offer
           all products as well as not offer products in all states. You might
           not be matched any Lender or Creditor making a specific offer.
-        </p>
+        </div>
 
-        <p className={'fs--1 pt-1 mb-0'}>
+        <div className={'fs--1 pt-1 mb-0'}>
           Depending on the Lender or Creditor and your credit qualifications,
           you may be required to make a down-payment.
-        </p>
+        </div>
       </SimpleBarReact>
       <h5 className="me-3 pt-3 fs--1">
         I Confirm that I have read the Application Disclosure:

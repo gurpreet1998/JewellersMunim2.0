@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import ServiceDateForm from './sections/service-date/ServiceDate';
 import { NewApplicationContext } from 'context/Context';
 import IconButton from 'components/common/IconButton';
-import { FormModal, HardStopModal } from './FormModal';
+import { FormModal } from './FormModal';
 import Flex from 'components/common/Flex';
 import DisclosuresForm from './sections/disclosures';
 import ApplicantInfo from './sections/applicant-info';
@@ -15,6 +15,7 @@ import Offers from './sections/finalize-offers/offer/Offers';
 import OfferProvider from './sections/finalize-offers/OfferProvider';
 import FinalizeLoan from './sections/finalize-offers/checkout/FinalizeLoan';
 import { userService, serviceDate, Disclosure } from '_services/userService';
+import HardStopModal from './HardStop';
 
 const FormLayout = ({ variant, validation, progressBar }) => {
   // eslint-disable-next-line no-unused-vars
@@ -34,9 +35,6 @@ const FormLayout = ({ variant, validation, progressBar }) => {
   const [modal, setModal] = useState(false);
   const [hardStop, setHardStop] = useState(false);
   const [loanAppId, setLoanAppId] = useState(0);
-
-  console.log('loanAppId', loanAppId);
-  console.log('hardStop', hardStop);
 
   const navItems = [
     {
@@ -62,15 +60,20 @@ const FormLayout = ({ variant, validation, progressBar }) => {
   ];
 
   const onSubmitData = data => {
-    console.log('onSubmitData', data);
     if (step === 1) {
       setUser({ ...user, ...data });
-      userService.saveUserDetail(data).then(loanId => {
-        setLoanAppId(loanId);
-        // todo: need hardStop response (bool) from API
-        //  ... NOTE: to test, set hardStop to true
-        setHardStop(hardStop);
-      });
+
+      if (Object.keys(user).length === 0) {
+        userService.saveUserDetail(data).then(loanId => {
+          setLoanAppId(loanId);
+          // todo: need response from API...
+          // NOTE: to test, set to true
+          setHardStop(hardStop);
+        });
+      } else {
+        // todo: write PUT request to update db
+        console.log('Need PUT request to update DB');
+      }
     } else if (step === 2) {
       setUser({ ...servicedata, ...data });
       serviceDate.saveServiceDetail(data, loanAppId);
@@ -94,7 +97,7 @@ const FormLayout = ({ variant, validation, progressBar }) => {
       if (targetStep < step) {
         setStep(targetStep);
       } else {
-        handleSubmit(onSubmitData, onError)();
+        handleSubmit(onSubmitData, onError);
       }
     } else {
       toggle();
@@ -110,7 +113,7 @@ const FormLayout = ({ variant, validation, progressBar }) => {
           'Please select an offer to continue with the New Application process'
         }
       />
-      <HardStopModal hardStop={hardStop} />
+      <HardStopModal hardStop={hardStop} setValue={setValue} />
 
       <Card
         as={Form}

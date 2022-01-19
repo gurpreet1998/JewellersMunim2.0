@@ -6,7 +6,8 @@ import {
   Row,
   Button,
   InputGroup,
-  Spinner
+  Tooltip,
+  OverlayTrigger
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -14,6 +15,8 @@ import OfferGrid from './OfferGrid';
 import { OfferContext } from 'context/Context';
 import usePagination from 'hooks/usePagination';
 import Flex from 'components/common/Flex';
+import IconButton from 'components/common/IconButton';
+import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
 
 const Offers = () => {
   const {
@@ -23,6 +26,8 @@ const Offers = () => {
 
   const [sortBy, setSortBy] = useState('loanAmount');
   const [isAsc, setIsAsc] = useState(true);
+  const [isCML, setIsCML] = useState(false);
+
   const [offerPerPage] = useState(6);
 
   const {
@@ -111,6 +116,25 @@ const Offers = () => {
                     </Col>
                   </Form>
                 </Col>
+                <Col xs="auto" className="pe-0">
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip>View {isCML ? 'CML' : 'CP+'} Loans</Tooltip>
+                    }
+                  >
+                    <IconButton
+                      variant="link"
+                      icon="eye"
+                      iconAlign="left"
+                      transform="down-1 shrink-1"
+                      className={'text-600 px-1'}
+                      onClick={() => setIsCML(!isCML)}
+                    >
+                      {isCML ? 'CML' : 'CP+'}
+                    </IconButton>
+                  </OverlayTrigger>
+                </Col>
               </Row>
             </Col>
           </Row>
@@ -129,36 +153,7 @@ const Offers = () => {
               ))}
             </Row>
           ) : (
-            <>
-              <Row>
-                <Flex
-                  justifyContent="center"
-                  alignItems="center"
-                  className="ms-3"
-                >
-                  <h5 className="text-secondary mb-4">Retrieving Offers...</h5>
-                </Flex>
-              </Row>
-              <Row>
-                <Flex
-                  justifyContent="center"
-                  alignItems="center"
-                  className="ms-3"
-                >
-                  <div>
-                    <Spinner
-                      animation="border"
-                      role="status"
-                      variant="secondary"
-                    >
-                      <span className="visually-hidden">
-                        Retrieving offers...
-                      </span>
-                    </Spinner>
-                  </div>
-                </Flex>
-              </Row>
-            </>
+            <LoadingSpinner messageText={'Retrieving offers...'} />
           )}
         </Card.Body>
         {/* ***** OFFER PAGINATION ***** */}

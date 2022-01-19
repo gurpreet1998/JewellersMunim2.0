@@ -43,7 +43,6 @@ const ServiceDateForm = ({ register, errors, setValue }) => {
             })
           }}
         />
-
         {/*  todo: figure out form validation for Controller before using
         <Form.Group as={Col} xl={6}>
           <Form.Label>Example Field with Masked NumberFormat</Form.Label>
@@ -55,18 +54,23 @@ const ServiceDateForm = ({ register, errors, setValue }) => {
                   prefix={'$'}
                   decimalScale={2}
                   fixedDecimalScale={true}
-                  // className={'form-control'}
+                  displayType={'input'}
+                  className={errors.numberFormatTest ? 'is-invalid' : ''}
                   placeholder="E.g. $5,000.00"
                   customInput={Form.Control}
+                  name="numberFormatTest"
                   {...field}
                 />
               </>
             )}
-            name="numberFormat"
+            {...register('numberFormatTest', {
+              required: 'Please enter the service amount.'
+            })}
             control={control}
+            name={'numberFormatTest'}
           />
         </Form.Group>
-       */}
+        */}
       </Row>
 
       <Row className="g-2 mb-3">

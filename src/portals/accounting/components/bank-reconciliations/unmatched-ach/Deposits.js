@@ -1,16 +1,16 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import Header from './Header';
-export default class Loan extends React.Component {
+
+export default class Deposits extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: props.data };
+    this.state = { data: props.data, MasterChecked: false, SelectedList: [] };
   }
+
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       this.setState({ data: [...this.props.data] });
@@ -19,17 +19,18 @@ export default class Loan extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'paymentAmount',
-        Header: 'Payment Amount'
-      },
-      {
-        accessor: 'loan',
-        Header: 'Loan#',
+        accessor: 'depositID',
+        Header: 'Deposit ID',
         headerProps: { className: 'pe-4' }
       },
       {
-        accessor: 'date',
-        Header: 'Date'
+        accessor: 'depositDate',
+        Header: 'Deposit Date',
+        headerProps: { className: 'pe-2' }
+      },
+      {
+        accessor: 'depositAmount',
+        Header: 'Deposit Amt.'
       },
       {
         accessor: 'none',
@@ -52,7 +53,7 @@ export default class Loan extends React.Component {
       >
         <Card>
           <Card.Header>
-            <Header name={'Loan Payments'} />
+            <Header name={'Bulk Deposits'} />
           </Card.Header>
           <Card.Body className="p-3">
             <AdvanceTable
@@ -70,6 +71,6 @@ export default class Loan extends React.Component {
     );
   }
 }
-Loan.propTypes = {
+Deposits.propTypes = {
   data: PropTypes.array
 };

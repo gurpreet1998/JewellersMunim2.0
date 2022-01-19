@@ -32,35 +32,8 @@ export const FormModal = ({ modal, setModal, notification }) => {
   );
 };
 
-export const HardStopModal = ({ hardStop }) => {
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice'
-    }
-  };
-  return (
-    <Modal show={hardStop} centered dialogClassName="wizard-modal">
-      <Modal.Body className="p-4">
-        <Flex justifyContent="center" alignItems="center">
-          <Lottie options={defaultOptions} style={{ width: '100px' }} />
-          <p className="mb-0 flex-1">
-            Hard Stop Placeholder. Please Contact (xxx) xxx xxxx
-          </p>
-        </Flex>
-      </Modal.Body>
-    </Modal>
-  );
-};
-
 FormModal.propTypes = {
   modal: PropTypes.bool.isRequired,
   setModal: PropTypes.func.isRequired,
   notification: PropTypes.string
-};
-
-HardStopModal.propTypes = {
-  hardStop: PropTypes.bool.isRequired
 };

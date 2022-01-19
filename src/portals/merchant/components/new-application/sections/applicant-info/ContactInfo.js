@@ -30,7 +30,7 @@ const ContactInfoForm = ({ register, setValue, errors, watch }) => {
   };
 
   const preLoadEmail = {
-    email: state.noEmail ? 'noemail@choicepays.com' : ''
+    email: state.noEmail ? 'noemail@choicepays.com' : null
   };
 
   return (

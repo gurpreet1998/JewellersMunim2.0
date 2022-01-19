@@ -21,8 +21,8 @@ const AppStatus = () => {
       .getTodaysStatement(1)
       .then(res => setdata({ ...todaysData, data: res }));
   }, []);
-  console.log('D1');
-  console.log(todaysData);
+  // console.log('D1');
+  // console.log(todaysData);
   // const [loanData, setLoanData] = useState({ columns: columns, data: data });
   // setLoanData(loanData);
   // console.log('D2');
@@ -58,7 +58,10 @@ const AppStatus = () => {
               </Accordion.Header>
 
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={todaysData} />
+                <StatusAccordionBody
+                  tableData={todaysData}
+                  pagePath="/portal/accounting/home/loandetails/"
+                />
               </Accordion.Body>
             </Accordion.Item>
 

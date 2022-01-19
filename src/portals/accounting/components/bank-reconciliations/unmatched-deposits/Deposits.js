@@ -1,8 +1,7 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
+// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 // import { DepositsTableData } from 'data/accounting/unmatcheddeposits';
@@ -20,23 +19,22 @@ export default class Deposits extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'loanNumber',
-        Header: 'Loan #',
+        accessor: 'depositDate',
+        Header: 'Deposit Date',
         headerProps: { className: 'pe-2' }
       },
       {
-        accessor: 'name',
-        Header: 'Name',
+        accessor: 'despositDescription',
+        Header: 'Deposit Description',
         headerProps: { className: 'pe-4' }
-      },
-      {
-        accessor: 'date',
-        Header: 'Date',
-        headerProps: { className: 'pe-6' }
       },
       {
         accessor: 'depositAmount',
         Header: 'Deposit Amt.'
+      },
+      {
+        accessor: 'crdb',
+        Header: 'CR/DB'
       },
       {
         accessor: 'none',
@@ -61,7 +59,7 @@ export default class Deposits extends React.Component {
           <Card.Header>
             <Header name={'Deposits'} />
           </Card.Header>
-          <Card.Body className="p-0">
+          <Card.Body className="p-3">
             <AdvanceTable
               table
               headerClassName="bg-200 text-900 text-nowrap align-middle"
@@ -72,14 +70,14 @@ export default class Deposits extends React.Component {
               }}
             />
           </Card.Body>
-          <Card.Footer>
+          {/* <Card.Footer>
             <AdvanceTableFooter
               rowCount={this.state.data.length}
               table
               rowInfo
               navButtons
             />
-          </Card.Footer>
+          </Card.Footer> */}
         </Card>
       </AdvanceTableWrapper>
     );

@@ -19,14 +19,14 @@ const LoanSummary = ({
   ...rest
 }) => {
   return (
-    <Card className="my-3 pe-card border-0 shadow-none" {...rest}>
-      <Card.Header className="bg-none border-bottom btn-reveal-trigger d-flex flex-between-center">
+    <Card className="mt-2 my-sm-3 pe-card border-0 shadow-none" {...rest}>
+      <Card.Header className="bg-none border-bottom ms-3 ps-sm-4 ps-xl-0 d-flex flex-between-center">
         <h5 className="mb-0">Finance Details</h5>
         <SoftBadge pill bg="primary" className="me-2">
           {loanProgramName}
         </SoftBadge>
       </Card.Header>
-      <Card.Body>
+      <Card.Body className={'ms-3 ps-sm-4 ps-xl-0'}>
         <Table borderless className="fs--1 mb-0">
           <tbody>
             <>

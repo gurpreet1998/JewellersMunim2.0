@@ -13,7 +13,7 @@ import Flex from 'components/common/Flex';
 import StatusAccordionTable from './StatusAccordionTable';
 import StatusAccordionSearchBox from './StatusAccordionSearchBox';
 
-const StatusAccordionBody = ({ tableData }) => {
+const StatusAccordionBody = ({ tableData, pagePath }) => {
   const { columns, data } = tableData;
   const {
     getTableProps,
@@ -57,6 +57,7 @@ const StatusAccordionBody = ({ tableData }) => {
           headers={headers}
           page={page}
           prepareRow={prepareRow}
+          pagePath={pagePath}
         />
       </Card.Body>
       <Card.Footer>
@@ -120,7 +121,8 @@ StatusAccordionBody.propTypes = {
         appType: PropTypes.string
       })
     ).isRequired
-  }).isRequired
+  }).isRequired,
+  pagePath: PropTypes.string
 };
 
 export default StatusAccordionBody;

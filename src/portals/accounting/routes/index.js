@@ -11,10 +11,17 @@ import UnmatchedDeposits from '../components/bank-reconciliations/unmatched-depo
 import LockBox from '../components/bank-reconciliations/lock-box';
 import UnmatchedACHDeposits from '../components/bank-reconciliations/unmatched-ach';
 import DepositRec from '../components/manual-payments/deposit-rec';
+import LoanDetails from '../components/loan-details';
 
 const AccountingPortalRoutes = ({ match: { url } }) => (
   <Switch>
     <Route path={`${url}/home`} exact component={AccountingHomeDashboard} />
+
+    <Route
+      path={`${url}/home/loandetails/:loanId`}
+      exact
+      component={LoanDetails}
+    />
     {/* Bank Reconciliations */}
     <Route
       path={`${url}/reconciliations/unmatched`}
