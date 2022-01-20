@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { roleBased_Permission } from '../../../_services/userService';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Nav, Collapse } from 'react-bootstrap';
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
 import AppContext from 'context/Context';
+import { AuthContext } from '../../../api/authentication/auth-context';
 
 const CollapseItems = ({ route }) => {
   const { pathname } = useLocation();
@@ -61,6 +63,52 @@ const NavbarVerticalMenu = ({ routes }) => {
     config: { showBurgerMenu },
     setConfig
   } = useContext(AppContext);
+  // Use States Here
+  const auth = useContext(AuthContext);
+  const [ExtensionRole, setExtensionRole] = useState('');
+  const [RolePermissionsObj, setRolePermissionsObj] = useState({});
+
+  const GetAccessRolesByAPI = extnRole => {
+    roleBased_Permission.GetPermissionsForRole(extnRole).then(res =>
+      setRolePermissionsObj({
+        ...RolePermissionsObj,
+        [extnRole]: { Access: [...res] }
+      })
+    );
+  };
+
+  const CheckChildComponent = ROUTE => {
+    console.log('funccc called');
+    if (!ROUTE.children) {
+      return false;
+    }
+    const arr = [...ROUTE.children];
+
+    const AccessArr = RolePermissionsObj?.[ExtensionRole]?.Access;
+    console.log('Parenty ARr==>', arr);
+    for (let i = 0; i < arr.length; i++) {
+      const element = arr[i];
+      console.log('=>', i, element.name);
+      if (AccessArr?.includes(element.name)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const RoleBasedPermission = () => {
+    if (auth.isAuthenticated) {
+      const extension_Role = auth.account?.idToken?.extension_Role || '';
+      setExtensionRole(extension_Role);
+      GetAccessRolesByAPI(extension_Role);
+    } else {
+      console.log('Login Failed');
+    }
+  };
+
+  useEffect(() => {
+    RoleBasedPermission();
+  }, [auth]);
 
   const handleNavItemClick = () => {
     if (showBurgerMenu) {
@@ -68,30 +116,52 @@ const NavbarVerticalMenu = ({ routes }) => {
     }
   };
   return routes.map(route => {
-    if (!route.children) {
-      return (
-        <Nav.Item as="li" key={route.name} onClick={handleNavItemClick}>
-          <NavLink
-            exact={route.exact}
-            to={
-              route.to === '/authentication-modal'
-                ? { pathname: '/authentication-modal', state: { open: true } }
-                : route.to
-            }
-            isActive={match => {
-              if (!match) {
-                return false;
-              }
-              return route.to !== '#!';
-            }}
-            className={classNames('nav-link', { 'text-500': !route.active })}
-          >
-            <NavbarVerticalMenuItem route={route} />
-          </NavLink>
-        </Nav.Item>
-      );
+    if (
+      // RolePermissionsObj?.[ExtensionRole]?.Access.includes(parentName || '') ||
+      CheckChildComponent(route) ||
+      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route.name)
+    ) {
+      if (!route.children) {
+        return (
+          <>
+            <Nav.Item as="li" key={route.name} onClick={handleNavItemClick}>
+              <NavLink
+                exact={route.exact}
+                to={
+                  route.to === '/authentication-modal'
+                    ? {
+                        pathname: '/authentication-modal',
+                        state: { open: true }
+                      }
+                    : route.to
+                }
+                isActive={match => {
+                  if (!match) {
+                    return false;
+                  }
+                  return route.to !== '#!';
+                }}
+                className={classNames('nav-link', {
+                  'text-500': !route.active
+                })}
+              >
+                <NavbarVerticalMenuItem route={route} />
+              </NavLink>
+            </Nav.Item>
+          </>
+        );
+      } else {
+        return (
+          <CollapseItems
+            AccessArr={RolePermissionsObj?.[ExtensionRole]?.Access}
+            route={route}
+            key={route.name}
+          />
+        );
+      }
+    } else {
+      return <></>;
     }
-    return <CollapseItems route={route} key={route.name} />;
   });
 };
 

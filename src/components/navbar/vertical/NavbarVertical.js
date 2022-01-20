@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Nav, Navbar, Row, Col } from 'react-bootstrap';
 import { navbarBreakPoint } from 'config';
@@ -9,8 +9,19 @@ import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes/routes';
 import { capitalize } from 'helpers/utils';
+import { AuthContext } from '../../../api/authentication/auth-context';
+import { roleBased_Permission } from '../../../_services/userService';
 
 const NavbarVertical = () => {
+  const [Permissions, permissions] = useState([]);
+  useEffect(() => {
+    console.log('ROutess=>', routes);
+    roleBased_Permission
+      .GetPermissionsForRole('Merchant')
+      .then(res => permissions(res));
+  }, []);
+  console.log(Permissions);
+
   const {
     config: { navbarStyle, isNavbarVerticalCollapsed, showBurgerMenu }
   } = useContext(AppContext);
@@ -72,17 +83,70 @@ const NavbarVertical = () => {
       >
         <div className="navbar-vertical-content scrollbar">
           <Nav className="flex-column" as="ul">
-            {routes.map(route => (
-              <div key={route.label}>
-                {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                <NavbarVerticalMenu routes={route.children} />
-              </div>
-            ))}
+            {routes.map(route => showRoleOptions(route))}
           </Nav>
         </div>
       </Navbar.Collapse>
     </Navbar>
   );
+
+  function showRoleOptions(route) {
+    //Sperate function to show options in terms of roles
+
+    const auth = useContext(AuthContext);
+
+    if (auth && auth.isAuthenticated) {
+      //Check if user has authenticated
+
+      var CurrentRole = auth.account.idTokenClaims.extension_Role;
+
+      switch (
+        route.label // Render each section based on a condition
+      ) {
+        case 'Merchant Portal': // Condition
+          if (CurrentRole == 'Merchant')
+            return (
+              <div key={route.label}>
+                {console.log(route.label)}
+                {!route.labelDisable && navbarLabel(capitalize(route.label))}
+                <NavbarVerticalMenu routes={route.children} />
+              </div>
+            );
+          break;
+
+        case 'Accounting Portal':
+          if (CurrentRole == 'Developer')
+            return (
+              <div key={route.label}>
+                {console.log(route.label)}
+                {!route.labelDisable && navbarLabel(capitalize(route.label))}
+                <NavbarVerticalMenu routes={route.children} />
+              </div>
+            );
+          break;
+
+        case 'pages (dev only)':
+          if (CurrentRole == 'Developer')
+            return (
+              <div key={route.label}>
+                {console.log(route.label)}
+                {!route.labelDisable && navbarLabel(capitalize(route.label))}
+                <NavbarVerticalMenu routes={route.children} />
+              </div>
+            );
+          break;
+
+        default:
+          return (
+            <div key={route.label}>
+              {console.log(route.label)}
+              {!route.labelDisable && navbarLabel(capitalize(route.label))}
+              <NavbarVerticalMenu routes={route.children} />
+            </div>
+          );
+      }
+    }
+  }
 };
 
 export default NavbarVertical;

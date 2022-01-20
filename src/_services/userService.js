@@ -2,6 +2,17 @@ import { setPostRequestOptions } from './baseService';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
+export const roleBased_Permission = {
+  GetPermissionsForRole: function (roleName) {
+    return fetch(`${API_URI}/User/GetPermissions?RoleName=${roleName}`)
+      .then(res => res.json())
+
+      .then(data => {
+        return data;
+      });
+  }
+};
+
 export const userService = {
   saveUserDetail: function (user) {
     // Returns `loanAppId` used throughout the new app process
