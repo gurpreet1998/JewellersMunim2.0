@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Error500 = () => (
   <Card className="text-center h-100">
@@ -12,9 +13,14 @@ const Error500 = () => (
       <p>
         Try refreshing the page, or going back and attempting the action again.
         If this problem persists,
-        <a href="mailto:info@exmaple.com" className="ms-1">
+        {/*todo: update with correct email */}
+        <Link
+          className="ms-1"
+          to={{ pathname: 'mailto:info@exmaple.com' }}
+          target="_blank"
+        >
           contact us
-        </a>
+        </Link>
         .
       </p>
     </Card.Body>

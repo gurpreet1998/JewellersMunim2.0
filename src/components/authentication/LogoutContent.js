@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logoutImg from 'assets/img/icons/spot-illustrations/45.png';
+import { AuthContext } from 'api/authentication/auth-context';
 
 const LogoutContent = ({ titleTag: TitleTag }) => {
+  const auth = useContext(AuthContext);
+
   return (
     <>
       <img
@@ -14,18 +16,17 @@ const LogoutContent = ({ titleTag: TitleTag }) => {
         alt="shield"
         width={100}
       />
-      <TitleTag>See you next time!</TitleTag>
+      <TitleTag className={'text-500'}>See you next time!</TitleTag>
       <p>
-        Thanks for using the Choice Merchant Portal. You are{' '}
+        Thanks for using the Choice Portal. You are{' '}
         <br className="d-none d-sm-block" />
         now successfully signed out.
       </p>
       <Button
-        as={Link}
         color="primary"
         size="sm"
         className="mt-3"
-        to={`/authentication/login`}
+        onClick={() => auth.onSignIn()}
       >
         <FontAwesomeIcon
           icon="chevron-left"

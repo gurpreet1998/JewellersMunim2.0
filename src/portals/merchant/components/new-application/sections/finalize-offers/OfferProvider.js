@@ -21,7 +21,6 @@ const OfferProvider = ({ children, loanAppId }) => {
       loanService.getLoanOffers(loanAppId).then(data => {
         initData.initOffers = [...data];
         initData.offers = [...data];
-        console.log('Offers Array: ', [...data]);
         setData([...data]);
         offersDispatch({ type: 'UPDATE_DATA', payload: initData });
       });

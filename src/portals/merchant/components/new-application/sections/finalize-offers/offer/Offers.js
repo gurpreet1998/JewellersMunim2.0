@@ -7,16 +7,18 @@ import {
   Button,
   InputGroup,
   Tooltip,
-  OverlayTrigger
+  OverlayTrigger,
+  FormControl
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import OfferGrid from './OfferGrid';
-import { OfferContext } from 'context/Context';
+import { NewApplicationContext, OfferContext } from 'context/Context';
 import usePagination from 'hooks/usePagination';
 import Flex from 'components/common/Flex';
 import IconButton from 'components/common/IconButton';
 import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
+import NumberFormat from 'react-number-format';
 
 const Offers = () => {
   const {
@@ -24,9 +26,12 @@ const Offers = () => {
     offersDispatch: offersDispatch
   } = useContext(OfferContext);
 
+  const { user } = useContext(NewApplicationContext);
+
   const [sortBy, setSortBy] = useState('loanAmount');
   const [isAsc, setIsAsc] = useState(true);
   const [isCML, setIsCML] = useState(false);
+  const [update, setUpdate] = useState(true);
 
   const [offerPerPage] = useState(6);
 
@@ -63,12 +68,7 @@ const Offers = () => {
       <Card className="mb-0 shadow-none">
         <Card.Header className={'fw-normal px-md-6 pt-4 pb-0'}>
           <Row className="flex-between-center">
-            <Col
-              sm="auto"
-              as={Flex}
-              alignItems="center"
-              className="mb-2 mb-sm-0"
-            >
+            <Col sm="auto" as={Flex} alignItems="center" className="mb-2">
               <Form.Select
                 size="sm"
                 value={itemsPerPage}
@@ -88,8 +88,8 @@ const Offers = () => {
             <Col sm="auto">
               <Row className="gx-2 align-items-center">
                 <Col xs="auto">
-                  <Form as={Row} className="gx-2">
-                    <Col xs="auto">
+                  <Row className="gx-2">
+                    <Col className={'d-none d-lg-block'} xs="auto">
                       <small>Sort by:</small>
                     </Col>
                     <Col xs="auto">
@@ -114,7 +114,7 @@ const Offers = () => {
                         </InputGroup.Text>
                       </InputGroup>
                     </Col>
-                  </Form>
+                  </Row>
                 </Col>
                 <Col xs="auto" className="pe-0">
                   <OverlayTrigger
@@ -139,7 +139,33 @@ const Offers = () => {
             </Col>
           </Row>
         </Card.Header>
-        <Card.Body className="fw-normal px-md-6 py-4">
+        <Card.Body className="fw-normal px-md-6 py-0">
+          <hr />
+          <Row className="gx-2 mb-3">
+            <Col xs="8" sm="7" md="6" xl="4" className={'pe-3'}>
+              <InputGroup size="sm">
+                <NumberFormat
+                  value={user.serviceAmount}
+                  thousandSeparator={true}
+                  prefix={'$'}
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  displayType={'input'}
+                  customInput={FormControl}
+                />
+                <InputGroup.Text
+                  as={Button}
+                  variant="secondary"
+                  onClick={() => setUpdate(!update)}
+                >
+                  <FontAwesomeIcon icon={'sync-alt'} />
+                </InputGroup.Text>
+              </InputGroup>
+            </Col>
+            <Col xs="auto">
+              <small>Recalculate Offers</small>
+            </Col>
+          </Row>
           {offers.length !== 0 ? (
             <Row>
               {paginatedOffers.map((offer, index) => (
@@ -147,7 +173,7 @@ const Offers = () => {
                   offer={offer}
                   key={offer.id}
                   md={6}
-                  lg={4}
+                  xl={4}
                   index={index}
                 />
               ))}

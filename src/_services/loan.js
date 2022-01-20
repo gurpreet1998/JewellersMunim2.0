@@ -2,22 +2,28 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 let API_URI = process.env.REACT_APP_API_URI;
-//merchantID 1 until login implemented
-const MerchantLoanData = () => {
-  const [user, setUser] = useState([]);
+
+/**
+ * todo: Update merchantID. Set to 1 until login implemented
+ * @param merchantId number
+ * @returns {[]} Object from the API response or empty array
+ * @constructor
+ */
+const MerchantLoanData = merchantId => {
+  const [loanStats, setLoanStats] = useState([]);
 
   useEffect(() => {
-    loadUsers();
+    loadUsers((merchantId = 1));
   }, []);
 
   const loadUsers = async () => {
     const result = await axios.get(
-      `${API_URI}/Loan/GetMerchantLoanData?merchantId=1`
+      `${API_URI}/Loan/GetMerchantLoanData?merchantId=${merchantId}`
     );
-    setUser(result.data);
+    setLoanStats(result.data);
   };
 
-  return user;
+  return loanStats;
 };
 
 export { MerchantLoanData };

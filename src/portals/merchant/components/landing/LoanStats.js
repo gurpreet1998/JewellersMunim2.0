@@ -3,9 +3,9 @@ import { Card, Row, Col, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import Flex from 'components/common/Flex';
 import IconItem from 'components/common/icon/IconItem';
+import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
 import { MerchantLoanData } from '_services/loan';
 import { numberFormatter } from 'helpers/utils';
-import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
 
 const LoanStats = () => {
   let avgLoanAmt = MerchantLoanData().avgLoanAmount;

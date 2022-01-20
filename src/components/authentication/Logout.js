@@ -5,7 +5,7 @@ import AuthCardLayout from 'layouts/AuthCardLayout';
 
 const Logout = () => {
   return (
-    <AuthCardLayout>
+    <AuthCardLayout footer={false}>
       <div className="text-center">
         <LogoutContent layout="card" titleTag="h3" />
       </div>

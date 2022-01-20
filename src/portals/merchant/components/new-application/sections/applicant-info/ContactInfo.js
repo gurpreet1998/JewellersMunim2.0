@@ -30,7 +30,7 @@ const ContactInfoForm = ({ register, setValue, errors, watch }) => {
   };
 
   const preLoadEmail = {
-    email: state.noEmail ? 'noemail@choicepays.com' : null
+    email: state.noEmail ? 'noemail@choicepays.com' : undefined
   };
 
   return (
@@ -186,7 +186,6 @@ const ContactInfoForm = ({ register, setValue, errors, watch }) => {
         />
         <Col lg={9} xl={4}>
           <FormInput
-            ref={register}
             type="email"
             errors={errors}
             label="Email*"

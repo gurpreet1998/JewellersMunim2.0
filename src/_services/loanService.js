@@ -11,6 +11,19 @@ export const loanService = {
       });
   },
 
+  /**
+   * Returns the applicants contact information, including:
+   *  - borrowerId
+   *  - city
+   *  - email
+   *  - name
+   *  - phone
+   *  - state
+   *  - street
+   *  - zip
+   * @param id number
+   * @returns {Promise<any>}
+   */
   getApplicantInfo: function (id) {
     return fetch(`${API_URI}/Loan/GetApplicantInfo?loanAppId=${id}`)
       .then(res => res.json())

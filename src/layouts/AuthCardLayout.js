@@ -13,7 +13,7 @@ const AuthCardLayout = ({ leftSideContent, children, footer = true }) => {
   return (
     <Section fluid className="py-0">
       <Row className="g-0 min-vh-100 flex-center">
-        <Col lg={8} xxl={5} className="py-3 position-relative">
+        <Col lg={10} xl={9} xxl={7} className="py-3 px-4 position-relative">
           <Card className="overflow-hidden z-index-1">
             <Card.Body className="p-0">
               <Row className="h-100 g-0 login-card-shadow">
@@ -24,35 +24,29 @@ const AuthCardLayout = ({ leftSideContent, children, footer = true }) => {
                       className="bg-auth-card-shape"
                     />
                     <div className="z-index-1 position-relative dark">
-                      <Link
-                        className="link-light mb-4 font-sans-serif fw-bolder fs-4 d-inline-block"
-                        to="/"
-                      >
-                        <Logo width={220} textClass="fs-4" />
-                      </Link>
-                      <p className="fs-3 fw-normal text-secondary">
-                        Empowering Choice in Consumer Lending
-                      </p>
+                      <Logo className={'py-0 py-md-4'} width={180} />
+                      <h4 className="fs-1 fs-sm-2 fs-md-1 fs-lg-2 text-600 mb-0">
+                        Empowering{' '}
+                        <span className={'text-primary'}>Choice</span> in
+                        Consumer Lending
+                      </h4>
                     </div>
                   </div>
-                  <div className="mt-3 mb-4 mt-md-4 mb-md-5">
+                  <div className="mb-4 mt-md-4 mb-md-5">
                     {leftSideContent}
 
                     {footer && (
-                      <p className="mb-0 mt-4 mt-md-5 fs--1 fw-semi-bold text-600 opacity-75">
+                      <p className="mb-0 mt-1 mt-md-5 fs--1 fw-semi-bold text-600 opacity-75 d-none d-md-block">
                         Read our{' '}
                         <Link
                           className="text-decoration-underline text-700"
-                          to="#!"
+                          to={{
+                            pathname:
+                              'https://choicepayments.wpengine.com/wp-content/uploads/2022/01/20220112_Website-Privacy-Policy-and-Terms-of-Use_v2.pdf'
+                          }}
+                          target="_blank"
                         >
-                          terms{' '}
-                        </Link>
-                        and{' '}
-                        <Link
-                          className="text-decoration-underline text-700"
-                          to="#!"
-                        >
-                          conditions
+                          terms & conditions
                         </Link>
                       </p>
                     )}
@@ -74,6 +68,7 @@ const AuthCardLayout = ({ leftSideContent, children, footer = true }) => {
     </Section>
   );
 };
+
 AuthCardLayout.propTypes = {
   leftSideContent: PropTypes.node,
   children: PropTypes.node.isRequired,

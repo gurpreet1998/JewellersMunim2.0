@@ -185,10 +185,13 @@ const HardStopModal = ({ hardStop, setValue }) => {
           </p>{' '}
           <p>
             Please contact Choice Payment Services' Customer Service team at
-            {/* todo: replace phone number with variable/ placeholder for DB? */}
-            <a href="tel:8888749940" className="ms-1">
+            <Link
+              className="ms-1"
+              to={{ pathname: 'tel:8888749940' }}
+              target="_blank"
+            >
               (888) 874 9940
-            </a>
+            </Link>
             .
           </p>
           <Link className="btn btn-primary btn-sm mt-3" to="/">

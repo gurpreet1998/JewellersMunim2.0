@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import SimpleBarReact from 'simplebar-react';
 import FormInput from '../../FormInput';
-import PropTypes from 'prop-types';
 
 const ESignConsent = ({ register, errors }) => {
   return (
@@ -59,29 +60,26 @@ const ESignConsent = ({ register, errors }) => {
                   {' '}
                   Minimum recommended browser standards are the most recent
                   versions of Mozilla Firefox (see{' '}
-                  <a
-                    href={'https://www.mozilla.com'}
+                  <Link
+                    to={{ pathname: 'https://www.mozilla.com' }}
                     target="_blank"
-                    rel="noreferrer"
                   >
                     https://www.mozilla.com
-                  </a>{' '}
+                  </Link>{' '}
                   for latest version), Apple Safari (see{' '}
-                  <a
-                    href={'https://www.apple.com/safari'}
+                  <Link
+                    to={{ pathname: 'https://www.apple.com/safari' }}
                     target="_blank"
-                    rel="noreferrer"
                   >
                     https://www.apple.com/safari
-                  </a>{' '}
+                  </Link>{' '}
                   for latest version), or Google Chrome (see{' '}
-                  <a
-                    href={'https://www.google.com/chrome'}
+                  <Link
+                    to={{ pathname: 'https://www.google.com/chrome' }}
                     target="_blank"
-                    rel="noreferrer"
                   >
                     https://www.google.com/chrome
-                  </a>{' '}
+                  </Link>{' '}
                   for latest version).
                 </li>
               </ul>
