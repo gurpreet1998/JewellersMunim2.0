@@ -61,19 +61,19 @@ const FormLayout = ({ variant, validation, progressBar }) => {
 
   const onSubmitData = data => {
     if (step === 1) {
-      setUser({ ...user, ...data });
-
-      if (Object.keys(user).length === 0) {
-        userService.saveUserDetail(data).then(loanId => {
-          setLoanAppId(loanId);
-          // todo: need response from API...
-          // NOTE: to test, set to true
-          setHardStop(hardStop);
-        });
-      } else {
-        // todo: write PUT request to update db
-        console.log('Need PUT request to update DB');
-      }
+      setUser({ ...user, ...data });      
+        userService.saveUserDetail(data).then(res => {
+          console.log(res.result);
+          if(res.result==="HardStop")
+          {
+            setHardStop(true);
+          }
+          else{
+            setLoanAppId(res.result);
+          }
+         
+            
+      });
     } else if (step === 2) {
       setUser({ ...servicedata, ...data });
       serviceDate.saveServiceDetail(data, loanAppId);
