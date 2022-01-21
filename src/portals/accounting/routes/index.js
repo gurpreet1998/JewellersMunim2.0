@@ -83,7 +83,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           </Route>
 
           <Route path={`${url}/reconciliations/unmatched-ach`} exact>
-            {checkForAccess('Unmatched ACH Deposits', ExtensionRole) ? (
+            {checkForAccess('CP+ Lender', ExtensionRole) ? (
               <UnmatchedACHDeposits />
             ) : (
               <Redirect to="/errors/404" />
