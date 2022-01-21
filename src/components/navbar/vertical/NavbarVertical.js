@@ -115,7 +115,7 @@ const NavbarVertical = () => {
           break;
 
         case 'Accounting Portal':
-          if (CurrentRole == 'Developer')
+          if (CurrentRole == 'Accountant')
             return (
               <div key={route.label}>
                 {console.log(route.label)}
