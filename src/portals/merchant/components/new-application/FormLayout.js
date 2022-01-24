@@ -1,21 +1,21 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Card, Form, Nav, ProgressBar } from 'react-bootstrap';
 import classNames from 'classnames';
+import { Col, Card, Form, Nav, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
-import ServiceDateForm from './sections/service-date/ServiceDate';
-import { NewApplicationContext } from 'context/Context';
 import IconButton from 'components/common/IconButton';
-import { FormModal } from './FormModal';
 import Flex from 'components/common/Flex';
 import DisclosuresForm from './sections/disclosures';
 import ApplicantInfo from './sections/applicant-info';
 import Offers from './sections/finalize-offers/offer/Offers';
 import OfferProvider from './sections/finalize-offers/OfferProvider';
 import FinalizeLoan from './sections/finalize-offers/checkout/FinalizeLoan';
-import { userService, serviceDate, Disclosure } from '_services/userService';
+import ServiceDateForm from './sections/service-date/ServiceDate';
+import { FormModal } from './FormModal';
 import HardStopModal from './HardStop';
+import { NewApplicationContext } from 'context/Context';
+import { userService, serviceDate, Disclosure } from '_services/userService';
 
 const FormLayout = ({ variant, validation, progressBar }) => {
   // eslint-disable-next-line no-unused-vars
@@ -61,18 +61,13 @@ const FormLayout = ({ variant, validation, progressBar }) => {
 
   const onSubmitData = data => {
     if (step === 1) {
-      setUser({ ...user, ...data });      
-        userService.saveUserDetail(data).then(res => {
-          console.log(res.result);
-          if(res.result==="HardStop")
-          {
-            setHardStop(true);
-          }
-          else{
-            setLoanAppId(res.result);
-          }
-         
-            
+      setUser({ ...user, ...data });
+      userService.saveUserDetail(data).then(res => {
+        if (res.result === 'HardStop') {
+          setHardStop(true);
+        } else {
+          setLoanAppId(res.result);
+        }
       });
     } else if (step === 2) {
       setUser({ ...servicedata, ...data });
