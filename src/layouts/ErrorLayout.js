@@ -5,6 +5,7 @@ import Logo from 'components/common/Logo';
 import { Redirect, Route, Switch } from 'react-router';
 import Error404 from 'components/errors/Error404';
 import Error500 from 'components/errors/Error500';
+import Error501 from 'components/errors/Error501';
 import Section from 'components/common/Section';
 
 const ErrorLayout = ({ match: { url } }) => {
@@ -16,6 +17,7 @@ const ErrorLayout = ({ match: { url } }) => {
           <Switch>
             <Route path={`${url}/404`} component={Error404} />
             <Route path={`${url}/500`} component={Error500} />
+            <Route path={`${url}/501`} component={Error501} />
             <Redirect to={`${url}/404`} />
           </Switch>
         </Col>
