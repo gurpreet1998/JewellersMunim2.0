@@ -119,7 +119,8 @@ const NavbarVerticalMenu = ({ routes }) => {
     if (
       // RolePermissionsObj?.[ExtensionRole]?.Access.includes(parentName || '') ||
       CheckChildComponent(route) ||
-      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route.name)
+      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.keyword) ||
+      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.name)
     ) {
       if (!route.children) {
         return (
