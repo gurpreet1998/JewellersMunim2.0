@@ -7,18 +7,20 @@ import LoanCalculator from '../components/loan-calculator';
 import InviteConsumer from '../components/invite-consumer';
 import InviteHistory from '../components/invitation-history';
 import PowerBi from '../components/power-bi/PowerBi';
-import { AuthContext } from '../../../api/authentication/auth-context';
-import { roleBased_Permission } from '../../../_services/userService';
+
+import { AuthContext } from 'api/authentication/auth-context';
+import { roleBased_Permission } from '_services/userService';
 
 export default function MerchantPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
-  const [ExtensionRole, setExtensionRole] = useState('');
-  const [RolePermissionsObj, setRolePermissionsObj] = useState({});
+  console.log('auth ctx:', auth);
+  const [extensionRole, setExtensionRole] = useState('');
+  const [rolePermissionsObj, setRolePermissionsObj] = useState({});
 
   const GetAccessRolesByAPI = extnRole => {
     roleBased_Permission.GetPermissionsForRole(extnRole).then(res =>
       setRolePermissionsObj({
-        ...RolePermissionsObj,
+        ...rolePermissionsObj,
         [extnRole]: { Access: [...res] }
       })
     );
@@ -27,9 +29,9 @@ export default function MerchantPortalRoutes({ match: { url } }) {
   const RoleBasedPermission = () => {
     if (auth.isAuthenticated) {
       const extension_Role = auth.account?.idToken?.extension_Role || '';
+
       setExtensionRole(extension_Role);
       GetAccessRolesByAPI(extension_Role);
-      console.log('Routess===>', auth.account.idToken.extension_Role);
     } else {
       console.log('Login Failed');
     }
@@ -37,17 +39,13 @@ export default function MerchantPortalRoutes({ match: { url } }) {
 
   const checkForAccess = RouteName => {
     console.log(
-      'Access Role',
-      RolePermissionsObj?.[ExtensionRole]?.Access,
-      'ExtensionRole==>',
-      ExtensionRole
+      'Access Role =>',
+      rolePermissionsObj?.[extensionRole]?.Access,
+      'extensionRole =>',
+      extensionRole
     );
     if (auth.isAuthenticated) {
-      if (RolePermissionsObj?.[ExtensionRole]?.Access.includes(RouteName)) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!rolePermissionsObj?.[extensionRole]?.Access.includes(RouteName);
     }
     return true;
   };
@@ -59,10 +57,10 @@ export default function MerchantPortalRoutes({ match: { url } }) {
 
   return (
     <>
-      {RolePermissionsObj?.[ExtensionRole]?.Access && (
+      {rolePermissionsObj?.[extensionRole]?.Access && (
         <Switch>
           <Route path={`${url}/new-application`} exact>
-            {checkForAccess('New Application', ExtensionRole) ? (
+            {checkForAccess('New Application', extensionRole) ? (
               <NewApplication />
             ) : (
               <Redirect to="/errors/404" />

@@ -16,10 +16,9 @@ const Error404 = () => {
         <p>
           Make sure the address is correct and that the page hasn't moved. If
           you think this is a mistake,
-          {/*todo: update with correct email */}
           <Link
             className="ms-1"
-            to={{ pathname: 'mailto:info@exmaple.com' }}
+            to={{ pathname: 'mailto:websupport@choicepays.com' }}
             target="_blank"
           >
             contact us

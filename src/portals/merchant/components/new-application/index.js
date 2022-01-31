@@ -8,7 +8,7 @@ import AltNavbarTop from 'components/navbar/alt/AltNavbarTop';
 const NewApplicationWizard = () => {
   return (
     <Section className="py-0">
-      <AltNavbarTop />
+      <AltNavbarTop navTitle={'New Application'} />
       <Row className="flex-center min-vh-75 py-6">
         <Col sm={11} md={10} className="col-xxl-9">
           <Logo width={220} />

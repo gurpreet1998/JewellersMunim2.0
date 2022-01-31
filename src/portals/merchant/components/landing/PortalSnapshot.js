@@ -10,7 +10,7 @@ import {
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import NumberFormat from 'react-number-format';
-import LoadingSpinner from '../../../../components/loading-spinner/LoadingSpinner';
+import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
@@ -79,7 +79,7 @@ const SnapshotItem = ({
                   </Tooltip>
                 }
               >
-                <p className="font-sans-serif lh-1 fs-4 pe-2">
+                <p className="font-sans-serif lh-1 fs-4 pe-2 cursor-default">
                   ${numberFormatter(loanTotal, 0)}
                 </p>
               </OverlayTrigger>

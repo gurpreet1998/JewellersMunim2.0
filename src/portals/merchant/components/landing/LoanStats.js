@@ -56,7 +56,7 @@ const LoanStats = () => {
                     </Tooltip>
                   }
                 >
-                  <p className="font-sans-serif lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
+                  <p className="font-sans-serif cursor-default lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
                     ${numberFormatter(avgLoanAmt, 2)}
                   </p>
                 </OverlayTrigger>
@@ -130,7 +130,7 @@ const LoanStats = () => {
                     </Tooltip>
                   }
                 >
-                  <p className="font-sans-serif lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
+                  <p className="font-sans-serif cursor-default lh-1 fs-3 fs-sm-4 fs-xl-4 fs-xxl-3 pe-2">
                     ${numberFormatter(totalFundedAmount, 1)}
                   </p>
                 </OverlayTrigger>

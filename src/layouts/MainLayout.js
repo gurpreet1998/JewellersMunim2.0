@@ -10,12 +10,15 @@ import { AuthContext } from '../api/authentication/auth-context';
 import AccountingStats from 'portals/accounting/components/landing';
 import Login from 'components/authentication/Login';
 import { Redirect } from 'react-router-dom';
+
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
 
   const {
     config: { isFluid, navbarPosition }
   } = useContext(AppContext);
+
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,40 +38,47 @@ const MainLayout = () => {
 
   return (
     <div className={isFluid ? 'container-fluid' : 'container'}>
-      {navbarPosition === 'vertical' && <NavbarVertical />}
+      {auth.isAuthenticated ? (
+        navbarPosition === 'vertical' && <NavbarVertical />
+      ) : (
+        <></>
+      )}
       <div className="content">
-        <NavbarTop />
+        {auth.isAuthenticated ? <NavbarTop /> : <></>}
         <Switch>
           {ShowDesiredLandingPage()}
           <MainRoutes />
         </Switch>
-        <Footer />
+        {auth.isAuthenticated ? <Footer /> : <></>}
       </div>
     </div>
   );
 };
 
-
-function ShowDesiredLandingPage() {     //Sperate function to show pages in terms of roles
+/**
+ * Separate function to show pages in terms of roles
+ * @returns {JSX.Element} A path to role-based landing page
+ * @constructor
+ */
+function ShowDesiredLandingPage() {
   const auth = useContext(AuthContext);
 
-  if (auth && auth.isAuthenticated) {        //Check if user has authenticated
-    var CurrentRole = auth.account.idTokenClaims.extension_Role;
+  if (auth && auth.isAuthenticated) {
+    // Check if user has authenticated
+    const CurrentRole = auth.account.idTokenClaims.extension_Role;
 
     switch (CurrentRole) {
-      case "Merchant":
-        return (<Route path="/" exact component={HomeDashboard} />);
-        break;
-      case "Developer":
-        return (<Route path="/" exact component={AccountingStats} />);
-        break;
+      case 'Merchant':
+        return <Route path="/" exact component={HomeDashboard} />;
+
+      case 'Developer':
+        return <Route path="/" exact component={AccountingStats} />;
+
       default:
-        return <Redirect to={`errors/501`} />// When role is not defined
-        break;
+        return <Redirect to={`errors/501`} />; // When role is not defined
     }
-  }
-  else {
-    return (<Route path="/" exact component={Login} />);
+  } else {
+    return <Route path="/" exact component={Login} />;
   }
 }
 

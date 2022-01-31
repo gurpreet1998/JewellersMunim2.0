@@ -11,8 +11,9 @@ import UnmatchedDeposits from '../components/bank-reconciliations/unmatched-depo
 import LockBox from '../components/bank-reconciliations/lock-box';
 import UnmatchedACHDeposits from '../components/bank-reconciliations/unmatched-ach';
 import DepositRec from '../components/manual-payments/deposit-rec';
-import { AuthContext } from '../../../api/authentication/auth-context';
-import { roleBased_Permission } from '../../../_services/userService';
+
+import { AuthContext } from 'api/authentication/auth-context';
+import { roleBased_Permission } from '_services/userService';
 
 export default function AccountingPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
@@ -31,9 +32,9 @@ export default function AccountingPortalRoutes({ match: { url } }) {
   const RoleBasedPermission = () => {
     if (auth.isAuthenticated) {
       const extension_Role = auth.account?.idToken?.extension_Role || '';
+
       setExtensionRole(extension_Role);
       GetAccessRolesByAPI(extension_Role);
-      console.log('Routess===>', auth.account.idToken.extension_Role);
     } else {
       console.log('Login Failed');
     }
@@ -43,15 +44,11 @@ export default function AccountingPortalRoutes({ match: { url } }) {
     console.log(
       'Access Role',
       RolePermissionsObj?.[ExtensionRole]?.Access,
-      'ExtensionRole==>',
+      'ExtensionRole =>',
       ExtensionRole
     );
     if (auth.isAuthenticated) {
-      if (RolePermissionsObj?.[ExtensionRole]?.Access.includes(RouteName)) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!RolePermissionsObj?.[ExtensionRole]?.Access.includes(RouteName);
     }
     return true;
   };
@@ -63,7 +60,6 @@ export default function AccountingPortalRoutes({ match: { url } }) {
 
   return (
     <>
-      {/* <Route> */}
       {RolePermissionsObj?.[ExtensionRole]?.Access && (
         <Switch>
           <Route path={`${url}/home`} exact>

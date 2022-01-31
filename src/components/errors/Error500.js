@@ -13,10 +13,9 @@ const Error500 = () => (
       <p>
         Try refreshing the page, or going back and attempting the action again.
         If this problem persists,
-        {/*todo: update with correct email */}
         <Link
           className="ms-1"
-          to={{ pathname: 'mailto:info@exmaple.com' }}
+          to={{ pathname: 'mailto:websupport@choicepays.com' }}
           target="_blank"
         >
           contact us

@@ -1,26 +1,24 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import avatarIcon from 'assets/img/team/avatar.png';
 import Avatar from 'components/common/Avatar';
 
-import { AuthContext } from '../../../api/authentication/auth-context';
+import { AuthContext } from 'api/authentication/auth-context';
 
 const ProfileDropdown = () => {
   const auth = useContext(AuthContext);
-  // console.log('Profile');
-  // console.log(auth);
-  // console.log('auth');
-  // console.log(auth);
-  // console.log(auth.isAuthenticated);
   let userName = '';
   let jobTitle = '';
+  let firstName = '';
+  let lastName = '';
+
   if (auth && auth.isAuthenticated) {
-    // console.log('Auth Name');
+    console.log('Login data =>', auth.account.idTokenClaims);
+
     userName = auth.account.idTokenClaims.name;
-    console.log('Login data');
-    console.log(auth.account.idTokenClaims.name);
     jobTitle = auth.account.idTokenClaims.jobTitle;
+    firstName = auth.account.idTokenClaims.given_name;
+    lastName = auth.account.idTokenClaims.family_name;
   }
 
   return (
@@ -31,18 +29,14 @@ const ProfileDropdown = () => {
         to="#!"
         className="pe-0 nav-link"
       >
-        <Avatar src={avatarIcon} />
+        <Avatar size={'l'} name={`${firstName} ${lastName}`} />
       </Dropdown.Toggle>
 
       <Dropdown.Menu className="dropdown-menu-card  dropdown-menu-end">
         <div className="bg-white rounded-2 py-2 dark__bg-1000">
-          <Dropdown.Item className="text-center" href="#!">
-            <span>
-              <p className={'fs-0'}>{userName}</p>
-            </span>
-            <span>
-              <p className={'fw-normal text-700'}>{jobTitle} </p>
-            </span>
+          <Dropdown.Item className="text-center bg-transparent cursor-default">
+            <div className={'fs-0 pb-1'}>{userName}</div>
+            <div className={'fw-light text-700'}>{jobTitle}</div>
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item as={Link} to="/pages/profile">

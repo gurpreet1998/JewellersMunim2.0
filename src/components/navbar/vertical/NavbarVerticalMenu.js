@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useState, useEffect } from 'react';
-import { roleBased_Permission } from '../../../_services/userService';
+import { roleBased_Permission } from '_services/userService';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Nav, Collapse } from 'react-bootstrap';
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
 import AppContext from 'context/Context';
-import { AuthContext } from '../../../api/authentication/auth-context';
+import { AuthContext } from 'api/authentication/auth-context';
 
 const CollapseItems = ({ route }) => {
   const { pathname } = useLocation();
@@ -36,7 +36,6 @@ const CollapseItems = ({ route }) => {
           'text-500': !route.active
         })}
         aria-expanded={open}
-        // {...route}
       >
         <NavbarVerticalMenuItem route={route} />
       </Nav.Link>
@@ -63,6 +62,7 @@ const NavbarVerticalMenu = ({ routes }) => {
     config: { showBurgerMenu },
     setConfig
   } = useContext(AppContext);
+
   // Use States Here
   const auth = useContext(AuthContext);
   const [ExtensionRole, setExtensionRole] = useState('');
@@ -78,14 +78,13 @@ const NavbarVerticalMenu = ({ routes }) => {
   };
 
   const CheckChildComponent = ROUTE => {
-    console.log('funccc called');
     if (!ROUTE.children) {
       return false;
     }
     const arr = [...ROUTE.children];
 
     const AccessArr = RolePermissionsObj?.[ExtensionRole]?.Access;
-    console.log('Parenty ARr==>', arr);
+    console.log('Parent Array =>', arr);
     for (let i = 0; i < arr.length; i++) {
       const element = arr[i];
       console.log('=>', i, element.name);
@@ -117,7 +116,6 @@ const NavbarVerticalMenu = ({ routes }) => {
   };
   return routes.map(route => {
     if (
-      // RolePermissionsObj?.[ExtensionRole]?.Access.includes(parentName || '') ||
       CheckChildComponent(route) ||
       RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.keyword) ||
       RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.name)
@@ -125,17 +123,10 @@ const NavbarVerticalMenu = ({ routes }) => {
       if (!route.children) {
         return (
           <>
-            <Nav.Item as="li" key={route.name} onClick={handleNavItemClick}>
+            <Nav.Item as="li" key={route.keyword} onClick={handleNavItemClick}>
               <NavLink
                 exact={route.exact}
-                to={
-                  route.to === '/authentication-modal'
-                    ? {
-                        pathname: '/authentication-modal',
-                        state: { open: true }
-                      }
-                    : route.to
-                }
+                to={route.to}
                 isActive={match => {
                   if (!match) {
                     return false;
@@ -156,7 +147,7 @@ const NavbarVerticalMenu = ({ routes }) => {
           <CollapseItems
             AccessArr={RolePermissionsObj?.[ExtensionRole]?.Access}
             route={route}
-            key={route.name}
+            key={route.keyword}
           />
         );
       }

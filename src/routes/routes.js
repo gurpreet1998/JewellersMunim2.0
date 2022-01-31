@@ -59,7 +59,7 @@ export const accountingPortalRoutes = {
   labelDisable: false,
   children: [
     {
-      name: 'Accounting Home',
+      name: 'Home',
       keyword: 'AccountingHome',
       icon: 'home',
       to: '/portal/accounting/home',
@@ -173,22 +173,5 @@ export const appRoutes = {
   ]
 };
 
-export const pageRoutes = {
-  label: 'pages (dev only)',
-  children: [
-    {
-      name: 'Login',
-      keyword: 'Login',
-      icon: 'lock',
-      to: '/authentication/login',
-      active: true
-    }
-  ]
-};
-
-export default [
-  merchantPortalRoutes,
-  accountingPortalRoutes,
-  appRoutes,
-  pageRoutes
-];
+// todo: remove app routes header when not using
+export default [merchantPortalRoutes, accountingPortalRoutes, appRoutes];

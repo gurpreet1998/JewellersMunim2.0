@@ -9,18 +9,19 @@ import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
 import routes from 'routes/routes';
 import { capitalize } from 'helpers/utils';
-import { AuthContext } from '../../../api/authentication/auth-context';
-import { roleBased_Permission } from '../../../_services/userService';
+import { AuthContext } from 'api/authentication/auth-context';
+import { roleBased_Permission } from '_services/userService';
+import { LoadingDots } from '../../loading-spinner/LoadingDots';
 
 const NavbarVertical = () => {
-  const [Permissions, permissions] = useState([]);
+  const [permissions, setPermissions] = useState([]);
+  console.log('permissions => ', permissions);
+
   useEffect(() => {
-    console.log('ROutess=>', routes);
     roleBased_Permission
       .GetPermissionsForRole('Merchant')
-      .then(res => permissions(res));
+      .then(res => setPermissions(res));
   }, []);
-  console.log(Permissions);
 
   const {
     config: { navbarStyle, isNavbarVerticalCollapsed, showBurgerMenu }
@@ -51,14 +52,13 @@ const NavbarVertical = () => {
     HTMLClassList.remove('navbar-vertical-collapsed-hover');
   };
 
-  // noinspection CheckTagEmptyBody
   const navbarLabel = label => (
     <Row className="mt-3 mb-2 navbar-vertical-label-wrapper">
       <Col xs="auto" className="navbar-vertical-label navbar-vertical-label">
         {label}
       </Col>
       <Col className="ps-0">
-        <hr className="mb-0 navbar-vertical-divider"></hr>
+        <hr className="mb-0 navbar-vertical-divider" />
       </Col>
     </Row>
   );
@@ -79,7 +79,6 @@ const NavbarVertical = () => {
         in={showBurgerMenu}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="asdfa"
       >
         <div className="navbar-vertical-content scrollbar">
           <Nav className="flex-column" as="ul">
@@ -91,47 +90,40 @@ const NavbarVertical = () => {
   );
 
   function showRoleOptions(route) {
-    //Sperate function to show options in terms of roles
-
+    // Separate function to show options in terms of roles
     const auth = useContext(AuthContext);
 
+    // Check if user has authenticated
     if (auth && auth.isAuthenticated) {
-      //Check if user has authenticated
-
-      var CurrentRole = auth.account.idTokenClaims.extension_Role;
+      let CurrentRole = auth.account.idTokenClaims.extension_Role;
 
       switch (
         route.label // Render each section based on a condition
       ) {
         case 'Merchant Portal': // Condition
-          if (CurrentRole == 'Merchant')
+          if (CurrentRole === 'Merchant')
             return (
               <div key={route.label}>
-                {console.log(route.label)}
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                <NavbarVerticalMenu routes={route.children} />
+                {permissions.length !== 0 ? (
+                  <NavbarVerticalMenu routes={route.children} />
+                ) : (
+                  <LoadingDots color={'#748194'} width={40} height={20} />
+                )}
               </div>
             );
           break;
 
         case 'Accounting Portal':
-          if (CurrentRole == 'Accountant')
+          if (CurrentRole === 'Accountant')
             return (
               <div key={route.label}>
-                {console.log(route.label)}
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                <NavbarVerticalMenu routes={route.children} />
-              </div>
-            );
-          break;
-
-        case 'pages (dev only)':
-          if (CurrentRole == 'Developer')
-            return (
-              <div key={route.label}>
-                {console.log(route.label)}
-                {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                <NavbarVerticalMenu routes={route.children} />
+                {permissions.length !== 0 ? (
+                  <NavbarVerticalMenu routes={route.children} />
+                ) : (
+                  <LoadingDots color={'#748194'} width={40} height={20} />
+                )}
               </div>
             );
           break;
@@ -139,7 +131,6 @@ const NavbarVertical = () => {
         default:
           return (
             <div key={route.label}>
-              {console.log(route.label)}
               {!route.labelDisable && navbarLabel(capitalize(route.label))}
               <NavbarVerticalMenu routes={route.children} />
             </div>

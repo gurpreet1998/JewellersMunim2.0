@@ -6,12 +6,11 @@ import {
   AUTH_REQUESTS,
   AUTH_SCOPES
 } from './auth-utils';
-// import { AuthContext } from 'context/Context';
-import { AuthContext } from '../../api/authentication/auth-context';
+
+import { AuthContext } from './auth-context';
 
 // If you support IE, our recommendation is that you sign-in using Redirect APIs
 const useRedirectFlow = isIE();
-// const useRedirectFlow = true;
 
 export default C =>
   class AuthProvider extends Component {

@@ -1,16 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Navbar, Nav } from 'react-bootstrap';
 import ProfileDropdown from '../top/ProfileDropdown';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AltNavbarTop = () => {
+const AltNavbarTop = ({ navTitle }) => {
   return (
     <Navbar className="navbar-glass fs--1 navbar-top sticky-kit border-bottom border-1">
       <Nav navbar className={`align-items-center`} as="ul">
         <Nav.Item as="li">
-          <div className="fs-1">Create Application</div>
+          <div className="fs-1 fw-normal">{navTitle}</div>
         </Nav.Item>
       </Nav>
       <Nav
@@ -35,6 +36,10 @@ const AltNavbarTop = () => {
       </Nav>
     </Navbar>
   );
+};
+
+AltNavbarTop.propTypes = {
+  navTitle: PropTypes.string.isRequired
 };
 
 export default AltNavbarTop;

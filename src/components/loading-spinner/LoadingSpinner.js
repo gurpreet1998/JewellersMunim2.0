@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Spinner } from 'react-bootstrap';
 import Flex from '../common/Flex';
 
-const LoadingSpinner = ({ messageText = '' }) => {
+const LoadingSpinner = ({ messageText = '', color = 'secondary' }) => {
   return (
     <>
       <Row>
@@ -14,7 +14,7 @@ const LoadingSpinner = ({ messageText = '' }) => {
       <Row>
         <Flex justifyContent="center" alignItems="center" className="ms-3">
           <div>
-            <Spinner animation="border" role="status" variant="secondary">
+            <Spinner animation="border" role="status" variant={color}>
               <span className="visually-hidden">{messageText}</span>
             </Spinner>
           </div>
@@ -25,7 +25,8 @@ const LoadingSpinner = ({ messageText = '' }) => {
 };
 
 LoadingSpinner.propTypes = {
-  messageText: PropTypes.string
+  messageText: PropTypes.string,
+  color: PropTypes.string
 };
 
 export default LoadingSpinner;
