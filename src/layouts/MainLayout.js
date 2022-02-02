@@ -71,7 +71,7 @@ function ShowDesiredLandingPage() {
       case 'Merchant':
         return <Route path="/" exact component={HomeDashboard} />;
 
-      case 'Developer':
+      case 'Accountant':
         return <Route path="/" exact component={AccountingStats} />;
 
       default:
