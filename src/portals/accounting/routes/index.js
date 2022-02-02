@@ -63,7 +63,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
       {RolePermissionsObj?.[ExtensionRole]?.Access && (
         <Switch>
           <Route path={`${url}/home`} exact>
-            {checkForAccess('Accounting Home', ExtensionRole) ? (
+            {checkForAccess('AccountingHome', ExtensionRole) ? (
               <AccountingHomeDashboard />
             ) : (
               <Redirect to="/errors/404" />
