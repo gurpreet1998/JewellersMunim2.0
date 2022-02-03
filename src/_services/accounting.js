@@ -1,3 +1,4 @@
+import { setPostRequestOptions } from './baseService';
 let API_URI = process.env.REACT_APP_API_URI;
 
 export const accountingService = {
@@ -11,38 +12,43 @@ export const accountingService = {
 };
 
 export const depositService = {
-  getDepositsTableData: function () {
-    return fetch(`${API_URI}/Accounting/GetDepositsTableData`)
+  getDepositsTableData: function (id) {
+    return fetch(
+      `${API_URI}/Accounting/GetDepositsTableData?bankAccountId=${id}`
+    )
       .then(res => res.json())
       .then(data => {
         return data;
       });
-  }
-};
+  },
 
-export const transactionHistoryService = {
-  getTransactionHistory: function (id) {
-    return fetch(`${API_URI}/Accounting/GetLoanTransactionData?loanId=${id}`)
-      .then(res => res.json())
-      .then(data => {
-        return data;
-      });
-  }
-};
-
-export const lendersNames = {
   getLendersNames: function (id) {
     return fetch(`${API_URI}/Accounting/GetLendersNames?lenderId=${id}`)
       .then(res => res.json())
       .then(data => {
         return data;
       });
+  },
+
+  getBankNames: function (id) {
+    return fetch(`${API_URI}/Accounting/GetBankNames?lenderId=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      });
+  },
+
+  savePostTransaction: function (id) {
+    fetch(
+      `${API_URI}/Accounting/UpdateDataForPostTransactionButton?bankAccountId=${id}`,
+      setPostRequestOptions()
+    ).catch(err => console.log('ERROR (PostTransaction):', err));
   }
 };
 
-export const bankNames = {
-  getBankNames: function (id) {
-    return fetch(`${API_URI}/Accounting/GetBankNames?lenderId=${id}`)
+export const transactionHistoryService = {
+  getTransactionHistory: function (id) {
+    return fetch(`${API_URI}/Accounting/GetLoanTransactionData?loanId=${id}`)
       .then(res => res.json())
       .then(data => {
         return data;

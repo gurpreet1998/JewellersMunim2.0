@@ -11,7 +11,7 @@ import UnmatchedDeposits from '../components/bank-reconciliations/unmatched-depo
 import LockBox from '../components/bank-reconciliations/lock-box';
 import UnmatchedACHDeposits from '../components/bank-reconciliations/unmatched-ach';
 import DepositRec from '../components/manual-payments/deposit-rec';
-
+import LoanDetails from '../components/loan-details';
 import { AuthContext } from 'api/authentication/auth-context';
 import { roleBased_Permission } from '_services/userService';
 
@@ -65,6 +65,14 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           <Route path={`${url}/home`} exact>
             {checkForAccess('AccountingHome', ExtensionRole) ? (
               <AccountingHomeDashboard />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+
+          <Route path={`${url}/home/loandetails/:loanId`}>
+            {checkForAccess('AccountingHome', ExtensionRole) ? (
+              <LoanDetails />
             ) : (
               <Redirect to="/errors/404" />
             )}

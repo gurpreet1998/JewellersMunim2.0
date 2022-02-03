@@ -5,10 +5,11 @@ import { Card } from 'react-bootstrap';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import Header from '../unmatched-deposits/Header';
+import { paymentHistoryData } from 'data/accounting/lockBox';
 // import Header from './Header';
 export default function DepositHistory() {
   // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(paymentHistoryData);
   const columns = [
     {
       accessor: 'paymentId',
@@ -29,11 +30,11 @@ export default function DepositHistory() {
     },
     {
       accessor: 'paymentAmount',
-      Header: 'Paymen Amount'
+      Header: 'Payment Amount$'
     },
     {
       accessor: 'paymentType',
-      Header: 'Paymen Type'
+      Header: 'Payment Type'
     },
     {
       accessor: 'none',
@@ -54,7 +55,7 @@ export default function DepositHistory() {
     >
       <Card>
         <Card.Header>
-          <Header name={'Deposit History'} />
+          <Header name={'Payment History'} />
         </Card.Header>
         <Card.Body className="p-3">
           <AdvanceTable

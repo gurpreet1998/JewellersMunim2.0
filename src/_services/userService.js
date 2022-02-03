@@ -42,7 +42,6 @@ export const userService = {
       //hard coded until login implemented fully
       MerchantId: 1
     };
-    console.log('AddApplicationInfo POST:', data);
 
     return fetch(
       `${API_URI}/Loan/AddApplicationInfo`,
@@ -50,6 +49,7 @@ export const userService = {
     )
       .then(response => response.json())
       .then(data => {
+        console.log('AddApplicationInfo Response:', data);
         return data;
       })
       .catch(err => console.log('ERROR (AddApplicationInfo):', err));

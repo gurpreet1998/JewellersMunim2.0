@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import Flex from 'components/common/Flex';
 import { Row, Col, Form } from 'react-bootstrap';
@@ -7,53 +8,62 @@ import Loan from './Loan';
 import { Button } from 'react-bootstrap';
 import Deposits from './Deposits';
 
-import { depositService, lendersNames, bankNames } from '_services/accounting';
+import { depositService } from '_services/accounting';
 
 const AccountDetails = () => {
-  const [bank, setBank] = useState();
+  const [bank, setBank] = useState(0);
   const [lender, setLender] = useState();
   const [banks, setBanks] = useState([]);
   const [lenders, setLenders] = useState([]);
   const [loanData, setLoanData] = useState([]);
   const [flag, setFlag] = useState({});
   const [depositData, setDepositData] = useState([]);
-  const [tempLoanData, setTempLoanData] = useState([]);
-  const [tempDepositData, setTempDepositData] = useState([]);
+  // const [tempLoanData, setTempLoanData] = useState([]);
+  // const [tempDepositData, setTempDepositData] = useState([]);
 
   //Lender Id 1 until we get login implemented
 
-  const reconcileData = () => {
-    const result1 = loanData.filter(o =>
-      depositData.some(({ depositAmount }) => o.paymentAmount === depositAmount)
-    );
-    setLoanData(result1);
-    const result2 = depositData.filter(o =>
-      loanData.some(({ paymentAmount }) => o.depositAmount === paymentAmount)
-    );
-    setFlag(true);
-    console.log(loanData);
-    setDepositData(result2);
-  };
-  const unReconcileData = () => {
-    setLoanData(tempLoanData);
-    console.log(tempLoanData);
-    setDepositData(tempDepositData);
-    setFlag(false);
-  };
+  // const reconcileData = () => {
+  //   const result1 = loanData.filter(o =>
+  //     depositData.some(({ depositAmount }) => o.paymentAmount === depositAmount)
+  //   );
+  //   setLoanData(result1);
+  //   const result2 = depositData.filter(o =>
+  //     loanData.some(({ paymentAmount }) => o.depositAmount === paymentAmount)
+  //   );
+  //   setFlag(true);
+  //   console.log(loanData);
+  //   setDepositData(result2);
+  // };
+  // const unReconcileData = () => {
+  //   setLoanData(tempLoanData);
+  //   console.log(tempLoanData);
+  //   setDepositData(tempDepositData);
+  //   setFlag(false);
+  // };
   useEffect(() => {
-    lendersNames.getLendersNames(1).then(res => setLenders(res));
+    depositService.getLendersNames(1).then(res => setLenders(res));
 
-    bankNames.getBankNames(1).then(res => setBanks(res));
+    depositService.getBankNames(1).then(res => setBanks(res));
 
-    // loanService.getLoanTableData().then(res => setLoanData(res));
-    depositService.getDepositsTableData().then(res => {
+    // setTempLoanData(loanData);
+    // setTempDepositData(depositData);
+    console.log(depositData);
+  }, []);
+
+  useEffect(() => {
+    depositService.getDepositsTableData(bank).then(res => {
       setDepositData(res);
       setLoanData(res);
+      console.log(res);
     });
-    setTempLoanData(loanData);
-    setTempDepositData(depositData);
-  }, []);
-  useEffect(() => {}, [loanData]);
+  }, [bank]);
+
+  const postOnClick = event => {
+    depositService.savePostTransaction(event);
+    console.log(event);
+  };
+  // useEffect(() => {}, [loanData, depositData]);
 
   return (
     <>
@@ -94,19 +104,20 @@ const AccountDetails = () => {
                   >
                     <option value="">Select Bank</option>
                     {banks.map((bank, index) => (
-                      <option value={bank.bank} key={index}>
+                      <option value={bank.bankAccountId} key={index}>
                         {bank.banks}
                       </option>
                     ))}
+                    {/* {console.log(bank)} */}
                   </Form.Select>
                 </Flex>
               }
             />
           ) : null}
         </Col>
-        <Col md={5}>{bank !== undefined ? <Loan data={loanData} /> : null}</Col>
+        <Col md={5}>{bank !== 0 ? <Loan data={loanData} /> : null}</Col>
         <Col md={2}>
-          {bank !== undefined ? (
+          {bank !== 0 ? (
             <div className="btn-group-justified">
               <div className="px-2 ms-1 mb-2 w-100">
                 <label>
@@ -117,7 +128,7 @@ const AccountDetails = () => {
                     id="flexRadioDefault1"
                     style={{ marginRight: '5px' }}
                     checked={true}
-                    onClick={() => reconcileData()}
+                    // onClick={() => reconcileData()}
                   />
                   View Reconciled
                 </label>
@@ -132,7 +143,7 @@ const AccountDetails = () => {
                       marginBottom: '2px',
                       marginTop: '3px'
                     }}
-                    onClick={() => unReconcileData()}
+                    // onClick={() => unReconcileData()}
                   />
                   View Un-Reconciled
                 </label>
@@ -141,7 +152,7 @@ const AccountDetails = () => {
                 size="sm"
                 variant={'secondary'}
                 className="px-2 ms-1 mb-2 w-100"
-                disabled={flag}
+                disabled={!flag}
                 // onClick={() => reconcileData()}
               >
                 Match
@@ -150,7 +161,7 @@ const AccountDetails = () => {
                 size="sm"
                 variant={'secondary'}
                 className="px-2 ms-1 mb-2 w-100"
-                disabled={flag}
+                disabled={!flag}
                 // onClick={() => reconcileData()}
               >
                 Un-Match
@@ -177,16 +188,14 @@ const AccountDetails = () => {
                 variant={'success'}
                 disabled={!flag}
                 className="px-2 ms-1 mb-2 w-100"
-                // onClick={() => reconcileData()}
+                onClick={() => postOnClick(bank)}
               >
                 Post Transactions
               </Button>
             </div>
           ) : null}
         </Col>
-        <Col md={5}>
-          {bank !== undefined ? <Deposits data={depositData} /> : null}
-        </Col>
+        <Col md={5}>{bank !== 0 ? <Deposits data={depositData} /> : null}</Col>
       </Row>
       {/* <Filters /> */}
     </>

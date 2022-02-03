@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AmortizationSchedule from './AmortizationSchedule';
-import DisputesComplaints from './Disputes-Complaints';
-import Documentations from './Documentations';
-import LoanInformation from './LoanInformation';
-import Statements from './Statements';
+import AmortizationSchedule from './Tabs/AmortizationSchedule';
+import DisputesComplaints from './Tabs/Disputes-Complaints';
+import Documentations from './Tabs/Documentations';
+import LoanInformation from './Tabs/LoanInformation';
+import Statements from './Tabs/Statements';
 import 'react-tabs/style/react-tabs.css';
-import TransactionHistory from './TransactionHistory';
+import TransactionHistory from './Tabs/TransactionHistory';
 import { Tab, TabPanel, Tabs, TabList } from 'react-tabs';
 export default function LoanDetailsTab(props) {
   return (

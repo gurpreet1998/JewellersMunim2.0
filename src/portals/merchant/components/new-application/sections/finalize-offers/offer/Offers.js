@@ -135,6 +135,25 @@ const Offers = () => {
                     </IconButton>
                   </OverlayTrigger>
                 </Col>
+                <Col xs="auto" className="pe-0">
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip>View {isCML ? 'CML' : 'CP+'} Loans</Tooltip>
+                    }
+                  >
+                    <IconButton
+                      variant="link"
+                      icon="eye"
+                      iconAlign="left"
+                      transform="down-1 shrink-1"
+                      className={'text-600 px-1'}
+                      onClick={() => setIsCML(!isCML)}
+                    >
+                      {isCML ? 'CML' : 'CP+'}
+                    </IconButton>
+                  </OverlayTrigger>
+                </Col>
               </Row>
             </Col>
           </Row>

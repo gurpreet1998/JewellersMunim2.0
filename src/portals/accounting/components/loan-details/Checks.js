@@ -1,6 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import ValidateCaller from './ValidateCaller';
 
 export default function Checks() {
+  const [modal, setModal] = useState(false);
+  const {
+    register,
+    // handleSubmit,
+    formState: { errors },
+    watch,
+    setValue
+    // clearErrors
+  } = useForm();
+
+  const closeModal = () => {
+    setModal(false);
+    console.log('Heyyy');
+  };
   return (
     <div className="mt-2 mb-0">
       <label className="p-0">
@@ -67,6 +84,24 @@ export default function Checks() {
           // onClick={() => reconcileData()}
         />
         Do Not Call
+      </label>
+      <label className="p-0">
+        <Button
+          onClick={() => setModal(true)}
+          style={{ marginLeft: 'auto', display: 'flex' }}
+        >
+          Validate Caller
+        </Button>
+        {modal && (
+          <ValidateCaller
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            watch={watch}
+            show={true}
+            closeModal={closeModal}
+          />
+        )}
       </label>
     </div>
   );

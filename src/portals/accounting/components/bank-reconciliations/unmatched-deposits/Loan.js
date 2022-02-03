@@ -19,11 +19,15 @@ export default class Loan extends React.Component {
   render() {
     const columns = [
       {
+        accessor: 'depositId',
+        Header: 'Deposit ID.'
+      },
+      {
         accessor: 'paymentAmount',
         Header: 'Payment Amount'
       },
       {
-        accessor: 'loan',
+        accessor: 'loanNumber',
         Header: 'Loan#',
         headerProps: { className: 'pe-4' }
       },

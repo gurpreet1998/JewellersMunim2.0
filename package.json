@@ -36,6 +36,7 @@
     "react-dropzone": "^11.3.4",
     "react-hook-form": "^7.19.5",
     "react-lottie": "^1.2.3",
+    "react-modal": "^3.14.4",
     "react-number-format": "^4.8.0",
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",

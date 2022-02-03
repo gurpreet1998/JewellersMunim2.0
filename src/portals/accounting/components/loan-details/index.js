@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SubTitleCard from 'components/common/SubTitleCard';
 import { Card, Row, Col, Form } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
-import { Button } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 // import { LoanDetailsTable } from 'data/accounting/landing';
 import { useLocation } from 'react-router-dom';
 import Checks from './Checks';
@@ -59,18 +59,12 @@ const loanDetails = () => {
               }
             >
               <Row>
-                <h5 className="mb-0 flex-1">Loan Status</h5>
-                <p className="mb-0 flex-1" text-align="right">
+                <h6 className="mb-0 flex-1">Loan Status</h6>
+                {/* <p className="mb-0 flex-1" text-align="right">
                   Loan ID: {loanId}
-                </p>
+                </p> */}
               </Row>
-              <Button
-                disabled={tabData}
-                className="mt-4 flex-1"
-                // onClick={() => setTabData(true)}
-              >
-                Validate Caller
-              </Button>
+              <h4 className="mt-4 flex-1">Open Complaint</h4>
             </Col>
             <Col
               xxl={4}

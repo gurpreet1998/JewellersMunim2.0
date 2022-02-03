@@ -19,6 +19,10 @@ export default class Deposits extends React.Component {
   render() {
     const columns = [
       {
+        accessor: 'depositId',
+        Header: 'Deposit ID'
+      },
+      {
         accessor: 'depositDate',
         Header: 'Deposit Date',
         headerProps: { className: 'pe-2' }
