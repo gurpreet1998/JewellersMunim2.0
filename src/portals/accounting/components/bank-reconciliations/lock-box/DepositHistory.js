@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import Header from '../unmatched-deposits/Header';
+import BasicCardHeader from 'components/common/BasicCardHeader';
 import { paymentHistoryData } from 'data/accounting/lockBox';
-// import Header from './Header';
+
 export default function DepositHistory() {
   // eslint-disable-next-line no-unused-vars
   const [data, setData] = useState(paymentHistoryData);
@@ -54,9 +53,7 @@ export default function DepositHistory() {
       rowCount={data.length}
     >
       <Card>
-        <Card.Header>
-          <Header name={'Payment History'} />
-        </Card.Header>
+        <BasicCardHeader name={'Deposit History'} />
         <Card.Body className="p-3">
           <AdvanceTable
             table

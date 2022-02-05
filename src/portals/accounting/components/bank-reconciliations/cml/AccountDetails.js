@@ -4,7 +4,7 @@ import Flex from 'components/common/Flex';
 import { Row, Col, Form } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
 import SubTitleCard from 'components/common/SubTitleCard';
-import Loan from './Loan';
+import Payment from './Payment';
 import { Button } from 'react-bootstrap';
 import Deposits from './Deposits';
 
@@ -115,7 +115,7 @@ const AccountDetails = () => {
             />
           ) : null}
         </Col>
-        <Col md={5}>{bank !== 0 ? <Loan data={loanData} /> : null}</Col>
+        <Col md={5}>{bank !== 0 ? <Payment data={loanData} /> : null}</Col>
         <Col md={2}>
           {bank !== 0 ? (
             <div className="btn-group-justified">

@@ -7,9 +7,9 @@ import PendingLenderSettlements from '../components/pending-settlements/lender';
 import CPPAutoPayLoans from '../components/daily-payments/autopay-loans';
 import DebitCreditCardPayments from '../components/daily-payments/debit-credit';
 import ACHPayments from '../components/daily-payments/ach';
-import UnmatchedDeposits from '../components/bank-reconciliations/unmatched-deposits';
+import CMLReconciliation from '../components/bank-reconciliations/cml';
 import LockBox from '../components/bank-reconciliations/lock-box';
-import UnmatchedACHDeposits from '../components/bank-reconciliations/unmatched-ach';
+import CPPReconciliation from '../components/bank-reconciliations/cpp';
 import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
 import { AuthContext } from 'api/authentication/auth-context';
@@ -78,17 +78,17 @@ export default function AccountingPortalRoutes({ match: { url } }) {
             )}
           </Route>
 
-          <Route path={`${url}/reconciliations/unmatched`} exact>
+          <Route path={`${url}/reconciliations/cml`} exact>
             {checkForAccess('CML Lender', ExtensionRole) ? (
-              <UnmatchedDeposits />
+              <CMLReconciliation />
             ) : (
               <Redirect to="/errors/404" />
             )}
           </Route>
 
-          <Route path={`${url}/reconciliations/unmatched-ach`} exact>
+          <Route path={`${url}/reconciliations/cpplus`} exact>
             {checkForAccess('CP+ Lender', ExtensionRole) ? (
-              <UnmatchedACHDeposits />
+              <CPPReconciliation />
             ) : (
               <Redirect to="/errors/404" />
             )}

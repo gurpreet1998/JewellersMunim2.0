@@ -281,7 +281,7 @@ const DepositForm = ({
                       value={''}
                       typeof="select"
                       className="me-2 mb-3"
-                    ></Form.Select>
+                    />
                   </Row>
                   <Row>
                     <FormInput

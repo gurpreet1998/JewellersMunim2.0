@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
+import NumberFormat from 'react-number-format';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-// import { DepositsTableData } from 'data/accounting/unmatcheddeposits';
-import Header from './Header';
-export default class Deposits extends React.Component {
+import BasicCardHeader from 'components/common/BasicCardHeader';
+
+export default class Payment extends React.Component {
   constructor(props) {
     super(props);
     this.state = { data: props.data };
@@ -23,32 +23,29 @@ export default class Deposits extends React.Component {
         Header: 'Deposit ID'
       },
       {
-        accessor: 'depositDate',
-        Header: 'Deposit Date',
-        headerProps: { className: 'pe-2' }
+        accessor: 'date',
+        Header: 'Date'
       },
       {
-        accessor: 'despositDescription',
-        Header: 'Deposit Description',
-        headerProps: { className: 'pe-4' }
+        accessor: 'paymentAmount',
+        Header: 'Amount',
+        Cell: cellInfo => (
+          <NumberFormat
+            value={cellInfo.data[cellInfo.row.index].paymentAmount}
+            displayType={'text'}
+            thousandSeparator={true}
+            prefix={'$'}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
+        )
       },
       {
-        accessor: 'depositAmount',
-        Header: 'Deposit Amt.'
-      },
-      {
-        accessor: 'crdb',
-        Header: 'CR/DB'
-      },
-      {
-        accessor: 'none',
-        Header: '',
-        disableSortBy: true,
-        cellProps: {
-          className: 'text-end py-2'
-        }
+        accessor: 'loanNumber',
+        Header: 'Loan #'
       }
     ];
+
     return (
       <AdvanceTableWrapper
         columns={columns}
@@ -60,9 +57,7 @@ export default class Deposits extends React.Component {
         rowCount={this.state.data.length}
       >
         <Card>
-          <Card.Header>
-            <Header name={'Deposits'} />
-          </Card.Header>
+          <BasicCardHeader name={'Payments'} />
           <Card.Body className="p-3">
             <AdvanceTable
               table
@@ -74,19 +69,11 @@ export default class Deposits extends React.Component {
               }}
             />
           </Card.Body>
-          {/* <Card.Footer>
-            <AdvanceTableFooter
-              rowCount={this.state.data.length}
-              table
-              rowInfo
-              navButtons
-            />
-          </Card.Footer> */}
         </Card>
       </AdvanceTableWrapper>
     );
   }
 }
-Deposits.propTypes = {
+Payment.propTypes = {
   data: PropTypes.array
 };

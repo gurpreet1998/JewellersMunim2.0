@@ -1,16 +1,17 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import Header from './Header';
-export default class Loan extends React.Component {
+import BasicCardHeader from 'components/common/BasicCardHeader';
+import NumberFormat from 'react-number-format';
+
+export default class Deposits extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: props.data };
+    this.state = { data: props.data, MasterChecked: false, SelectedList: [] };
   }
+
   componentDidUpdate(prevProps) {
     if (prevProps.data !== this.props.data) {
       this.setState({ data: [...this.props.data] });
@@ -19,31 +20,29 @@ export default class Loan extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'depositId',
-        Header: 'Deposit ID.'
+        accessor: 'depositID',
+        Header: 'Deposit ID'
       },
       {
-        accessor: 'paymentAmount',
-        Header: 'Payment Amount'
-      },
-      {
-        accessor: 'loanNumber',
-        Header: 'Loan#',
-        headerProps: { className: 'pe-4' }
-      },
-      {
-        accessor: 'date',
+        accessor: 'depositDate',
         Header: 'Date'
       },
       {
-        accessor: 'none',
-        Header: '',
-        disableSortBy: true,
-        cellProps: {
-          className: 'text-end py-2'
-        }
+        accessor: 'depositAmount',
+        Header: 'Amount',
+        Cell: cellInfo => (
+          <NumberFormat
+            value={cellInfo.data[cellInfo.row.index].depositAmount}
+            displayType={'text'}
+            thousandSeparator={true}
+            prefix={'$'}
+            decimalScale={2}
+            fixedDecimalScale={true}
+          />
+        )
       }
     ];
+
     return (
       <AdvanceTableWrapper
         columns={columns}
@@ -55,9 +54,7 @@ export default class Loan extends React.Component {
         rowCount={this.state.data.length}
       >
         <Card>
-          <Card.Header>
-            <Header name={'Loan Payments'} />
-          </Card.Header>
+          <BasicCardHeader name={'Deposits'} />
           <Card.Body className="p-3">
             <AdvanceTable
               table
@@ -74,6 +71,7 @@ export default class Loan extends React.Component {
     );
   }
 }
-Loan.propTypes = {
+
+Deposits.propTypes = {
   data: PropTypes.array
 };

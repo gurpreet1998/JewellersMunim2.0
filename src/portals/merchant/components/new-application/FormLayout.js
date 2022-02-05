@@ -62,13 +62,16 @@ const FormLayout = ({ variant, validation, progressBar }) => {
   const onSubmitData = data => {
     if (step === 1) {
       setUser({ ...user, ...data });
-      userService.saveUserDetail(data).then(res => {
-        if (res.result === 'HardStop') {
-          setHardStop(true);
-        } else {
-          setLoanAppId(res.result);
-        }
-      });
+      userService
+        .saveUserDetail(data)
+        .then(res => {
+          if (res.result === 'HardStop') {
+            setHardStop(true);
+          } else {
+            setLoanAppId(res.result);
+          }
+        })
+        .catch(err => console.log('ERROR:', err));
     } else if (step === 2) {
       setUser({ ...servicedata, ...data });
       serviceDate.saveServiceDetail(data, loanAppId);

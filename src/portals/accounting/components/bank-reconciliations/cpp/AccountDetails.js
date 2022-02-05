@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Flex from 'components/common/Flex';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
-import SubTitleCard from 'components/common/SubTitleCard';
-import Loan from './Loan';
-import { Button } from 'react-bootstrap';
+import Payment from './Payment';
 import Deposits from './Deposits';
-// import { lenders } from 'data/accounting/unmatcheddeposits';
-import { banks } from 'data/accounting/unmatcheddeposits';
+
 import { LoanTableData } from 'data/accounting/unmatcheddeposits';
 import { BulkDepositsTableData } from 'data/accounting/unmatcheddeposits';
+
 const AccountDetails = () => {
   const [bank, setBank] = useState(0);
-  // const [lender, setLender] = useState(0);
   const [loanData, setLoanData] = useState(LoanTableData);
   const [flag, setFlag] = useState({});
   const [depositData, setDepositData] = useState(BulkDepositsTableData);
   const tempLoanData = LoanTableData;
   const tempDepositData = BulkDepositsTableData;
+
   const reconcileData = () => {
     // console.log(loanData);
     const result1 = loanData.filter(o =>
@@ -41,36 +38,15 @@ const AccountDetails = () => {
   useEffect(() => {
     console.log('UseEffect ' + loanData);
   }, [loanData]);
+
   return (
     <>
       <Row className="g-3 mb-3">
         <Col md={12}>
           <TitleCard title="Bank Reconciliations &gt; CP+ Lender" />
         </Col>
-        <Col md={12}>
-          <SubTitleCard
-            title="Depository Account Details"
-            endEl={
-              <Flex>
-                <Form.Select
-                  size="sm"
-                  value={bank}
-                  onChange={e => setBank(e.target.value)}
-                  className="me-2"
-                >
-                  <option value="">Select Bank...</option>
-                  {banks.map((bank, index) => (
-                    <option value={index} key={bank}>
-                      {bank}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Flex>
-            }
-          />
-        </Col>
         <Col md={5}>
-          <Loan data={loanData} />
+          <Payment data={loanData} />
         </Col>
         <Col md={2}>
           <div className="btn-group-justified">

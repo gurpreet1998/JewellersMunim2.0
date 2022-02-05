@@ -74,13 +74,13 @@ export const accountingPortalRoutes = {
         {
           name: 'CML Lender',
           keyword: 'CMLLender',
-          to: '/portal/accounting/reconciliations/unmatched',
+          to: '/portal/accounting/reconciliations/cml',
           active: true
         },
         {
           name: 'CP+ Lender',
           keyword: 'CP+Lender',
-          to: '/portal/accounting/reconciliations/unmatched-ach',
+          to: '/portal/accounting/reconciliations/cpplus',
           active: true
         },
         {

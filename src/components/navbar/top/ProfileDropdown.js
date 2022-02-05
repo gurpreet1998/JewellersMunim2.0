@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
 import Avatar from 'components/common/Avatar';
+import avatarIcon from 'assets/img/team/avatar.png';
 
 import { AuthContext } from 'api/authentication/auth-context';
 
@@ -29,7 +30,11 @@ const ProfileDropdown = () => {
         to="#!"
         className="pe-0 nav-link"
       >
-        <Avatar size={'l'} name={`${firstName} ${lastName}`} />
+        {auth.isAuthenticated === true ? (
+          <Avatar size={'l'} name={`${firstName} ${lastName}`} />
+        ) : (
+          <Avatar size={'l'} src={avatarIcon} />
+        )}
       </Dropdown.Toggle>
 
       <Dropdown.Menu className="dropdown-menu-card  dropdown-menu-end">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import LoanStatus from './LoanStatus';
+import LoanStatus from './WorkQueues';
 import AccountingStats from './AccountingStats';
 
 const AccountingHomeDashboard = () => {

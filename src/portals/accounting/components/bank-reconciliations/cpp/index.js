@@ -1,11 +1,12 @@
 import React from 'react';
 
 import AccountDetails from './AccountDetails';
-const UnmatchedDeposits = () => {
+
+const CPPReconciliation = () => {
   return (
     <>
-      <AccountDetails></AccountDetails>
+      <AccountDetails />
     </>
   );
 };
-export default UnmatchedDeposits;
+export default CPPReconciliation;
