@@ -8,7 +8,7 @@ import { LoanTableData } from 'data/accounting/unmatcheddeposits';
 import { BulkDepositsTableData } from 'data/accounting/unmatcheddeposits';
 
 const AccountDetails = () => {
-  const [bank, setBank] = useState(0);
+  // const [bank, setBank] = useState(0);
   const [loanData, setLoanData] = useState(LoanTableData);
   const [flag, setFlag] = useState({});
   const [depositData, setDepositData] = useState(BulkDepositsTableData);
