@@ -7,7 +7,7 @@ import connectCircle from 'assets/img/icons/connect-circle.png';
 
 const TitleCard = ({ title, endEl }) => {
   return (
-    <Card className="bg-100 shadow-none border mb-3">
+    <Card className="bg-100 shadow-none border mb-1">
       <Background
         image={bgImage}
         className="bg-card"

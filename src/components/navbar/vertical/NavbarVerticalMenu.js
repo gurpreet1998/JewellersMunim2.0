@@ -1,12 +1,12 @@
-import PropTypes from 'prop-types';
 import React, { useContext, useState, useEffect } from 'react';
-import { roleBased_Permission } from '_services/userService';
+import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Nav, Collapse } from 'react-bootstrap';
-import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import classNames from 'classnames';
+import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import AppContext from 'context/Context';
 import { AuthContext } from 'api/authentication/auth-context';
+import { roleBased_Permission } from '_services/userService';
 
 const CollapseItems = ({ route }) => {
   const { pathname } = useLocation();
@@ -82,12 +82,11 @@ const NavbarVerticalMenu = ({ routes }) => {
       return false;
     }
     const arr = [...ROUTE.children];
-
     const AccessArr = RolePermissionsObj?.[ExtensionRole]?.Access;
-    console.log('Parent Array =>', arr);
+
+    // navigation menu items
     for (let i = 0; i < arr.length; i++) {
       const element = arr[i];
-      console.log('=>', i, element.name);
       if (AccessArr?.includes(element.name)) {
         return true;
       }

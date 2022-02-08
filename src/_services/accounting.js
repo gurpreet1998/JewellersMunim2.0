@@ -20,6 +20,7 @@ export const depositService = {
       .then(data => {
         return data;
       });
+    // .catch(err => console.log('ERROR (getDepositsTableData):', err));
   },
 
   getLendersNames: function (id) {
@@ -28,6 +29,7 @@ export const depositService = {
       .then(data => {
         return data;
       });
+    // .catch(err => console.log('ERROR (getLendersNames):', err));
   },
 
   getBankNames: function (id) {

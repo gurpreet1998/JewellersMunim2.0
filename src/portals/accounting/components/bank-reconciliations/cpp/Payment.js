@@ -68,7 +68,7 @@ export default class Payment extends React.Component {
       >
         <Card>
           <BasicCardHeader name={'Payments'} />
-          <Card.Body className="p-3">
+          <Card.Body className="p-0">
             <AdvanceTable
               table
               headerClassName="bg-200 text-900 text-nowrap align-middle"

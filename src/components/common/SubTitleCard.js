@@ -1,29 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col, Row } from 'react-bootstrap';
-import Background from 'components/common/Background';
 
 const SubTitleCard = ({ title, endEl }) => {
   return (
-    <Card>
-      <Background
-        // image={bgImage}
-        className="bg-card"
-        style={{
-          borderTopRightRadius: '0.375rem',
-          borderBottomRightRadius: '0.375rem'
-        }}
-      />
-
+    <Card className="bg-100 shadow-none border mb-2 py-2">
       <Card.Body className="position-relative">
         <Row className="g-2 align-items-sm-center">
           <Col>
-            <Row className="align-items-center">
-              <Col className="pe-xl-8">
-                <h5 className="fs-1 mb-3 mb-sm-0 text-primary">{title}</h5>
-              </Col>
-              <Col xs="auto" className="ms-auto">
-                {endEl}
+            <Row className="g-2 align-items-sm-center">
+              <Col>
+                <Row className="align-items-center">
+                  <Col className="pe-xl-8">
+                    <div className="fs-0 fs-md-1 mb-2 mb-md-0 text-primary">
+                      {title}
+                    </div>
+                  </Col>
+                  <Col xs="12" sm="6" md="5" className="ms-auto">
+                    {endEl}
+                  </Col>
+                </Row>
               </Col>
             </Row>
           </Col>

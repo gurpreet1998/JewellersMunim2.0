@@ -40,13 +40,14 @@ export default function AccountingPortalRoutes({ match: { url } }) {
     }
   };
 
+  /**
+   * - The `RolePermissionsObj?.[ExtensionRole]?.Access` provides a list
+   * of menu items/ routes based on permission settings
+   * - The `ExtensionRole` is the type of access your role has. E.g. Accountant
+   * @param RouteName: The keyword to determine access type. E.g. `AccountingHome`
+   * @returns {boolean}
+   */
   const checkForAccess = RouteName => {
-    console.log(
-      'Access Role',
-      RolePermissionsObj?.[ExtensionRole]?.Access,
-      'ExtensionRole =>',
-      ExtensionRole
-    );
     if (auth.isAuthenticated) {
       return !!RolePermissionsObj?.[ExtensionRole]?.Access.includes(RouteName);
     }

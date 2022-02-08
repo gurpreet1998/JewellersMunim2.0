@@ -173,5 +173,5 @@ export const appRoutes = {
   ]
 };
 
-// todo: remove app routes header when not using
-export default [merchantPortalRoutes, accountingPortalRoutes, appRoutes];
+// note: removed appRoutes header when not using
+export default [merchantPortalRoutes, accountingPortalRoutes];

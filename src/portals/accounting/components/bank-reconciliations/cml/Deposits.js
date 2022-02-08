@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
+import NumberFormat from 'react-number-format';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import BasicCardHeader from 'components/common/BasicCardHeader';
-import NumberFormat from 'react-number-format';
 
 export default class Deposits extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ export default class Deposits extends React.Component {
       >
         <Card>
           <BasicCardHeader name={'Deposits'} />
-          <Card.Body className="p-3">
+          <Card.Body className="px-0 pt-0 pb-3">
             <AdvanceTable
               table
               headerClassName="bg-200 text-900 text-nowrap align-middle"

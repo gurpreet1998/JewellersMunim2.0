@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Row, Col, Card, Button } from 'react-bootstrap';
 import SubTitleCard from 'components/common/SubTitleCard';
-// import Deposit from './DepositHistory';
 import Flex from 'components/common/Flex';
 import DepositHistory from './DepositHistory';
 import DepositForm from './DepositForm';

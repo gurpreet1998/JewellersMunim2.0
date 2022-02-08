@@ -15,7 +15,6 @@ import { LoadingDots } from '../../loading-spinner/LoadingDots';
 
 const NavbarVertical = () => {
   const [permissions, setPermissions] = useState([]);
-  console.log('permissions => ', permissions);
 
   useEffect(() => {
     roleBased_Permission
