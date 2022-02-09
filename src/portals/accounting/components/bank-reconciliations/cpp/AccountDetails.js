@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Col, Form, Card } from 'react-bootstrap';
+import { Row, Col, Card } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
 import Deposits from './Deposits';
 
 import { LoanTableData } from 'data/accounting/unmatcheddeposits';
 import { BulkDepositsTableData } from 'data/accounting/unmatcheddeposits';
+import TransactionHandler from '../TransactionHandler';
 
 const AccountDetails = () => {
   // const [bank, setBank] = useState(0);
@@ -42,86 +43,27 @@ const AccountDetails = () => {
   return (
     <>
       <Row className="g-3 mb-3">
-        <Col md={12}>
+        <Col>
           <TitleCard title="Bank Reconciliations &gt; CP+ Lender" />
         </Col>
-        <Col lg={5}>
-          <Payment data={loanData} />
-        </Col>
-        <Col lg={2}>
-          <Card className="bg-100 shadow-none border mb-1">
-            <Card.Body>
-              <div>
-                <Form.Check
-                  type="radio"
-                  id="flexRadioDefault1"
-                  label="Reconciled"
-                  name="ReconcileRadio"
-                  className="form-label-nogutter"
-                  onChange={reconcileData}
-                />
-                <Form.Check
-                  type="radio"
-                  id="flexRadioDefault2"
-                  label="Un-Reconciled"
-                  name="ReconcileRadio"
-                  className="form-label-nogutter"
-                  onChange={unReconcileData}
-                  defaultChecked
-                />
-              </div>
-              <div className="border-dashed-bottom my-3" />
-
-              <Row>
-                <Col>
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="px-2 mb-2 w-100"
-                    disabled={flag}
-                    // onClick={() => reconcileData()}
-                  >
-                    Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="px-2 mb-2 w-100"
-                    disabled={flag}
-                    // onClick={() => reconcileData()}
-                  >
-                    Un-Match
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    size="sm"
-                    variant={'falcon-warning'}
-                    disabled={flag}
-                    className="px-2 mb-2 w-100"
-                    // onClick={() => reconcileData()}
-                  >
-                    Reset
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-success'}
-                    disabled={!flag}
-                    className="px-2 mb-2 w-100"
-                    // onClick={() => reconcileData()}
-                  >
-                    Post Transactions
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col lg={5}>
-          <Deposits data={depositData} />
-        </Col>
       </Row>
-      {/* <Filters /> */}
+      <Card className="bg-100 shadow-none border p-card">
+        <Row className="g-3">
+          <Col lg={{ span: 2, order: 2 }}>
+            <TransactionHandler
+              reconcileData={reconcileData}
+              unReconcileData={unReconcileData}
+              flag={flag}
+            />
+          </Col>
+          <Col lg={{ span: 5, order: 1 }}>
+            <Payment data={loanData} />
+          </Col>
+          <Col lg={{ span: 5, order: 3 }}>
+            <Deposits data={depositData} />
+          </Col>
+        </Row>
+      </Card>
     </>
   );
 };

@@ -16,7 +16,6 @@ const TitleCard = ({ title, endEl }) => {
           borderBottomRightRadius: '0.375rem'
         }}
       />
-
       <Card.Body className="position-relative">
         <Row className="g-2 align-items-sm-center">
           <Col xs="auto">
@@ -25,9 +24,9 @@ const TitleCard = ({ title, endEl }) => {
           <Col>
             <Row className="align-items-center">
               <Col className="pe-xl-8">
-                <h5 className="fs-1 mb-3 mb-sm-0 text-primary">{title}</h5>
+                <h5 className="fs-1 mb-3 mb-md-0 text-primary">{title}</h5>
               </Col>
-              <Col xs="auto" className="ms-auto">
+              <Col xs="12" md="5" className="ms-auto">
                 {endEl}
               </Col>
             </Row>

@@ -107,8 +107,8 @@ StatusAccordionBody.propTypes = {
     data: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number,
-        applicationId: PropTypes.string.isRequired,
-        consumer: PropTypes.string.isRequired,
+        applicationId: PropTypes.string,
+        consumer: PropTypes.string,
         serviceAmount: PropTypes.oneOfType([
           PropTypes.number,
           PropTypes.string
