@@ -51,12 +51,8 @@ const AppStatus = () => {
                   Today's Statements
                 </Flex>
               </Accordion.Header>
-
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody
-                  tableData={todaysData}
-                  pagePath="/portal/accounting/home/loandetails/"
-                />
+                <StatusAccordionBody tableData={todaysData} />
               </Accordion.Body>
             </Accordion.Item>
 

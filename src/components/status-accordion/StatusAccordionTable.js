@@ -2,16 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Table from 'react-bootstrap/Table';
-import { Link } from 'react-router-dom';
 import SimpleBarReact from 'simplebar-react';
 
-const StatusAccordionTable = ({
-  getTableProps,
-  headers,
-  page,
-  prepareRow,
-  pagePath
-}) => {
+const StatusAccordionTable = ({ getTableProps, headers, page, prepareRow }) => {
   return (
     <>
       <SimpleBarReact>
@@ -54,21 +47,7 @@ const StatusAccordionTable = ({
                           'text-start': index !== 0
                         })}
                       >
-                        {pagePath != null ? (
-                          <Link
-                            // to={pagePath +row.values.loanId}
-                            to={{
-                              pathname: pagePath + row.values.loanId,
-                              state: { cells: row.values.loanId }
-                            }}
-                            className="text-primary fw-semi-bold"
-                          >
-                            {cell.render('Cell')}
-                            {/* {console.log(pagePath + row.values.loanId.loanId)} */}
-                          </Link>
-                        ) : (
-                          cell.render('Cell')
-                        )}
+                        {cell.render('Cell')}
                       </td>
                     ))}
                   </tr>

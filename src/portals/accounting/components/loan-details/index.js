@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import SubTitleCard from 'components/common/SubTitleCard';
 import { Card, Row, Col, Form } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
-// import { Button } from 'react-bootstrap';
-// import { LoanDetailsTable } from 'data/accounting/landing';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import NumberFormat from 'react-number-format';
 import { useLocation } from 'react-router-dom';
+import Flex from 'components/common/Flex';
+import SoftBadge from 'components/common/SoftBadge';
+import TitleCard from 'components/common/TitleCard';
 import Checks from './Checks';
 import LoanDetailsTab from './LoanDetailsTab';
 import { loanDetailsByLoanId } from '_services/accounting';
 
 const loanDetails = () => {
-  // eslint-disable-next-line no-unused-vars
   const [loanDetails, setLoanDetails] = useState([]);
   const location = useLocation();
   // eslint-disable-next-line no-unused-vars
   const [tabData, setTabData] = useState(false);
   let loanId =
     location.pathname.split('/')[location.pathname.split('/').length - 1];
-  console.log(location);
+  console.log(loanDetails);
 
   useEffect(() => {
     loanDetailsByLoanId
@@ -26,10 +26,14 @@ const loanDetails = () => {
   }, []);
   return (
     <>
-      <Row className="g-3 mb-1">
+      <Row className="g-3 mb-3">
         <Col md={12}>
-          <SubTitleCard
-            title="Loan Details"
+          <TitleCard
+            title={
+              loanDetails.borrowerName === undefined
+                ? 'Loan Details'
+                : `Loan Details > ${loanDetails.borrowerName}`
+            }
             endEl={
               <Flex>
                 <Form.Select size="sm" className="me-4">
@@ -48,94 +52,130 @@ const loanDetails = () => {
           />
         </Col>
       </Row>
+
       <Card className={'h-lg-100 mb-4'}>
-        <Card.Body>
+        <Card.Header>
+          <Row className="align-items-center">
+            <Col>
+              <h6 className="mb-0 fs-1">Loan Id: {loanDetails.loanId}</h6>
+            </Col>
+          </Row>
+        </Card.Header>
+        <Card.Body className="bg-light border-top">
           <Row>
-            <Col
-              xxl={4}
-              sm={4}
-              className={
-                'border-bottom border-sm-0 border-sm-end border-lg-bottom border-xxl-0 border-xxl-end ps-4'
-              }
-            >
+            <Col lg xxl={5}>
+              <h6 className="fw-semi-bold ls mb-3 text-uppercase">
+                <strong className="me-2">Loan Status: </strong>
+                <SoftBadge pill bg="warning" className="fs--2">
+                  {' '}
+                  Open
+                  <FontAwesomeIcon
+                    icon="exclamation-circle"
+                    className="ms-1"
+                    transform="shrink-2"
+                  />
+                </SoftBadge>
+              </h6>
               <Row>
-                <h6 className="mb-0 flex-1">Loan Status</h6>
-                {/* <p className="mb-0 flex-1" text-align="right">
-                  Loan ID: {loanId}
-                </p> */}
-              </Row>
-              <h4 className="mt-4 flex-1">Open Complaint</h4>
-            </Col>
-            <Col
-              xxl={4}
-              sm={4}
-              className={
-                'border-bottom border-sm-0 border-sm-end border-lg-bottom border-xxl-0 border-xxl-end ps-4'
-              }
-            >
-              <Row>
-                <h6 className="mb-0 flex-1">Merchant</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.merchant}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-0 flex-1">Borrower Name</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.borrowerName}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-0 flex-1">Preferred Name</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.perferredName}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-0 flex-1">Authorized Party</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.authorizedParty}
-                </h6>
+                <Col xs={5} sm={4}>
+                  <p className="fw-semi-bold mb-2">Merchant</p>
+                  <p className="fw-semi-bold mb-2">Borrower Name</p>
+                  <p className="fw-semi-bold mb-2">
+                    {loanDetails.preferredName !== null ? 'Preferred Name' : ''}
+                  </p>
+                  <p className="fw-semi-bold mb-2">
+                    {loanDetails.authorizedParty !== null
+                      ? 'Authorized Party'
+                      : ''}
+                  </p>
+                </Col>
+                <Col>
+                  <p className="mb-2">{loanDetails.merchant || 'Not Found'}</p>
+                  <p className="mb-2">
+                    {loanDetails.borrowerName || 'Not Found'}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.preferredName !== null
+                      ? loanDetails.preferredName
+                      : ''}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.authorizedParty !== null
+                      ? loanDetails.authorizedParty
+                      : ''}
+                  </p>
+                </Col>
               </Row>
             </Col>
-            <Col
-              xxl={4}
-              sm={4}
-              className={'border-lg-end border-xxl-0 border-lg-bottom  ps-4'}
-            >
-              <Row>
-                <h6 className="mb-0 flex-1">Location</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.location}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-2 flex-1">Current Amount Due</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.currentAmountDue}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-0 flex-1">Current Principal</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.currentPrincipal}
-                </h6>
-              </Row>
-              <Row>
-                <h6 className="mb-0 flex-1">Next Due Date</h6>
-                <h6 className="mb-4 flex-1" text-align="right">
-                  {loanDetails.nextDueDate}
-                </h6>
+            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-4 mt-lg-0">
+              <Row className="mt-4">
+                <Col xs={5} sm={4}>
+                  <p className="fw-semi-bold mb-2">Location</p>
+                  <p className="fw-semi-bold mb-2">Current Due</p>
+                  <p className="fw-semi-bold mb-2">Current Principal</p>
+                  <p className="fw-semi-bold mb-2">Next Due Date</p>
+                </Col>
+                <Col>
+                  <p className="mb-2">{loanDetails.location || 'Not Found'}</p>
+                  <p className="mb-2">
+                    {loanDetails.currentAmountDue !== null ? (
+                      <NumberFormat
+                        value={loanDetails.currentAmountDue}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    ) : (
+                      <NumberFormat
+                        value={0}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    )}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.currentPrincipal !== null ? (
+                      <NumberFormat
+                        value={loanDetails.currentPrincipal}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    ) : (
+                      <NumberFormat
+                        value={0}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        prefix={'$'}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                      />
+                    )}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.nextDueDate !== null
+                      ? loanDetails.nextDueDate
+                      : 'Not Found'}
+                  </p>
+                </Col>
               </Row>
             </Col>
           </Row>
-          <Checks></Checks>
         </Card.Body>
+
+        <Card.Footer>
+          <Checks />
+        </Card.Footer>
       </Card>
       {/* <TabList></TabList> */}
-      <Col md={12}>
-        {!tabData && <LoanDetailsTab loanId={loanId}></LoanDetailsTab>}
-      </Col>
+      <Col md={12}>{!tabData && <LoanDetailsTab loanId={loanId} />}</Col>
     </>
   );
 };

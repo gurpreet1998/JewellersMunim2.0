@@ -19,7 +19,7 @@ export default function Checks() {
     console.log('Heyyy');
   };
   return (
-    <div className="mt-2 mb-0">
+    <div>
       <label className="p-0">
         <input
           className="form-check-input"
@@ -86,10 +86,7 @@ export default function Checks() {
         Do Not Call
       </label>
       <label className="p-0">
-        <Button
-          onClick={() => setModal(true)}
-          style={{ marginLeft: 'auto', display: 'flex' }}
-        >
+        <Button onClick={() => setModal(true)} className={'btn-sm'}>
           Validate Caller
         </Button>
         {modal && (

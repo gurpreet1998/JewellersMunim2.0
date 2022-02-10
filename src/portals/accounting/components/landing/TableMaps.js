@@ -8,28 +8,30 @@ export const todaysStatements = {
     {
       accessor: 'lenderLoanNumber',
       Header: 'Loan Number',
-      Cell: cellInfo => {
+      Cell: rowData => {
+        const tableData = rowData.data[rowData.row.index];
         return (
-          <Link to="#">
-            {cellInfo.data[cellInfo.row.index].lenderLoanNumber}
+          <Link
+            to={{
+              pathname: `/portal/accounting/home/loandetails/${tableData.loanId}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {tableData.lenderLoanNumber}
           </Link>
         );
       }
     },
     {
-      accessor: 'merchant',
-      Header: 'Merchant'
-    },
-    {
       accessor: 'location',
-      Header: 'Location'
+      Header: 'Merchant'
     },
     {
       accessor: 'currentAmountDue',
       Header: 'Current Amount Due',
-      Cell: cellInfo => (
+      Cell: rowData => (
         <NumberFormat
-          value={cellInfo.data[cellInfo.row.index].currentAmountDue}
+          value={rowData.data[rowData.row.index].currentAmountDue}
           displayType={'text'}
           thousandSeparator={true}
           prefix={'$'}
@@ -41,17 +43,17 @@ export const todaysStatements = {
     {
       accessor: 'dateofNextPayment',
       Header: 'Next Due Date',
-      Cell: cellInfo => {
-        let dateStr = cellInfo.data[cellInfo.row.index].dateofNextPayment;
+      Cell: rowData => {
+        let dateStr = rowData.data[rowData.row.index].dateofNextPayment;
         return moment(dateStr).format('MM/DD/YYYY');
       }
     },
     {
       accessor: 'loanAmount', //  todo: is this a static amount of does it update after a payment?
       Header: 'Current Principle',
-      Cell: cellInfo => (
+      Cell: rowData => (
         <NumberFormat
-          value={cellInfo.data[cellInfo.row.index].loanAmount}
+          value={rowData.data[rowData.row.index].loanAmount}
           displayType={'text'}
           thousandSeparator={true}
           prefix={'$'}
