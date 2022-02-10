@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 
-const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
+const TransactionHandler = ({
+  reconcileData,
+  unReconcileData,
+  matchData,
+  unMatchData,
+  postData,
+  flag
+}) => {
   return (
     <Card className="bg-transparent-50 shadow-none border border-200">
       <Card.Body>
@@ -35,7 +42,7 @@ const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
               variant={'falcon-primary'}
               className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
               disabled={flag}
-              // onClick={() => reconcileData()}
+              onClick={matchData}
             >
               Match
             </Button>
@@ -44,7 +51,7 @@ const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
               variant={'falcon-primary'}
               className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0 mb-lg-2"
               disabled={flag}
-              // onClick={() => reconcileData()}
+              onClick={unMatchData}
             >
               Un-Match
             </Button>
@@ -64,7 +71,7 @@ const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
               variant={'falcon-success'}
               disabled={!flag}
               className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
-              // onClick={() => reconcileData()}
+              onClick={postData}
             >
               Post Transactions
             </Button>
@@ -78,6 +85,9 @@ const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
 TransactionHandler.propTypes = {
   reconcileData: PropTypes.func,
   unReconcileData: PropTypes.func,
+  matchData: PropTypes.func,
+  unMatchData: PropTypes.func,
+  postData: PropTypes.func,
   flag: PropTypes.bool.isRequired
 };
 

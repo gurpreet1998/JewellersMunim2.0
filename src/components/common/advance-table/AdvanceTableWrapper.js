@@ -36,6 +36,7 @@ const AdvanceTableWrapper = ({
   data,
   sortable,
   selection,
+  setSelectedRowIDs,
   selectionColumnWidth,
   pagination,
   perPage = 10
@@ -94,6 +95,18 @@ const AdvanceTableWrapper = ({
       }
     }
   );
+
+  React.useEffect(() => {
+    try {
+      setSelectedRowIDs({ ...selectedRowIds });
+    } catch (err) {
+      console.log(
+        'SelectedRowIds Not Available',
+        err.message,
+        setSelectedRowIDs
+      );
+    }
+  }, [selectedRowIds]);
 
   const recursiveMap = children => {
     return React.Children.map(children, child => {

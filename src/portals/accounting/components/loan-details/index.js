@@ -171,7 +171,7 @@ const loanDetails = () => {
         </Card.Body>
 
         <Card.Footer>
-          <Checks />
+          <Checks loanId={loanId} />
         </Card.Footer>
       </Card>
       {/* <TabList></TabList> */}

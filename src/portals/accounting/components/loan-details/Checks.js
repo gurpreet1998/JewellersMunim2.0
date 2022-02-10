@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import ValidateCaller from './ValidateCaller';
+import PropTypes from 'prop-types';
 
-export default function Checks() {
+export default function Checks(props) {
   const [modal, setModal] = useState(false);
   const {
     register,
@@ -97,9 +98,13 @@ export default function Checks() {
             watch={watch}
             show={true}
             closeModal={closeModal}
+            loanId={props.loanId}
           />
         )}
       </label>
     </div>
   );
 }
+Checks.propTypes = {
+  loanId: PropTypes.array
+};

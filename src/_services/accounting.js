@@ -1,4 +1,4 @@
-import { setPostRequestOptions } from './baseService';
+import { setPostRequestOptions, setPutRequestOptions } from './baseService';
 let API_URI = process.env.REACT_APP_API_URI;
 
 export const accountingService = {
@@ -12,24 +12,12 @@ export const accountingService = {
 };
 
 export const depositService = {
-  getDepositsTableData: function (id) {
-    return fetch(
-      `${API_URI}/Accounting/GetDepositsTableData?bankAccountId=${id}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        return data;
-      });
-    // .catch(err => console.log('ERROR (getDepositsTableData):', err));
-  },
-
   getLendersNames: function (id) {
     return fetch(`${API_URI}/Accounting/GetLendersNames?lenderId=${id}`)
       .then(res => res.json())
       .then(data => {
         return data;
       });
-    // .catch(err => console.log('ERROR (getLendersNames):', err));
   },
 
   getBankNames: function (id) {
@@ -38,6 +26,50 @@ export const depositService = {
       .then(data => {
         return data;
       });
+  },
+
+  getGetReconciledCMLData: function (id) {
+    return fetch(
+      `${API_URI}/Accounting/GetReconciledCMLData?bankAccountId=${id}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      });
+  },
+
+  getGetUnReconciledCMLData: function (id) {
+    return fetch(
+      `${API_URI}/Accounting/GetUnReconciledCMLData?bankAccountId=${id}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      });
+  },
+
+  // saveMatchRecords: function () {
+  //   fetch(`${API_URI}/Accounting/MatchRecords`, setPostRequestOptions()).catch(
+  //     err => console.log('ERROR (MatchRecords):', err)
+  //   );
+  // },
+
+  saveMatchRecords: function (id, data) {
+    fetch(
+      `${API_URI}/Accounting/MatchRecords?bankAccountId=${id}`,
+      setPostRequestOptions(data)
+    )
+      .then(response => response.json())
+      .catch(err => console.log('ERROR (MatchRecords):', err));
+  },
+
+  saveUnMatchRecords: function (id, data) {
+    fetch(
+      `${API_URI}/Accounting/UnMatchRecords?bankAccountId=${id}`,
+      setPostRequestOptions(data)
+    )
+      .then(response => response.json())
+      .catch(err => console.log('ERROR (UnMatchRecords):', err));
   },
 
   savePostTransaction: function (id) {
@@ -55,6 +87,23 @@ export const transactionHistoryService = {
       .then(data => {
         return data;
       });
+  },
+
+  getBorrowerVerification: function (id) {
+    return fetch(`${API_URI}/Loan/BorrowerVerification?loanId=${id}`)
+      .then(res => res.json())
+      .then(data => {
+        return data;
+      });
+  },
+
+  updateBorrowerVerification: function (id, data) {
+    fetch(
+      `${API_URI}/Loan/UpdateBorrowerDetails?loanId=${id}`,
+      setPutRequestOptions(data)
+    )
+      .then(response => response.json())
+      .catch(err => console.log('ERROR (UpdateBorrowerDetails):', err));
   }
 };
 

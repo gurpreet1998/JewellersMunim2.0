@@ -19,53 +19,74 @@ const AccountDetails = () => {
   const [loanData, setLoanData] = useState([]);
   const [flag] = useState(true);
   const [depositData, setDepositData] = useState([]);
-  // const [tempLoanData, setTempLoanData] = useState([]);
-  // const [tempDepositData, setTempDepositData] = useState([]);
 
-  //Lender Id 1 until we get login implemented
-
-  // const reconcileData = () => {
-  //   const result1 = loanData.filter(o =>
-  //     depositData.some(({ depositAmount }) => o.paymentAmount === depositAmount)
-  //   );
-  //   setLoanData(result1);
-  //   const result2 = depositData.filter(o =>
-  //     loanData.some(({ paymentAmount }) => o.depositAmount === paymentAmount)
-  //   );
-  //   setFlag(true);
-  //   console.log(loanData);
-  //   setDepositData(result2);
-  // };
-  // const unReconcileData = () => {
-  //   setLoanData(tempLoanData);
-  //   console.log(tempLoanData);
-  //   setDepositData(tempDepositData);
-  //   setFlag(false);
-  // };
-
+  //Lender Id 1 until we get login return lender info
+  const [selectedDeposit, setSelectedDeposit] = useState([]);
+  const [selectedLoan, setSelectedLoan] = useState([]);
+  const [postData, setPostData] = useState({
+    loanSelectedData: [],
+    depositSelectedData: []
+  });
   useEffect(() => {
     depositService.getLendersNames(1).then(res => setLenders(res));
 
     depositService.getBankNames(1).then(res => setBanks(res));
-
-    // setTempLoanData(loanData);
-    // setTempDepositData(depositData);
-    console.log('depositData', depositData);
   }, []);
 
   useEffect(() => {
-    depositService.getDepositsTableData(bank).then(res => {
-      setDepositData(res);
-      setLoanData(res);
-      console.log('depositService results-', res);
-    });
+    if (bank > 0) {
+      depositService.getGetUnReconciledCMLData(bank).then(res => {
+        setLoanData(res.paymentDataModel);
+        setDepositData(res.bankDepositDataModel);
+        console.log('res.paymentData');
+        console.log(typeof res.paymentDataModel);
+      });
+    }
   }, [bank]);
+  useEffect(() => {}, [loanData, depositData]);
 
-  const postOnClick = event => {
-    depositService.savePostTransaction(event);
-    console.log('postOnClick  event-', event);
+  const postOnClick = () => {
+    depositService.savePostTransaction(bank);
   };
-  // useEffect(() => {}, [loanData, depositData]);
+
+  const reconcileOnClick = event => {
+    depositService.getGetReconciledCMLData(event).then(res => {
+      setDepositData(res.bankDepositDataModel);
+      setLoanData(res.paymentDataModel);
+    });
+  };
+
+  const unreconcileOnClick = e => {
+    depositService.getGetUnReconciledCMLData(e).then(res => {
+      setDepositData(res.bankDepositDataModel);
+      setLoanData(res.paymentDataModel);
+    });
+  };
+  const chooseLoan = val => {
+    setSelectedLoan(val);
+    // console.log('loan VALLLLL:', val);
+    setPostData({ ...postData, loanSelectedData: selectedLoan });
+    // console.log(postData);
+  };
+  const chooseDeposit = val => {
+    setSelectedDeposit(val);
+    // console.log('Deposit VALLLLL:', val);
+    setPostData({ ...postData, depositSelectedData: selectedDeposit });
+    // console.log(postData);
+  };
+
+  let selectedData = {
+    paymentDataModel: selectedLoan,
+    bankDepositDataModel: selectedDeposit
+  };
+
+  const matchOnClick = () => {
+    depositService.saveMatchRecords(bank, selectedData);
+  };
+
+  const unMatchOnClick = () => {
+    depositService.saveUnMatchRecords(bank, selectedData);
+  };
 
   return (
     <>
@@ -113,15 +134,112 @@ const AccountDetails = () => {
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
           <Col lg={{ span: 2, order: 2 }}>
-            {bank !== 0 ? <TransactionHandler flag={flag} /> : <></>}
+            {bank !== 0 ? (
+              <div className="btn-group-justified">
+                <div
+                  className="px-2 ms-1 mb-2 w-100"
+                  // onChange={() => unreconcileOnClick()}
+                >
+                  <label>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="ReconcileRadio"
+                      id="flexRadioDefault1"
+                      style={{ marginRight: '5px' }}
+                      onClick={() => reconcileOnClick(bank)}
+                    />
+                    View Reconciled
+                  </label>
+                  <label>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="ReconcileRadio"
+                      id="flexRadioDefault2"
+                      style={{
+                        marginRight: '5px',
+                        marginBottom: '2px',
+                        marginTop: '3px'
+                      }}
+                      defaultChecked
+                      onClick={() => unreconcileOnClick(bank)}
+                    />
+                    View Un-Reconciled
+                  </label>
+                </div>
+                <Button
+                  size="sm"
+                  variant={'primary'}
+                  className="px-2 ms-1 mb-2 w-100"
+                  disabled={!flag}
+                  onClick={() => matchOnClick()}
+                >
+                  Match
+                </Button>
+                <Button
+                  size="sm"
+                  variant={'primary'}
+                  className="px-2 ms-1 mb-2 w-100"
+                  disabled={!flag}
+                  onClick={() => unMatchOnClick()}
+                >
+                  Un-Match
+                </Button>
+                {/* <Button
+              size="sm"
+              variant={'primary'}
+              className="px-2 ms-1 mb-2 w-100"
+              // onClick={() => reconcileData()}
+            >
+              Add to Exceptions
+            </Button> */}
+                <Button
+                  size="sm"
+                  variant={'secondary'}
+                  disabled={flag}
+                  className="px-2 ms-1 mb-2 w-100"
+                  // onClick={() => reconcileData()}
+                >
+                  Reset
+                </Button>
+                <Button
+                  size="sm"
+                  variant={'success'}
+                  disabled={!flag}
+                  className="px-2 ms-1 mb-2 w-100"
+                  onClick={() => postOnClick()}
+                >
+                  Post Transactions
+                </Button>
+              </div>
+            ) : (
+              // <TransactionHandler
+              //   flag={flag}
+              //   reconcileData={reconcileOnClick}
+              //   unReconcileData={unreconcileOnClick}
+              //   matchData={matchOnClick}
+              //   unMatchData={unMatchOnClick}
+              //   postData={postOnClick}
+              // />
+              <></>
+            )}
           </Col>
 
           <Col lg={{ span: 5, order: 1 }}>
-            {bank !== 0 ? <Payment data={loanData} /> : <></>}
+            {bank !== 0 ? (
+              <Payment data={loanData} chooseLoan={chooseLoan} />
+            ) : (
+              <></>
+            )}
           </Col>
 
           <Col lg={{ span: 5, order: 3 }}>
-            {bank !== 0 ? <Deposits data={depositData} /> : <></>}
+            {bank !== 0 ? (
+              <Deposits data={depositData} chooseDeposit={chooseDeposit} />
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </Card>

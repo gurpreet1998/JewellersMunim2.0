@@ -9,13 +9,28 @@ import BasicCardHeader from 'components/common/BasicCardHeader';
 export default class Payment extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { data: props.data };
+    this.state = { data: props.data, SelectedRowID: {} };
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ data: [...this.props.data] });
+      this.setState({
+        data: [...this.props.data]
+      });
+    }
+    if (this.state.SelectedRowID !== prevState.SelectedRowID) {
+      this.handleChooseLoan(Object.keys(this.state.SelectedRowID));
     }
   }
+  handleChooseLoan(event) {
+    let res = [];
+    for (let i = 0; i < event.length; i++) {
+      res.push(this.props.data[parseInt(event[i])]);
+    }
+    this.props.chooseLoan(res);
+    // console.log(this.props.data);
+    // console.log('LoanData Selected', res);
+  }
+
   render() {
     const columns = [
       {
@@ -52,6 +67,7 @@ export default class Payment extends React.Component {
         data={this.state.data}
         selection
         sortable
+        setSelectedRowIDs={val => this.setState({ SelectedRowID: val })}
         pagination
         perPage={7}
         rowCount={this.state.data.length}
@@ -75,5 +91,6 @@ export default class Payment extends React.Component {
   }
 }
 Payment.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  chooseLoan: PropTypes.func
 };

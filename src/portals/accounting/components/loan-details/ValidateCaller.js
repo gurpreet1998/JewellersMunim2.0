@@ -1,59 +1,61 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import PropTypes from 'prop-types';
 import { Col, Row, Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import { transactionHistoryService } from '_services/accounting';
 
-const ValidateCaller = ({
-  register,
-  setValue,
-  errors,
-  watch,
-  show,
-  closeModal
-}) => {
+const ValidateCaller = props => {
   const [validateCaller, setValidateCaller] = useState({
-    addressType: 'Mail',
-    street: '123 Liberty Avenue',
-    city: 'Cambridge',
-    state: 'Massachusetts',
-    zipCode: '02134',
-    authorizedPartyEmail: 'abc@gmail.com',
-    authorizedPartyRelationship: 'Spouse',
-    mobile: '7240327034',
-    homePhone: '4231443',
-    ssn: 'xxx-xxx-2131',
-    dob: '1995-11-01',
-    idNumber: '3121',
-    idType: 'Driving License',
-    idIssuanceDate: '2005-12-01',
-    idExpirationDate: '2015-09-01'
+    // street: '',
+    // city: '',
+    // state: '',
+    // postalCode: '',
+    // idNumber: '',
+    // idType: '',
+    // idIssueDate: '',
+    // idIssueExperiationDate: '',
+    // authorizedPartyName: '',
+    // authorizedPartyEmail: '',
+    // addressId: null,
+    // addressTypeName: '',
+    // mobileNumber: '',
+    // homeNumber: null,
+    // authorizedPartyRelationship: ''
   });
+
+  useEffect(() => {
+    transactionHistoryService
+      .getBorrowerVerification(props.loanId)
+      .then(res => setValidateCaller(res[0]));
+  }, []);
+
   const [edit, setEdit] = useState(false);
-  const inputsHandler = e => {
-    const { name, value } = e.target;
-    setValidateCaller(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+
+  const inputsHandler = ({ target }) => {
+    const { name, value } = target;
+    setValidateCaller({ ...validateCaller, [name]: value });
   };
 
   const handleSubmit = e => {
     setValidateCaller(validateCaller);
     setEdit(false);
-    console.log(validateCaller);
+    transactionHistoryService.updateBorrowerVerification(
+      props.loanId,
+      validateCaller
+    );
+    // console.log(validateCaller);
   };
-  const [modal, setModal] = useState(show);
+  const [modal, setModal] = useState(props.show);
 
-  const editOnClick = event => {
-    // event.preventDefault();
+  const editOnClick = e => {
     setEdit(true);
   };
 
   const handleCancel = () => {
     setEdit(false);
-    closeModal();
+    props.closeModal();
   };
   return (
     <>
@@ -110,9 +112,11 @@ const ValidateCaller = ({
                       name="addressType"
                       onChange={inputsHandler}
                       placeholder="Address Type"
-                      value={validateCaller.addressType}
+                      defaultValue={validateCaller.addressTypeName}
                     />
                   </Col>
+                  {/* {console.log(validateCaller.street)}
+                  {console.log(validateCaller)} */}
                 </Row>
                 <Row>
                   <Col>
@@ -125,7 +129,7 @@ const ValidateCaller = ({
                       name="street"
                       onChange={inputsHandler}
                       placeholder="Street"
-                      value={validateCaller.street}
+                      defaultValue={validateCaller.street}
                     />
                   </Col>
                 </Row>
@@ -140,7 +144,7 @@ const ValidateCaller = ({
                       name="city"
                       onChange={inputsHandler}
                       placeholder="City"
-                      value={validateCaller.city}
+                      defaultValue={validateCaller.city}
                     />
                   </Col>
                 </Row>
@@ -155,7 +159,7 @@ const ValidateCaller = ({
                       name="state"
                       onChange={inputsHandler}
                       placeholder="State"
-                      value={validateCaller.state}
+                      defaultValue={validateCaller.state}
                     />
                   </Col>
                 </Row>
@@ -170,7 +174,7 @@ const ValidateCaller = ({
                       name="zipCode"
                       onChange={inputsHandler}
                       placeholder="ZipCode"
-                      value={validateCaller.zipCode}
+                      defaultValue={validateCaller.zipCode}
                     />
                   </Col>
                 </Row>
@@ -193,7 +197,7 @@ const ValidateCaller = ({
                       name="authorizedPartyEmail"
                       onChange={inputsHandler}
                       placeholder="Authorized Party Email"
-                      value={validateCaller.authorizedPartyEmail}
+                      defaultValue={validateCaller.authorizedPartyEmail}
                     />
                   </Col>
                 </Row>
@@ -209,7 +213,7 @@ const ValidateCaller = ({
                       //
                       onChange={inputsHandler}
                       placeholder="Authorized Party Relationship"
-                      value={validateCaller.authorizedPartyRelationship}
+                      defaultValue={validateCaller.authorizedPartyRelationship}
                     />
                   </Col>
                 </Row>
@@ -219,7 +223,7 @@ const ValidateCaller = ({
                   </Col>
                   <Col>
                     <input
-                      type="text"
+                      type="number"
                       disabled={!edit}
                       name="mobile"
                       //
@@ -230,7 +234,7 @@ const ValidateCaller = ({
                       //   marginLeft: '25px',
                       //   marginBottom: '5px'
                       // }}
-                      value={validateCaller.mobile}
+                      defaultValue={validateCaller.mobile}
                     />
                   </Col>
                 </Row>
@@ -247,7 +251,7 @@ const ValidateCaller = ({
                       onChange={inputsHandler}
                       placeholder="Home Phone"
                       // style={{ marginRight: '5px', marginLeft: '25px' }}
-                      value={validateCaller.homePhone}
+                      defaultValue={validateCaller.homePhone}
                     />
                   </Col>
                 </Row>
@@ -275,7 +279,7 @@ const ValidateCaller = ({
                     name="ssn"
                     onChange={inputsHandler}
                     placeholder="SSN"
-                    value={validateCaller.ssn}
+                    defaultValue={validateCaller.ssn}
                   />
                 </Col>
               </Row>
@@ -296,7 +300,7 @@ const ValidateCaller = ({
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    value={validateCaller.dob}
+                    defaultValue={validateCaller.dob}
                   />
                 </Col>
               </Row>
@@ -324,7 +328,7 @@ const ValidateCaller = ({
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    value={validateCaller.idNumber}
+                    defaultValue={validateCaller.idNumber}
                   />
                 </Col>
               </Row>
@@ -344,7 +348,7 @@ const ValidateCaller = ({
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    value={validateCaller.idType}
+                    defaultValue={validateCaller.idType}
                   />
                 </Col>
               </Row>
@@ -372,7 +376,7 @@ const ValidateCaller = ({
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    value={validateCaller.idIssuanceDate}
+                    defaultValue={validateCaller.idIssuanceDate}
                   />
                 </Col>
               </Row>
@@ -393,7 +397,7 @@ const ValidateCaller = ({
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    value={validateCaller.idExpirationDate}
+                    defaultValue={validateCaller.idExpirationDate}
                   />
                 </Col>
               </Row>
@@ -411,7 +415,8 @@ ValidateCaller.propTypes = {
   errors: PropTypes.object,
   watch: PropTypes.func,
   show: PropTypes.bool,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  loanId: PropTypes.array
 };
 
 export default ValidateCaller;
