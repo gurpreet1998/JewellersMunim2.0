@@ -3,9 +3,10 @@ const REACT_APP_CLIENT_ID = 'bbea8205-0507-42dd-bc6f-b2bf0b2a0b78';
 const REACT_APP_AUTHORITY =
   'https://choicepayb2c.b2clogin.com/tfp/choicepayb2c.onmicrosoft.com/B2C_1_choicepayUF';
 const REACT_APP_VALIDATE_AUTHORITY = 'false';
-const REACT_APP_REDIRECT_URI = 'http://localhost:3000/';
+const REACT_APP_REDIRECT_URI =
+  'https://web-czeu-cpsptl-li-npddev.azurewebsites.net';
 const REACT_APP_POST_LOGOUT_REDIRECT_URI =
-  'http://localhost:3000/authentication/logout';
+  'https://web-czeu-cpsptl-li-npddev.azurewebsites.net/authentication/logout';
 const REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL = 'false';
 
 export const requiresInteraction = errorMessage => {
