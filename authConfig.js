@@ -3,7 +3,7 @@ export const msalConfig = {
     clientId: 'bbea8205-0507-42dd-bc6f-b2bf0b2a0b78',
     authority:
       'https://choicepayb2c.b2clogin.com/tfp/choicepayb2c.onmicrosoft.com/B2C_1_choicepayUF', // This is a URL (e.g. https://login.microsoftonline.com/{your tenant ID})
-    redirectUri: 'http://localhost:3000'
+    redirectUri: 'https://web-czeu-cpsptl-li-npddev.azurewebsites.net'
   },
   cache: {
     cacheLocation: 'sessionStorage', // This configures where your cache will be stored
