@@ -32,7 +32,7 @@ export default class Deposits extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'depositId',
+        accessor: 'bankDepositId',
         Header: 'Deposit ID'
       },
       {

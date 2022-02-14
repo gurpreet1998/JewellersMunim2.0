@@ -108,7 +108,7 @@ const ValidateCaller = props => {
                   <Col>
                     <input
                       type="text"
-                      disabled={!edit}
+                      disabled={true}
                       name="addressType"
                       onChange={inputsHandler}
                       placeholder="Address Type"
@@ -125,7 +125,7 @@ const ValidateCaller = props => {
                   <Col>
                     <input
                       type="text"
-                      disabled={!edit}
+                      disabled={true}
                       name="street"
                       onChange={inputsHandler}
                       placeholder="Street"
@@ -140,7 +140,7 @@ const ValidateCaller = props => {
                   <Col>
                     <input
                       type="text"
-                      disabled={!edit}
+                      disabled={true}
                       name="city"
                       onChange={inputsHandler}
                       placeholder="City"
@@ -155,7 +155,7 @@ const ValidateCaller = props => {
                   <Col>
                     <input
                       type="text"
-                      disabled={!edit}
+                      disabled={true}
                       name="state"
                       onChange={inputsHandler}
                       placeholder="State"
@@ -170,11 +170,11 @@ const ValidateCaller = props => {
                   <Col>
                     <input
                       type="text"
-                      disabled={!edit}
-                      name="zipCode"
+                      disabled={true}
+                      name="postalCode"
                       onChange={inputsHandler}
                       placeholder="ZipCode"
-                      defaultValue={validateCaller.zipCode}
+                      defaultValue={validateCaller.postalCode}
                     />
                   </Col>
                 </Row>
@@ -225,7 +225,7 @@ const ValidateCaller = props => {
                     <input
                       type="number"
                       disabled={!edit}
-                      name="mobile"
+                      name="mobileNumber"
                       //
                       onChange={inputsHandler}
                       placeholder="Mobile Phone"
@@ -234,7 +234,7 @@ const ValidateCaller = props => {
                       //   marginLeft: '25px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller.mobile}
+                      defaultValue={validateCaller.mobileNumber}
                     />
                   </Col>
                 </Row>
@@ -246,12 +246,12 @@ const ValidateCaller = props => {
                     <input
                       type="text"
                       disabled={!edit}
-                      name="homePhone"
+                      name="homeNumber"
                       //
                       onChange={inputsHandler}
                       placeholder="Home Phone"
                       // style={{ marginRight: '5px', marginLeft: '25px' }}
-                      defaultValue={validateCaller.homePhone}
+                      defaultValue={validateCaller.homeNumber}
                     />
                   </Col>
                 </Row>
@@ -275,7 +275,7 @@ const ValidateCaller = props => {
                 <Col>
                   <input
                     type="text"
-                    disabled={!edit}
+                    disabled={true}
                     name="ssn"
                     onChange={inputsHandler}
                     placeholder="SSN"
@@ -289,8 +289,8 @@ const ValidateCaller = props => {
                 </Col>
                 <Col>
                   <input
-                    type="date"
-                    disabled={!edit}
+                    type="text"
+                    disabled={true}
                     name="dob"
                     max="2017-04-01"
                     onChange={inputsHandler}
@@ -319,7 +319,7 @@ const ValidateCaller = props => {
                 <Col>
                   <input
                     type="text"
-                    disabled={!edit}
+                    disabled={true}
                     name="idNumber"
                     onChange={inputsHandler}
                     placeholder="ID Number"
@@ -339,7 +339,7 @@ const ValidateCaller = props => {
                 <Col>
                   <input
                     type="text"
-                    disabled={!edit}
+                    disabled={true}
                     name="idType"
                     onChange={inputsHandler}
                     placeholder="ID Type"
@@ -366,9 +366,9 @@ const ValidateCaller = props => {
                 </Col>
                 <Col>
                   <input
-                    type="date"
-                    disabled={!edit}
-                    name="idIssuanceDate"
+                    type="text"
+                    disabled={true}
+                    name="idIssueDate"
                     onChange={inputsHandler}
                     placeholder="ID Issue Date"
                     // style={{
@@ -376,7 +376,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idIssuanceDate}
+                    defaultValue={validateCaller.idIssueDate}
                   />
                 </Col>
               </Row>
@@ -386,9 +386,9 @@ const ValidateCaller = props => {
                 </Col>
                 <Col>
                   <input
-                    type="date"
-                    disabled={!edit}
-                    name="idExpirationDate"
+                    type="text"
+                    disabled={true}
+                    name="idIssueExperiationDate"
                     onChange={inputsHandler}
                     placeholder="ID Expiry Date"
                     icon="calendar-alt"
@@ -397,7 +397,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idExpirationDate}
+                    defaultValue={validateCaller.idIssueExperiationDate}
                   />
                 </Col>
               </Row>

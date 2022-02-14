@@ -55,7 +55,7 @@ export const depositService = {
   // },
 
   saveMatchRecords: function (id, data) {
-    fetch(
+    return fetch(
       `${API_URI}/Accounting/MatchRecords?bankAccountId=${id}`,
       setPostRequestOptions(data)
     )
@@ -64,7 +64,7 @@ export const depositService = {
   },
 
   saveUnMatchRecords: function (id, data) {
-    fetch(
+    return fetch(
       `${API_URI}/Accounting/UnMatchRecords?bankAccountId=${id}`,
       setPostRequestOptions(data)
     )

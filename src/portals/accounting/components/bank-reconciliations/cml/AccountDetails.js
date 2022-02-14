@@ -18,15 +18,17 @@ const AccountDetails = () => {
   const [lenders, setLenders] = useState([]);
   const [loanData, setLoanData] = useState([]);
   const [flag] = useState(true);
+  const [Bflag, setBflag] = useState(true);
+  const [Cflag, setCflag] = useState(true);
   const [depositData, setDepositData] = useState([]);
 
   //Lender Id 1 until we get login return lender info
   const [selectedDeposit, setSelectedDeposit] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState([]);
-  const [postData, setPostData] = useState({
-    loanSelectedData: [],
-    depositSelectedData: []
-  });
+  // const [postData, setPostData] = useState({
+  //   loanSelectedData: [],
+  //   depositSelectedData: []
+  // });
   useEffect(() => {
     depositService.getLendersNames(1).then(res => setLenders(res));
 
@@ -35,11 +37,9 @@ const AccountDetails = () => {
 
   useEffect(() => {
     if (bank > 0) {
-      depositService.getGetUnReconciledCMLData(bank).then(res => {
+      depositService.getGetReconciledCMLData(bank).then(res => {
         setLoanData(res.paymentDataModel);
         setDepositData(res.bankDepositDataModel);
-        console.log('res.paymentData');
-        console.log(typeof res.paymentDataModel);
       });
     }
   }, [bank]);
@@ -65,13 +65,13 @@ const AccountDetails = () => {
   const chooseLoan = val => {
     setSelectedLoan(val);
     // console.log('loan VALLLLL:', val);
-    setPostData({ ...postData, loanSelectedData: selectedLoan });
+    // setPostData({ ...postData, loanSelectedData: selectedLoan });
     // console.log(postData);
   };
   const chooseDeposit = val => {
     setSelectedDeposit(val);
     // console.log('Deposit VALLLLL:', val);
-    setPostData({ ...postData, depositSelectedData: selectedDeposit });
+    // setPostData({ ...postData, depositSelectedData: selectedDeposit });
     // console.log(postData);
   };
 
@@ -81,11 +81,20 @@ const AccountDetails = () => {
   };
 
   const matchOnClick = () => {
-    depositService.saveMatchRecords(bank, selectedData);
+    depositService.saveMatchRecords(bank, selectedData).then(res => {
+      setDepositData(res.bankDepositDataModel);
+      setLoanData(res.paymentDataModel);
+    });
   };
 
   const unMatchOnClick = () => {
-    depositService.saveUnMatchRecords(bank, selectedData);
+    depositService.saveUnMatchRecords(bank, selectedData).then(res => {
+      setDepositData(res.bankDepositDataModel);
+      setLoanData(res.paymentDataModel);
+    });
+  };
+  const resetOnClick = () => {
+    setSelectedDeposit([]);
   };
 
   return (
@@ -147,7 +156,10 @@ const AccountDetails = () => {
                       name="ReconcileRadio"
                       id="flexRadioDefault1"
                       style={{ marginRight: '5px' }}
-                      onClick={() => reconcileOnClick(bank)}
+                      defaultChecked
+                      onClick={() => {
+                        reconcileOnClick(bank), setBflag(true);
+                      }}
                     />
                     View Reconciled
                   </label>
@@ -162,8 +174,9 @@ const AccountDetails = () => {
                         marginBottom: '2px',
                         marginTop: '3px'
                       }}
-                      defaultChecked
-                      onClick={() => unreconcileOnClick(bank)}
+                      onClick={() => {
+                        unreconcileOnClick(bank), setBflag(false);
+                      }}
                     />
                     View Un-Reconciled
                   </label>
@@ -172,7 +185,7 @@ const AccountDetails = () => {
                   size="sm"
                   variant={'primary'}
                   className="px-2 ms-1 mb-2 w-100"
-                  disabled={!flag}
+                  disabled={Bflag}
                   onClick={() => matchOnClick()}
                 >
                   Match
@@ -181,25 +194,19 @@ const AccountDetails = () => {
                   size="sm"
                   variant={'primary'}
                   className="px-2 ms-1 mb-2 w-100"
-                  disabled={!flag}
-                  onClick={() => unMatchOnClick()}
+                  disabled={!Bflag}
+                  onClick={() => {
+                    unMatchOnClick(), setCflag(false);
+                  }}
                 >
                   Un-Match
                 </Button>
-                {/* <Button
-              size="sm"
-              variant={'primary'}
-              className="px-2 ms-1 mb-2 w-100"
-              // onClick={() => reconcileData()}
-            >
-              Add to Exceptions
-            </Button> */}
                 <Button
                   size="sm"
                   variant={'secondary'}
-                  disabled={flag}
+                  disabled={!flag}
                   className="px-2 ms-1 mb-2 w-100"
-                  // onClick={() => reconcileData()}
+                  onClick={() => resetOnClick()}
                 >
                   Reset
                 </Button>

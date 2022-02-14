@@ -57,7 +57,7 @@ const loanDetails = () => {
         <Card.Header>
           <Row className="align-items-center">
             <Col>
-              <h6 className="mb-0 fs-1">Loan Id: {loanDetails.loanId}</h6>
+              <h6 className="mb-0 fs-1">Loan : {loanDetails.loanId}</h6>
             </Col>
           </Row>
         </Card.Header>

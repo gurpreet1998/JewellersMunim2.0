@@ -34,7 +34,7 @@ export default class Payment extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'depositId',
+        accessor: 'paymentId',
         Header: 'Deposit ID'
       },
       {
@@ -42,11 +42,11 @@ export default class Payment extends React.Component {
         Header: 'Date'
       },
       {
-        accessor: 'paymentAmount',
+        accessor: 'amount',
         Header: 'Amount',
         Cell: cellInfo => (
           <NumberFormat
-            value={cellInfo.data[cellInfo.row.index].paymentAmount}
+            value={cellInfo.data[cellInfo.row.index].amount}
             displayType={'text'}
             thousandSeparator={true}
             prefix={'$'}
