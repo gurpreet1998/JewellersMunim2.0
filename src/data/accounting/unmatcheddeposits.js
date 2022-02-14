@@ -87,3 +87,33 @@ export const DepositsTableData = [
   }
 ];
 export const banks = ['Bank of America'];
+
+export const LoanTableDataACH = [
+  {
+    depositID: '24321768',
+    paymentAmount: 1000.0,
+
+    loanNumber: 'TRN12671',
+
+    date: '10/19/2019'
+  },
+
+  {
+    depositID: '24321768',
+    paymentAmount: 2000.0,
+
+    loanNumber: 'TRN12671',
+
+    date: ' 06/02/2020'
+  }
+];
+
+export const BulkDepositsTableDataACH = [
+  {
+    depositID: '24321768',
+
+    depositDate: ' 02/08/2022',
+
+    depositAmount: 3000.0
+  }
+];
