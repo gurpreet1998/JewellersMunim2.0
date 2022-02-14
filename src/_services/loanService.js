@@ -1,14 +1,13 @@
 let API_URI = process.env.REACT_APP_API_URI;
+import axiosinstance from "AxiosInstance";
 
 export const loanService = {
   getLoanDataStatusWise: function (id) {
-    return fetch(
-      `${API_URI}/Loan/GetLoanDataStatusWise?merchantId=1&statusId=${id}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        return data;
-      });
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/GetLoanDataStatusWise?merchantId=1&statusId=${id}`).then(r => {
+        resolve(r.data)
+      })
+    })
   },
 
   /**
@@ -25,20 +24,20 @@ export const loanService = {
    * @returns {Promise<any>}
    */
   getApplicantInfo: function (id) {
-    return fetch(`${API_URI}/Loan/GetApplicantInfo?loanAppId=${id}`)
-      .then(res => res.json())
-      .then(data => {
-        return data;
-      });
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/GetApplicantInfo?loanAppId=${id}`).then(r => {
+        resolve(r.data)
+      })
+    })
   },
 
   getLoanOffers: function (id) {
     if (id > 0) {
-      return fetch(`${API_URI}/Loan/GetLoanOffers?loanAppId=${id}`)
-        .then(res => res.json())
-        .then(data => {
-          return data;
-        });
+      return new Promise(resolve => {
+        axiosinstance.get(`${API_URI}/Loan/GetLoanOffers?loanAppId=${id}`).then(r => {
+          resolve(r.data)
+        })
+      })
     } else {
       return Promise.resolve([]);
     }

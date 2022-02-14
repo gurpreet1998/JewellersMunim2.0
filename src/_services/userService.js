@@ -1,15 +1,15 @@
 import { setPostRequestOptions } from './baseService';
+import axiosinstance from "AxiosInstance";
 
 let API_URI = process.env.REACT_APP_API_URI;
 
 export const roleBased_Permission = {
   GetPermissionsForRole: function (roleName) {
-    return fetch(`${API_URI}/User/GetPermissions?RoleName=${roleName}`)
-      .then(res => res.json())
-
-      .then(data => {
-        return data;
-      });
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/User/GetPermissions?RoleName=${roleName}`).then(r => {
+        resolve(r.data)
+      })
+    })
   }
 };
 
@@ -42,17 +42,12 @@ export const userService = {
       //hard coded until login implemented fully
       MerchantId: 1
     };
-
-    return fetch(
-      `${API_URI}/Loan/AddApplicationInfo`,
-      setPostRequestOptions(data)
-    )
-      .then(response => response.json())
-      .then(data => {
-        console.log('AddApplicationInfo Response:', data);
-        return data;
+    console.log('AddApplicationInfo POST:', data);
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/AddApplicationInfo`, data).then(r => {
+        resolve(r.data)
       })
-      .catch(err => console.log('ERROR (AddApplicationInfo):', err));
+    }).catch(err => console.log('ERROR (AddApplicationInfo):', err));
   }
 };
 
@@ -69,18 +64,23 @@ export const serviceDate = {
 
     console.log('AddPurchaseService POST:', data);
 
-    fetch(`${API_URI}/Loan/AddPurchaseService`, setPostRequestOptions(data))
-      .then(response => response.json())
-      .catch(err => console.log('ERROR (AddPurchaseService):', err));
+    new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/AddPurchaseService`, data).then(r => {
+        resolve(r.data)
+      })
+    }).catch(err => console.log('ERROR (AddPurchaseService):', err));
   }
 };
 
+
 export const Disclosure = {
   saveDisclosure: function (loanAppId) {
-    fetch(
-      `${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`,
-      setPostRequestOptions()
-    ).catch(err => console.log('ERROR (Disclosure):', err));
+
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`).then(r => {
+        resolve(r.data)
+      })
+    }).catch(err => console.log('ERROR (Disclosure):', err));
   }
 };
 
@@ -100,8 +100,12 @@ export const saveConfirmAndPayData = {
       AllTotalAmount: payableTotal
     };
 
-    console.log('ConFirmAndPay POST: ', data);
-    fetch(`${API_URI}/Loan/ConFirmAndPay`, setPostRequestOptions(data)).catch(
+
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/ConFirmAndPay`, data).then(r => {
+        resolve(r.data)
+      })
+    }).catch(
       err => console.log('ERROR (ConfirmAndPay):', err)
     );
   }

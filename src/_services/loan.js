@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import axiosinstance from "AxiosInstance";
+
 
 let API_URI = process.env.REACT_APP_API_URI;
 
@@ -17,7 +18,7 @@ const MerchantLoanData = merchantId => {
   }, []);
 
   const loadUsers = async () => {
-    const result = await axios.get(
+    const result = await axiosinstance.get(
       `${API_URI}/Loan/GetMerchantLoanData?merchantId=${merchantId}`
     );
     setLoanStats(result.data);
