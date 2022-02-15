@@ -1,13 +1,4 @@
 import { UserAgentApplication } from 'msal';
-const REACT_APP_CLIENT_ID = 'bbea8205-0507-42dd-bc6f-b2bf0b2a0b78';
-const REACT_APP_AUTHORITY =
-  'https://choicepayb2c.b2clogin.com/tfp/choicepayb2c.onmicrosoft.com/B2C_1_choicepayUF';
-const REACT_APP_VALIDATE_AUTHORITY = 'false';
-const REACT_APP_REDIRECT_URI =
-  'https://web-czeu-cpsptl-li-npddev.azurewebsites.net';
-const REACT_APP_POST_LOGOUT_REDIRECT_URI =
-  'https://web-czeu-cpsptl-li-npddev.azurewebsites.net/authentication/logout';
-const REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL = 'false';
 
 export const requiresInteraction = errorMessage => {
   if (!errorMessage || !errorMessage.length) {
@@ -56,19 +47,18 @@ export const AUTH_REQUESTS = {
     scopes: []
   },
   REFRESH_TOKEN: {
-    scopes: [REACT_APP_CLIENT_ID]
+    scopes: [process.env.REACT_APP_CLIENT_ID]
   }
 };
 
 export const msalApp = new UserAgentApplication({
   auth: {
-    clientId: REACT_APP_CLIENT_ID,
-    authority: REACT_APP_AUTHORITY,
-    validateAuthority: REACT_APP_VALIDATE_AUTHORITY === 'true',
-    redirectUri: REACT_APP_REDIRECT_URI,
-    postLogoutRedirectUri: REACT_APP_POST_LOGOUT_REDIRECT_URI,
-    navigateToLoginRequestUrl:
-      REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL === 'true'
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    authority: process.env.REACT_APP_AUTHORITY,
+    validateAuthority: process.env.REACT_APP_VALIDATE_AUTHORITY === 'true',
+    redirectUri: process.env.REACT_APP_REDIRECT_URI,
+    postLogoutRedirectUri: process.env.REACT_APP_POST_LOGOUT_REDIRECT_URI,
+    navigateToLoginRequestUrl: process.env.REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL === 'true'
   },
   cache: {
     cacheLocation: 'sessionStorage',

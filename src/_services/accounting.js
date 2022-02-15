@@ -1,4 +1,3 @@
-import { setPostRequestOptions, setPutRequestOptions } from './baseService';
 import axiosinstance from "AxiosInstance";
 
 let API_URI = process.env.REACT_APP_API_URI;
@@ -94,7 +93,7 @@ export const transactionHistoryService = {
     });
   },
 
-  updateBorrowerVerification: function (id, data) {
+  updateBorrowerVerification: function (id) {
     return new Promise(resolve => {
       axiosinstance.get(`${API_URI}/Loan/UpdateBorrowerDetails?loanId=${id}`).then(r => {
         resolve(r.data)

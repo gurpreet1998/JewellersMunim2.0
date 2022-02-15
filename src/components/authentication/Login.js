@@ -12,6 +12,10 @@ const Login = () => {
       </small>
       <br />
       <small>
+        Application Redirect URL :<b>{process.env.REACT_APP_REDIRECT_URI}</b>
+      </small>
+      <br />
+      <small>
         Application URL :<b>{process.env.REACT_APP_API_URI}</b>
       </small>
       <LoginForm layout="card" hasLabel />

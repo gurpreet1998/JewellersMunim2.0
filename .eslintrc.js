@@ -21,7 +21,7 @@ module.exports = {
         'react/no-unescaped-entities': 'off',
         'react/prop-types': 'error',
         'react/display-name': 'off',
-        'prettier/prettier': ['error', { endOfLine: 'auto' }]
+        'prettier/prettier': 0
     },
     globals: {
         process: true
