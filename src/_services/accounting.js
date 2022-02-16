@@ -105,7 +105,7 @@ export const transactionHistoryService = {
 export const loanDetailsByLoanId = {
   getLoanDetailsByLoanId: function (id) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI} /Accounting/GetLoanDetailsByLoanId ? loanId = ${id} `).then(r => {
+      axiosinstance.get(`${API_URI}/Accounting/GetLoanDetailsByLoanId?loanId=${id}`).then(r => {
         resolve(r.data)
       })
     })
