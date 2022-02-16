@@ -69,7 +69,7 @@ export const depositService = {
 
   savePostTransaction: function (id) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Accounting/UpdateDataForPostTransactionButton?bankAccountId=${id}`).then(r => {
+      axiosinstance.post(`${API_URI}/Accounting/UpdateDataForPostTransactionButton?bankAccountId=${id}`).then(r => {
         resolve(r.data)
       })
     }).catch(err => console.log('ERROR (PostTransaction):', err));
