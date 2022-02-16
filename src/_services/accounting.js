@@ -53,7 +53,7 @@ export const depositService = {
 
   saveMatchRecords: function (id, data) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Accounting/MatchRecords?bankAccountId=${id}`, data).then(r => {
+      axiosinstance.post(`${API_URI}/Accounting/MatchRecords?bankAccountId=${id}`, data).then(r => {
         resolve(r.data)
       })
     }).catch(err => console.log('ERROR (MatchRecords):', err));
@@ -61,7 +61,7 @@ export const depositService = {
 
   saveUnMatchRecords: function (id, data) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Accounting/UnMatchRecords?bankAccountId=${id}`, data).then(r => {
+      axiosinstance.post(`${API_URI}/Accounting/UnMatchRecords?bankAccountId=${id}`, data).then(r => {
         resolve(r.data)
       })
     }).catch(err => console.log('ERROR (UnMatchRecords):', err));
