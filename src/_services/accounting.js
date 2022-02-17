@@ -1,4 +1,6 @@
 import axiosinstance from 'AxiosInstance';
+// eslint-disable-next-line no-unused-vars
+import { setPostRequestOptions, setPutRequestOptions } from './baseService';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
@@ -136,4 +138,69 @@ export const loanDetailsByLoanId = {
         });
     });
   }
+};
+
+//ACH Services
+
+export const ACHService = {
+  getPaymentBatchACH: function () {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Accounting/PaymentBatchACH`).then(r => {
+        resolve(r.data);
+      });
+    });
+  },
+  getGetReconciledACHData: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(`${API_URI}/Accounting/GetReconciledACHData?paymentBatchId=${id}`)
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  getGetUnReconciledACHData: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Accounting/GetUnReconciledACHData?paymentBatchId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  saveMatchACHRecords: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(`${API_URI}/Accounting/MatchRecords?paymentBatchId=${id}`, data)
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (MatchRecords):', err));
+  },
+
+  saveUnMatchACHRecords: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(`${API_URI}/Accounting/UnMatchRecords?paymentBatchId=${id}`, data)
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (UnMatchRecords):', err));
+  }
+
+  // savePostACHTransaction: function (id) {
+  //   return new Promise(resolve => {
+  //     axiosinstance
+  //       .post(
+  //         `${API_URI}/Accounting/UpdateDataForPostACHTransactionButton?paymentBatchId=${id}`
+  //       )
+  //       .then(r => {
+  //         resolve(r.data);
+  //       });
+  //   }).catch(err => console.log('ERROR (PostTransaction):', err));
+  // }
 };

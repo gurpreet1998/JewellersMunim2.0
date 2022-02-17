@@ -223,7 +223,7 @@ const ValidateCaller = props => {
                   </Col>
                   <Col>
                     <input
-                      type="number"
+                      type="text"
                       disabled={!edit}
                       name="mobileNumber"
                       //

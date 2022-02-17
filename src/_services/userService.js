@@ -45,7 +45,7 @@ export const userService = {
     };
     console.log('AddApplicationInfo POST:', data);
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Loan/AddApplicationInfo`, data).then(r => {
+      axiosinstance.post(`${API_URI}/Loan/AddApplicationInfo`, data).then(r => {
         resolve(r.data);
       });
     }).catch(err => console.log('ERROR (AddApplicationInfo):', err));
@@ -66,7 +66,7 @@ export const serviceDate = {
     console.log('AddPurchaseService POST:', data);
 
     new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Loan/AddPurchaseService`, data).then(r => {
+      axiosinstance.post(`${API_URI}/Loan/AddPurchaseService`, data).then(r => {
         resolve(r.data);
       });
     }).catch(err => console.log('ERROR (AddPurchaseService):', err));
@@ -77,7 +77,7 @@ export const Disclosure = {
   saveDisclosure: function (loanAppId) {
     return new Promise(resolve => {
       axiosinstance
-        .get(`${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`)
+        .post(`${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`)
         .then(r => {
           resolve(r.data);
         });
@@ -102,7 +102,7 @@ export const saveConfirmAndPayData = {
     };
 
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Loan/ConFirmAndPay`, data).then(r => {
+      axiosinstance.post(`${API_URI}/Loan/ConFirmAndPay`, data).then(r => {
         resolve(r.data);
       });
     }).catch(err => console.log('ERROR (ConfirmAndPay):', err));

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Card, Button } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
@@ -16,6 +15,7 @@ const AccountDetails = () => {
   const [loanData, setLoanData] = useState([]);
   const [flag] = useState(true);
   const [Bflag, setBflag] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [Cflag, setCflag] = useState(true);
   const [depositData, setDepositData] = useState([]);
 

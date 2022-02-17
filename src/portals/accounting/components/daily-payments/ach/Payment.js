@@ -23,7 +23,7 @@ export default class Payment extends React.Component {
 
     const columns = [
       {
-        accessor: 'depositID',
+        accessor: 'bankDepositId',
         Header: 'Deposit ID'
       },
       {
@@ -35,11 +35,11 @@ export default class Payment extends React.Component {
         Header: 'Payment Date'
       },
       {
-        accessor: 'paymentAmount',
+        accessor: 'amount',
         Header: 'Amount',
         Cell: cellInfo => (
           <NumberFormat
-            value={cellInfo.data[cellInfo.row.index].paymentAmount}
+            value={cellInfo.data[cellInfo.row.index].amount}
             displayType={'text'}
             thousandSeparator={true}
             prefix={'$'}
@@ -52,7 +52,7 @@ export default class Payment extends React.Component {
 
     if (this.state.data.length > 0) {
       for (let i = 0; i < this.state.data.length; i++) {
-        total += this.state.data[i].paymentAmount;
+        total += this.state.data[i].amount;
       }
     }
 

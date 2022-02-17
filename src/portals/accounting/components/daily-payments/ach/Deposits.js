@@ -20,11 +20,11 @@ export default class Deposits extends React.Component {
   render() {
     const columns = [
       {
-        accessor: 'depositID',
+        accessor: 'bankDepositId',
         Header: 'Deposit ID'
       },
       {
-        accessor: 'depositDate',
+        accessor: 'dateOfDeposit',
         Header: ' Deposit Date'
       },
       {

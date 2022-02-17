@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
@@ -32,6 +32,7 @@ export default class Payment extends React.Component {
   }
 
   render() {
+    let total = 0;
     const columns = [
       {
         accessor: 'paymentId',
@@ -60,6 +61,11 @@ export default class Payment extends React.Component {
         Header: 'Loan #'
       }
     ];
+    if (this.state.data.length > 0) {
+      for (let i = 0; i < this.state.data.length; i++) {
+        total += this.state.data[i].amount;
+      }
+    }
 
     return (
       <AdvanceTableWrapper
@@ -85,6 +91,23 @@ export default class Payment extends React.Component {
               }}
             />
           </Card.Body>
+          <Card.Footer className={'bg-100'}>
+            <Row className="flex-end-center">
+              <Col xs="auto" className="d-flex align-items-end pe-4">
+                <h6 className="mb-0 text-nowrap">
+                  Total:{' '}
+                  <NumberFormat
+                    value={total}
+                    displayType={'text'}
+                    thousandSeparator={true}
+                    prefix={'$'}
+                    decimalScale={2}
+                    fixedDecimalScale={true}
+                  />
+                </h6>
+              </Col>
+            </Row>
+          </Card.Footer>
         </Card>
       </AdvanceTableWrapper>
     );
