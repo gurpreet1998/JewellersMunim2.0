@@ -7,6 +7,7 @@ const TransactionHandler = ({
   unReconcileData,
   matchData,
   unMatchData,
+  resetAction,
   postData,
   flag
 }) => {
@@ -62,7 +63,7 @@ const TransactionHandler = ({
               variant={'falcon-warning'}
               disabled={flag}
               className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-              // onClick={() => reconcileData()}
+              onClick={resetAction}
             >
               Reset
             </Button>
@@ -87,6 +88,7 @@ TransactionHandler.propTypes = {
   unReconcileData: PropTypes.func,
   matchData: PropTypes.func,
   unMatchData: PropTypes.func,
+  resetAction: PropTypes.func,
   postData: PropTypes.func,
   flag: PropTypes.bool.isRequired
 };

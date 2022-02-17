@@ -12,7 +12,6 @@ export default class Deposits extends React.Component {
     this.state = { data: props.data, SelectedRowID: {} };
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log(typeof this.props.data);
     if (prevProps.data !== this.props.data) {
       this.setState({ data: [...this.props.data] });
     }

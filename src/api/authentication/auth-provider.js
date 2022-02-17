@@ -58,7 +58,7 @@ export default C =>
         return msalApp.loginRedirect({
           scopes: [AUTH_SCOPES.OPENID, AUTH_SCOPES.PROFILE],
           extraQueryParameters: {
-            ui_locales: localStorage.getItem('language') ?? 'sv'
+            ui_locales: localStorage.getItem('language') ?? 'en_US'
           }
         });
       }
@@ -66,7 +66,7 @@ export default C =>
       const loginResponse = await msalApp.loginRedirect({
         scopes: [AUTH_SCOPES.OPENID, AUTH_SCOPES.PROFILE],
         extraQueryParameters: {
-          ui_locales: localStorage.getItem('language') ?? 'sv'
+          ui_locales: localStorage.getItem('language') ?? 'en_US'
         }
       });
 

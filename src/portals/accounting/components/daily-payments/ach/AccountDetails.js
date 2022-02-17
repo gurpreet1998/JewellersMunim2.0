@@ -18,8 +18,8 @@ const AccountDetails = () => {
   const tempLoanData = LoanTableDataACH;
   const tempDepositData = BulkDepositsTableDataACH;
 
-  function change(){
-    setPaymentBatch("20220207-ACHPersonalChecking");
+  function change() {
+    setPaymentBatch('20220207-ACHPersonalChecking');
   }
 
   const reconcileData = () => {
@@ -50,32 +50,39 @@ const AccountDetails = () => {
     <>
       <Row className="g-3 mb-3">
         <Col>
-          <TitleCard title="Payment Reconciliation &gt; ACH"/>
+          <TitleCard title="Payment Reconciliation &gt; ACH" />
         </Col>
       </Row>
       <Row className="g-3 mb-3">
-        <Col>    
+        <Col>
           <Card>
-            <Card.Body><Row className="align-items-center">
-            <Col className="pe-xl-8">Payment Batch</Col>
-              <Col xs="12" md="5" className="ms-auto">
-              <Flex>
-                <Form.Select
-                  size="sm"
-                  value={paymentbatch}
-                  onChange={e => setPaymentBatch(e.target.value)}
-                  className="me-2"
-                >
-                  <option value="">Select Payment Batch</option>
-                  <option onClick={change} value="20220207-ACHPersonalChecking">20220207-ACHPersonalChecking</option>
-                </Form.Select>
-              </Flex>
-              </Col></Row>
+            <Card.Body>
+              <Row className="align-items-center">
+                <Col className="pe-xl-8">Payment Batch</Col>
+                <Col xs="12" md="5" className="ms-auto">
+                  <Flex>
+                    <Form.Select
+                      size="sm"
+                      value={paymentbatch}
+                      onChange={e => setPaymentBatch(e.target.value)}
+                      className="me-2"
+                    >
+                      <option value="">Select Payment Batch</option>
+                      <option
+                        onClick={change}
+                        value="20220207-ACHPersonalChecking"
+                      >
+                        20220207-ACHPersonalChecking
+                      </option>
+                    </Form.Select>
+                  </Flex>
+                </Col>
+              </Row>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-          {/* <TitleCard title="Payment Reconciliation &gt; ACH"
+      {/* <TitleCard title="Payment Reconciliation &gt; ACH"
             endEl={
               <Flex>
                 <Form.Select
@@ -89,21 +96,33 @@ const AccountDetails = () => {
                 </Form.Select>
               </Flex>
             }
-          /> */} 
+          /> */}
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
           <Col lg={{ span: 2, order: 2 }}>
-            {paymentbatch === "20220207-ACHPersonalChecking" ? <TransactionHandler
-              reconcileData={reconcileData}
-              unReconcileData={unReconcileData}
-              flag={flag}
-            /> : <></>}
+            {paymentbatch === '20220207-ACHPersonalChecking' ? (
+              <TransactionHandler
+                reconcileData={reconcileData}
+                unReconcileData={unReconcileData}
+                flag={flag}
+              />
+            ) : (
+              <></>
+            )}
           </Col>
           <Col lg={{ span: 5, order: 1 }}>
-            {paymentbatch === "20220207-ACHPersonalChecking" ? <Payment data={loanData} /> : <></>}
+            {paymentbatch === '20220207-ACHPersonalChecking' ? (
+              <Payment data={loanData} />
+            ) : (
+              <></>
+            )}
           </Col>
           <Col lg={{ span: 5, order: 3 }}>
-            {paymentbatch === "20220207-ACHPersonalChecking" ? <Deposits data={depositData} /> : <></>}
+            {paymentbatch === '20220207-ACHPersonalChecking' ? (
+              <Deposits data={depositData} />
+            ) : (
+              <></>
+            )}
           </Col>
         </Row>
       </Card>

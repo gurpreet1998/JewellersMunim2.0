@@ -1,15 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Card, Button } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
-import { Row, Col, Form, Card } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
-import SubTitleCard from 'components/common/SubTitleCard';
 import Payment from './Payment';
-import { Button } from 'react-bootstrap';
 import Deposits from './Deposits';
 
 import { depositService } from '_services/accounting';
-import TransactionHandler from '../TransactionHandler';
 
 const AccountDetails = () => {
   const [bank, setBank] = useState(0);
@@ -22,16 +19,17 @@ const AccountDetails = () => {
   const [Cflag, setCflag] = useState(true);
   const [depositData, setDepositData] = useState([]);
 
-  //Lender Id 1 until we get login return lender info
+  // Lender Id 1 until we get login return lender info
   const [selectedDeposit, setSelectedDeposit] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState([]);
+
   // const [postData, setPostData] = useState({
   //   loanSelectedData: [],
   //   depositSelectedData: []
   // });
+
   useEffect(() => {
     depositService.getLendersNames(1).then(res => setLenders(res));
-
     depositService.getBankNames(1).then(res => setBanks(res));
   }, []);
 
@@ -43,6 +41,7 @@ const AccountDetails = () => {
       });
     }
   }, [bank]);
+
   useEffect(() => {}, [loanData, depositData]);
 
   const postOnClick = () => {
@@ -53,13 +52,15 @@ const AccountDetails = () => {
     depositService.getGetReconciledCMLData(event).then(res => {
       setDepositData(res.bankDepositDataModel);
       setLoanData(res.paymentDataModel);
+      setBflag(true);
     });
   };
 
-  const unreconcileOnClick = e => {
+  const unreconciledOnClick = e => {
     depositService.getGetUnReconciledCMLData(e).then(res => {
       setDepositData(res.bankDepositDataModel);
       setLoanData(res.paymentDataModel);
+      setBflag(false);
     });
   };
   const chooseLoan = val => {
@@ -91,6 +92,7 @@ const AccountDetails = () => {
     depositService.saveUnMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.bankDepositDataModel);
       setLoanData(res.paymentDataModel);
+      setCflag(false);
     });
   };
   const resetOnClick = () => {
@@ -144,91 +146,75 @@ const AccountDetails = () => {
         <Row className="g-3">
           <Col lg={{ span: 2, order: 2 }}>
             {bank !== 0 ? (
-              <div className="btn-group-justified">
-                <div
-                  className="px-2 ms-1 mb-2 w-100"
-                  // onChange={() => unreconcileOnClick()}
-                >
-                  <label>
-                    <input
-                      className="form-check-input"
+              <Card className="bg-transparent-50 shadow-none border border-200">
+                <Card.Body>
+                  <div>
+                    <Form.Check
+                      inline
                       type="radio"
-                      name="ReconcileRadio"
                       id="flexRadioDefault1"
-                      style={{ marginRight: '5px' }}
-                      defaultChecked
-                      onClick={() => {
-                        reconcileOnClick(bank), setBflag(true);
-                      }}
-                    />
-                    View Reconciled
-                  </label>
-                  <label>
-                    <input
-                      className="form-check-input"
-                      type="radio"
+                      label="Reconciled"
                       name="ReconcileRadio"
-                      id="flexRadioDefault2"
-                      style={{
-                        marginRight: '5px',
-                        marginBottom: '2px',
-                        marginTop: '3px'
+                      className="form-label-nogutter"
+                      onChange={() => {
+                        reconcileOnClick(bank);
                       }}
-                      onClick={() => {
-                        unreconcileOnClick(bank), setBflag(false);
+                      defaultChecked
+                    />
+                    <Form.Check
+                      inline
+                      type="radio"
+                      id="flexRadioDefault2"
+                      label="Un-Reconciled"
+                      name="ReconcileRadio"
+                      className="form-label-nogutter"
+                      onChange={() => {
+                        unreconciledOnClick(bank);
                       }}
                     />
-                    View Un-Reconciled
-                  </label>
-                </div>
-                <Button
-                  size="sm"
-                  variant={'primary'}
-                  className="px-2 ms-1 mb-2 w-100"
-                  disabled={Bflag}
-                  onClick={() => matchOnClick()}
-                >
-                  Match
-                </Button>
-                <Button
-                  size="sm"
-                  variant={'primary'}
-                  className="px-2 ms-1 mb-2 w-100"
-                  disabled={!Bflag}
-                  onClick={() => {
-                    unMatchOnClick(), setCflag(false);
-                  }}
-                >
-                  Un-Match
-                </Button>
-                <Button
-                  size="sm"
-                  variant={'secondary'}
-                  disabled={!flag}
-                  className="px-2 ms-1 mb-2 w-100"
-                  onClick={() => resetOnClick()}
-                >
-                  Reset
-                </Button>
-                <Button
-                  size="sm"
-                  variant={'success'}
-                  disabled={!flag}
-                  className="px-2 ms-1 mb-2 w-100"
-                  onClick={() => postOnClick()}
-                >
-                  Post Transactions
-                </Button>
-              </div>
+                  </div>
+                  <div className="border-dashed-bottom my-3" />
+                  <Button
+                    size="sm"
+                    variant={'falcon-primary'}
+                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
+                    disabled={Bflag}
+                    onClick={() => matchOnClick()}
+                  >
+                    Match
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={'falcon-primary'}
+                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0 mb-lg-2"
+                    disabled={!Bflag}
+                    onClick={() => {
+                      unMatchOnClick();
+                    }}
+                  >
+                    Un-Match
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={'falcon-warning'}
+                    disabled={!flag}
+                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
+                    onClick={() => resetOnClick()}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant={'falcon-success'}
+                    disabled={!flag}
+                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
+                    onClick={() => postOnClick()}
+                  >
+                    Post Transactions
+                  </Button>
+                </Card.Body>
+              </Card>
             ) : (
-              // <TransactionHandler
-              //   flag={flag}
-              //   reconcileData={reconcileOnClick}
-              //   unReconcileData={unreconcileOnClick}
-              //   matchData={matchOnClick}
-              //   unMatchData={unMatchOnClick}
-              //   postData={postOnClick}
-              // />
               <></>
             )}
           </Col>
@@ -250,7 +236,6 @@ const AccountDetails = () => {
           </Col>
         </Row>
       </Card>
-      {/* <Filters /> */}
     </>
   );
 };

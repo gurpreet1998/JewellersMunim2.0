@@ -1,5 +1,7 @@
 import { UserAgentApplication } from 'msal';
 
+const REACT_APP_REDIRECT_URI = 'http://localhost:3000';
+
 export const requiresInteraction = errorMessage => {
   if (!errorMessage || !errorMessage.length) {
     return false;
@@ -56,9 +58,10 @@ export const msalApp = new UserAgentApplication({
     clientId: process.env.REACT_APP_CLIENT_ID,
     authority: process.env.REACT_APP_AUTHORITY,
     validateAuthority: process.env.REACT_APP_VALIDATE_AUTHORITY === 'true',
-    redirectUri: process.env.REACT_APP_REDIRECT_URI,
+    redirectUri: REACT_APP_REDIRECT_URI, // process.env.REACT_APP_REDIRECT_URI,
     postLogoutRedirectUri: process.env.REACT_APP_POST_LOGOUT_REDIRECT_URI,
-    navigateToLoginRequestUrl: process.env.REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL === 'true'
+    navigateToLoginRequestUrl:
+      process.env.REACT_APP_NAVIGATE_TO_LOGIN_REQUEST_URL === 'true'
   },
   cache: {
     cacheLocation: 'sessionStorage',

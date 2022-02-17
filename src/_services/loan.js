@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import axiosinstance from "AxiosInstance";
-
+import axiosinstance from 'AxiosInstance';
 
 let API_URI = process.env.REACT_APP_API_URI;
 

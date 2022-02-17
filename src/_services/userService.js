@@ -1,14 +1,16 @@
-import axiosinstance from "AxiosInstance";
+import axiosinstance from 'AxiosInstance';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
 export const roleBased_Permission = {
   GetPermissionsForRole: function (roleName) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/User/GetPermissions?RoleName=${roleName}`).then(r => {
-        resolve(r.data)
-      })
-    })
+      axiosinstance
+        .get(`${API_URI}/User/GetPermissions?RoleName=${roleName}`)
+        .then(r => {
+          resolve(r.data);
+        });
+    });
   }
 };
 
@@ -44,8 +46,8 @@ export const userService = {
     console.log('AddApplicationInfo POST:', data);
     return new Promise(resolve => {
       axiosinstance.get(`${API_URI}/Loan/AddApplicationInfo`, data).then(r => {
-        resolve(r.data)
-      })
+        resolve(r.data);
+      });
     }).catch(err => console.log('ERROR (AddApplicationInfo):', err));
   }
 };
@@ -65,20 +67,20 @@ export const serviceDate = {
 
     new Promise(resolve => {
       axiosinstance.get(`${API_URI}/Loan/AddPurchaseService`, data).then(r => {
-        resolve(r.data)
-      })
+        resolve(r.data);
+      });
     }).catch(err => console.log('ERROR (AddPurchaseService):', err));
   }
 };
 
-
 export const Disclosure = {
   saveDisclosure: function (loanAppId) {
-
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`).then(r => {
-        resolve(r.data)
-      })
+      axiosinstance
+        .get(`${API_URI}/Loan/Disclosure?loanAppId=${loanAppId}`)
+        .then(r => {
+          resolve(r.data);
+        });
     }).catch(err => console.log('ERROR (Disclosure):', err));
   }
 };
@@ -99,13 +101,10 @@ export const saveConfirmAndPayData = {
       AllTotalAmount: payableTotal
     };
 
-
     return new Promise(resolve => {
       axiosinstance.get(`${API_URI}/Loan/ConFirmAndPay`, data).then(r => {
-        resolve(r.data)
-      })
-    }).catch(
-      err => console.log('ERROR (ConfirmAndPay):', err)
-    );
+        resolve(r.data);
+      });
+    }).catch(err => console.log('ERROR (ConfirmAndPay):', err));
   }
 };

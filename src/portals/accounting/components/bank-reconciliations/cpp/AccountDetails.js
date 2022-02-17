@@ -36,6 +36,10 @@ const AccountDetails = () => {
     setFlag(false);
   };
 
+  const resetOnClick = () => {
+    return console.log('resetOnClick placeholder');
+  };
+
   useEffect(() => {
     console.log('UseEffect ', loanData);
   }, [loanData]);
@@ -53,6 +57,7 @@ const AccountDetails = () => {
             <TransactionHandler
               reconcileData={reconcileData}
               unReconcileData={unReconcileData}
+              resetAction={resetOnClick}
               flag={flag}
             />
           </Col>

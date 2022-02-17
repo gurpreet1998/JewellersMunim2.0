@@ -1,17 +1,17 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 
 const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
   useEffect(() => {
-    unReconcileData()
-  }, [])
-  
+    unReconcileData();
+  }, []);
+
   return (
     <Card className="bg-transparent-50 shadow-none border border-200">
       <Card.Body>
         <div>
-        <Form.Check
+          <Form.Check
             inline
             type="radio"
             id="flexRadioDefault2"
@@ -29,7 +29,7 @@ const TransactionHandler = ({ reconcileData, unReconcileData, flag }) => {
             name="ReconcileRadio"
             className="form-label-nogutter"
             onChange={reconcileData}
-          />  
+          />
         </div>
         <div className="border-dashed-bottom my-3" />
         <Row>
