@@ -35,7 +35,7 @@ export default class Payment extends React.Component {
     let total = 0;
     const columns = [
       {
-        accessor: 'paymentId',
+        accessor: 'bankDepositId',
         Header: 'Deposit ID'
       },
       {

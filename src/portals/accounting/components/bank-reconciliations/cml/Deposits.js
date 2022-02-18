@@ -58,7 +58,7 @@ export default class Deposits extends React.Component {
       },
       {
         accessor: 'crdb',
-        Header: 'CR/ DB'
+        Header: 'CR/DB'
       }
     ];
     return (

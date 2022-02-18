@@ -65,7 +65,7 @@ const AccountDetails = () => {
     paymentDataModel: selectedLoan,
     bankDepositDataModel: selectedDeposit
   };
-
+  console.log(selectedData);
   const matchOnClick = () => {
     ACHService.saveMatchACHRecords(paymentbatch, selectedData).then(res => {
       setDepositData(res.bankDepositDataModel);

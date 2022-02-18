@@ -127,7 +127,7 @@ const AccountDetails = () => {
                     onChange={e => setBank(e.target.value)}
                     className="me-2"
                   >
-                    <option value="">Select Bank</option>
+                    <option value="">Select Bank Account...</option>
                     {banks.map((bank, index) => (
                       <option value={bank.bankAccountId} key={index}>
                         {bank.banks}

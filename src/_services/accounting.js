@@ -173,7 +173,10 @@ export const ACHService = {
   saveMatchACHRecords: function (id, data) {
     return new Promise(resolve => {
       axiosinstance
-        .post(`${API_URI}/Accounting/MatchRecords?paymentBatchId=${id}`, data)
+        .post(
+          `${API_URI}/Accounting/MatchACHRecords?paymentBatchId=${id}`,
+          data
+        )
         .then(r => {
           resolve(r.data);
         });
@@ -183,7 +186,10 @@ export const ACHService = {
   saveUnMatchACHRecords: function (id, data) {
     return new Promise(resolve => {
       axiosinstance
-        .post(`${API_URI}/Accounting/UnMatchRecords?paymentBatchId=${id}`, data)
+        .post(
+          `${API_URI}/Accounting/UnMatchACHRecords?paymentBatchId=${id}`,
+          data
+        )
         .then(r => {
           resolve(r.data);
         });

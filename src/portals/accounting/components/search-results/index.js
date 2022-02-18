@@ -28,6 +28,9 @@ const SearchResults = () => {
         <Col md={12}>
           <Card>
             <Card.Body>
+              <h5 className="fw-normal text-800 mb-0 text-nowrap py-2 py-xl-0">
+                Search Results
+              </h5>
               <Accordion.Item>
                 {/* {
                   (searchData.data.length = 1 && (
