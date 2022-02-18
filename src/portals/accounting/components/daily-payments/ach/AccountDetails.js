@@ -83,26 +83,6 @@ const AccountDetails = () => {
 
   // Last Edited till here
 
-  // const reconcileData = () => {
-  //   const result1 = loanData.filter(o =>
-  //     depositData.some(({ depositAmount }) => o.paymentAmount === depositAmount)
-  //   );
-  //   setLoanData(result1);
-
-  //   const result2 = depositData.filter(o =>
-  //     loanData.some(({ paymentAmount }) => o.depositAmount === paymentAmount)
-  //   );
-  //   setFlag(true);
-  //   setDepositData(result2);
-  // };
-
-  // const unReconcileData = () => {
-  //   setLoanData(tempLoanData);
-  //   console.log('tempLoanData', tempLoanData);
-  //   setDepositData(tempDepositData);
-  //   setFlag(false);
-  // };
-
   // useEffect(() => {
   //   console.log('UseEffect ', loanData);
   // }, [loanData]);

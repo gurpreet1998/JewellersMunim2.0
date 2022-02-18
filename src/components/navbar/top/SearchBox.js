@@ -1,14 +1,16 @@
-import React, { Fragment, useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Fuse from 'fuse.js';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import { isIterableArray } from 'helpers/utils';
 import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
-import SoftBadge from 'components/common/SoftBadge';
+// import SoftBadge from 'components/common/SoftBadge';
+import SearchResults from 'portals/accounting/components/search-results';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -35,50 +37,15 @@ const MediaSearchContent = ({ item }) => {
   );
 };
 
-const SearchBox = ({ autoCompleteItem }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+const SearchBox = () => {
   const [searchInputValue, setSearchInputValue] = useState('');
-  const [resultItem, setResultItem] = useState(autoCompleteItem);
-
-  const fuseJsOptions = {
-    includeScore: true,
-    keys: ['title', 'text', 'breadCrumbTexts']
-  };
-
-  let searchResult = new Fuse(autoCompleteItem, fuseJsOptions)
-    .search(searchInputValue)
-    .map(item => item.item);
-
-  const recentlyBrowsedItems = resultItem.filter(
-    item => item.catagories === 'recentlyBrowsedItems'
-  );
-
-  const suggestedFilters = resultItem.filter(
-    item => item.catagories === 'suggestedFilters'
-  );
-
-  const suggestionFiles = resultItem.filter(
-    item => item.catagories === 'suggestionFiles'
-  );
-
-  const suggestionMembers = resultItem.filter(
-    item => item.catagories === 'suggestionMembers'
-  );
-
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggle = () => setDropdownOpen(!dropdownOpen);
+  const [flag, setFlag] = useState(false);
 
-  useEffect(() => {
-    if (searchInputValue) {
-      setResultItem(searchResult);
-      isIterableArray(searchResult)
-        ? setDropdownOpen(true)
-        : setDropdownOpen(false);
-    } else {
-      setResultItem(autoCompleteItem);
-    }
-
-    // eslint-disable-next-line
-  }, [searchInputValue]);
+  const handleSubmit = () => {
+    setFlag(true);
+  };
 
   return (
     <Dropdown onToggle={toggle} className="search-box">
@@ -88,7 +55,15 @@ const SearchBox = ({ autoCompleteItem }) => {
         aria-expanded={dropdownOpen}
         bsPrefix="toggle"
       >
-        <Form className="position-relative">
+        <Form
+          className="position-relative"
+          onSubmit={() => handleSubmit(searchInputValue)}
+        >
+          {flag && (
+            <Redirect
+              to={`/portal/accounting/home/searchresults/${searchInputValue}`}
+            />
+          )}
           <Form.Control
             type="search"
             placeholder="Search..."
@@ -96,7 +71,6 @@ const SearchBox = ({ autoCompleteItem }) => {
             className="rounded-pill search-input"
             value={searchInputValue}
             onChange={({ target }) => setSearchInputValue(target.value)}
-            onClick={() => setDropdownOpen(false)}
           />
           <FontAwesomeIcon
             icon="search"
@@ -114,115 +88,11 @@ const SearchBox = ({ autoCompleteItem }) => {
               />
             </div>
           )}
+          {/* <button onClick={() => handleSubmit(searchInputValue)}>Submit</button> */}
         </Form>
       </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <div className="scrollbar py-3" style={{ maxHeight: '24rem' }}>
-          {isIterableArray(recentlyBrowsedItems) && (
-            <>
-              <Dropdown.Header as="h6" className="px-card pt-0 pb-2 fw-medium">
-                Recently Browsed
-              </Dropdown.Header>
-              {recentlyBrowsedItems.map(item => (
-                <Dropdown.Item
-                  as={Link}
-                  to={item.url}
-                  className="fs--1 px-card py-1 hover-primary "
-                  key={item.id}
-                >
-                  <Flex alignItems="center">
-                    <FontAwesomeIcon
-                      icon="circle"
-                      className="me-2 text-300 fs--2"
-                    />
-                    <div className="fw-normal">
-                      {item.breadCrumbTexts.map((breadCrumbText, index) => {
-                        return (
-                          <Fragment key={breadCrumbText}>
-                            {breadCrumbText}
-                            {item.breadCrumbTexts.length - 1 > index && (
-                              <FontAwesomeIcon
-                                icon="chevron-right"
-                                className="mx-1 text-500 fs--2"
-                                transform="shrink 2"
-                              />
-                            )}
-                          </Fragment>
-                        );
-                      })}
-                    </div>
-                  </Flex>
-                </Dropdown.Item>
-              ))}
-              {(isIterableArray(suggestedFilters) ||
-                isIterableArray(suggestionFiles) ||
-                isIterableArray(suggestionMembers)) && (
-                <hr className="bg-200 dark__bg-900" />
-              )}
-            </>
-          )}
-
-          {isIterableArray(suggestedFilters) && (
-            <>
-              <Dropdown.Header as="h6" className="px-card pt-0 pb-2 fw-medium">
-                Suggested Filter
-              </Dropdown.Header>
-              {suggestedFilters.map(item => (
-                <Dropdown.Item
-                  as={Link}
-                  to={item.url}
-                  className="fs-0 px-card py-1 hover-primary "
-                  key={item.id}
-                >
-                  <Flex alignItems="center">
-                    <SoftBadge
-                      bg={item.type}
-                      className="fw-medium text-decoration-none me-2"
-                    >
-                      {item.key}:{' '}
-                    </SoftBadge>
-                    <div className="flex-1 fs--1">{item.text}</div>
-                  </Flex>
-                </Dropdown.Item>
-              ))}
-              {(isIterableArray(suggestionFiles) ||
-                isIterableArray(suggestionMembers)) && (
-                <hr className="bg-200 dark__bg-900" />
-              )}
-            </>
-          )}
-
-          {isIterableArray(suggestionFiles) && (
-            <>
-              <Dropdown.Header as="h6" className="px-card pt-0 pb-2 fw-medium">
-                Files
-              </Dropdown.Header>
-              {suggestionFiles.map(item => (
-                <MediaSearchContent item={item} key={item.id} />
-              ))}
-              {isIterableArray(suggestionMembers) && (
-                <hr className="bg-200 dark__bg-900" />
-              )}
-            </>
-          )}
-
-          {isIterableArray(suggestionMembers) && (
-            <>
-              <Dropdown.Header as="h6" className="px-card pt-0 pb-2 fw-medium">
-                Members
-              </Dropdown.Header>
-              {suggestionMembers.map(item => (
-                <MediaSearchContent item={item} key={item.id} />
-              ))}
-            </>
-          )}
-
-          {resultItem.length === 0 && (
-            <p className="fs-1 fw-bold text-center mb-0">No Result Found.</p>
-          )}
-        </div>
-      </Dropdown.Menu>
     </Dropdown>
+    // <SearchResults input={searchInputValue}></SearchResults>
   );
 };
 
@@ -246,10 +116,10 @@ MediaSearchContent.propTypes = {
   }).isRequired
 };
 
-SearchBox.propTypes = {
-  autoCompleteItem: PropTypes.arrayOf(
-    PropTypes.shape(MediaSearchContent.propTypes.item)
-  )
-};
+// SearchBox.propTypes = {
+//   autoCompleteItem: PropTypes.arrayOf(
+//     PropTypes.shape(MediaSearchContent.propTypes.item)
+//   )
+// };
 
 export default SearchBox;

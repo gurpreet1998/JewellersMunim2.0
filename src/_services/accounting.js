@@ -1,6 +1,4 @@
 import axiosinstance from 'AxiosInstance';
-// eslint-disable-next-line no-unused-vars
-import { setPostRequestOptions, setPutRequestOptions } from './baseService';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
@@ -203,4 +201,14 @@ export const ACHService = {
   //       });
   //   }).catch(err => console.log('ERROR (PostTransaction):', err));
   // }
+};
+
+export const searchService = {
+  getSearchResults: function (id) {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Loan/Accountsearch?input=${id}`).then(r => {
+        resolve(r.data);
+      });
+    });
+  }
 };

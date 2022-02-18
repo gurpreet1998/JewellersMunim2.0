@@ -14,6 +14,7 @@ import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
 import { AuthContext } from 'api/authentication/auth-context';
 import { roleBased_Permission } from '_services/userService';
+import SearchResults from '../components/search-results';
 
 export default function AccountingPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
@@ -74,6 +75,14 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           <Route path={`${url}/home/loandetails/:loanId`}>
             {checkForAccess('AccountingHome', ExtensionRole) ? (
               <LoanDetails />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+
+          <Route path={`${url}/home/searchresults`}>
+            {checkForAccess('AccountingHome', ExtensionRole) ? (
+              <SearchResults />
             ) : (
               <Redirect to="/errors/404" />
             )}

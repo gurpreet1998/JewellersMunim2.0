@@ -217,3 +217,46 @@ export const dailyCCPaymentExceptions = {
     }
   ]
 };
+
+export const searchResult = {
+  columns: [
+    {
+      accessor: 'lenderLoanNumber',
+      Header: 'Loan Number',
+      Cell: rowData => {
+        const tableData = rowData.data[rowData.row.index];
+        return (
+          <Link
+            to={{
+              pathname: `/portal/accounting/home/loandetails/${tableData.loadID}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {tableData.lenderLoanNumber}
+          </Link>
+        );
+      }
+    },
+    {
+      accessor: 'borrowerName',
+      Header: 'Borrower Name'
+    },
+    {
+      accessor: 'ssn',
+      Header: 'SSN'
+    },
+    {
+      accessor: 'tin',
+      Header: 'TIN'
+    },
+    {
+      accessor: 'phoneNumber',
+      Header: 'Phone Number'
+    },
+    {
+      accessor: 'address',
+      Header: 'Street Address'
+    }
+  ],
+  data: []
+};
