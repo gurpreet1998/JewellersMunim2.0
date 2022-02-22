@@ -40,7 +40,7 @@ export default function AllUsersTable({ searchKeyword }) {
   const addBorrowerName = Data => {
     let allUsersData = [...Data];
     for (let i = 0; i < allUsersData.length; i++) {
-      const element = allUsersData[i];
+      //const element = allUsersData[i];
       allUsersData[i] = {
         ...allUsersData[i],
 
