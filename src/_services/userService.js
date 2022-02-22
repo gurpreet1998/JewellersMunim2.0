@@ -85,6 +85,35 @@ export const Disclosure = {
   }
 };
 
+// Get All Users API - Admin
+export const Users = {
+  getAllUsers: function () {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/User/getUsers`).then(r => {
+        resolve(r.data);
+      });
+    });
+  },
+  checkIfUserExists: async function (emailaddress) {
+    const resp = await axiosinstance.get(
+      `${API_URI}/User/IsUserExists?email=${emailaddress}`
+    );
+    return resp;
+  },
+  addNewUser: async function (data) {
+    const resp = await axiosinstance.post(`${API_URI}/User/AddUser`, data);
+    return resp;
+  }
+};
+
+// export const addNewUser = data => {
+//   return {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(data)
+//   };
+// };
+
 export const saveConfirmAndPayData = {
   saveConfirmAndPayAppDetail: function (
     cardData,

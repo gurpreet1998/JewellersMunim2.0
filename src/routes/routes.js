@@ -54,6 +54,56 @@ export const merchantPortalRoutes = {
   ]
 };
 
+export const adminPortalRoutes = {
+  label: 'Admin Portal',
+  labelDisable: false,
+  children: [
+    {
+      name: 'Home',
+      keyword: 'adminhome',
+      to: '/portal/admin/home',
+      active: true,
+      icon: 'home'
+    },
+
+    {
+      name: 'Overview',
+      keyword: 'overview',
+      to: '/portal/admin/overview',
+      active: true,
+      icon: 'history'
+    },
+    {
+      name: 'Users',
+      keyword: 'users',
+      to: '/',
+      active: true,
+      icon: 'user-plus'
+    },
+    {
+      name: 'Merchant',
+      keyword: 'AdminMerchants',
+      to: '/portal/admin/merchants',
+      active: true,
+      icon: 'calculator'
+    },
+    {
+      name: 'Lenders',
+      keyword: 'lenders',
+      to: '/portal/admin/lenders',
+      active: true,
+      icon: 'money-bill-alt'
+    },
+    {
+      name: 'Sponsors Banks',
+      keyword: 'SponsorBanks',
+      to: '/portal/admin/sponsorbanks',
+      active: true,
+      icon: 'university'
+    }
+  ]
+};
+
 export const accountingPortalRoutes = {
   label: 'Accounting Portal',
   labelDisable: false,
@@ -174,4 +224,8 @@ export const appRoutes = {
 };
 
 // note: removed appRoutes header when not using
-export default [merchantPortalRoutes, accountingPortalRoutes];
+export default [
+  merchantPortalRoutes,
+  accountingPortalRoutes,
+  adminPortalRoutes
+];

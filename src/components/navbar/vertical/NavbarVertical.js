@@ -127,6 +127,20 @@ const NavbarVertical = () => {
             );
           break;
 
+        case 'Admin Portal':
+          if (CurrentRole === 'Admin')
+            return (
+              <div key={route.label}>
+                {!route.labelDisable && navbarLabel(capitalize(route.label))}
+                {permissions.length !== 0 ? (
+                  <NavbarVerticalMenu routes={route.children} />
+                ) : (
+                  <LoadingDots color={'#748194'} width={40} height={20} />
+                )}
+              </div>
+            );
+          break;
+
         default:
           return (
             <div key={route.label}>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import HomeDashboard from 'portals/merchant/components/landing';
+import Users from 'portals/admin/components/users';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
 import AppContext from 'context/Context';
@@ -73,6 +74,9 @@ function ShowDesiredLandingPage() {
 
       case 'Accountant':
         return <Route path="/" exact component={AccountingStats} />;
+
+      case 'Admin':
+        return <Route path="/" exact component={Users} />;
 
       default:
         return <Redirect to={`errors/501`} />; // When role is not defined
