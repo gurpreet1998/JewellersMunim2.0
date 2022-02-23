@@ -3,7 +3,7 @@ import { Accordion, Card, Col, Row } from 'react-bootstrap';
 import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody';
 // import TitleCard from 'components/common/TitleCard';
 import { searchResult } from '../landing/TableMaps';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
 import { searchService } from '_services/accounting';
 
 const SearchResults = () => {
@@ -17,8 +17,14 @@ const SearchResults = () => {
     searchService
       .getSearchResults(input)
       .then(res => setSearchData({ ...searchData, data: res }));
-    console.log(searchData);
   }, []);
+  if (searchData.data.length == 1) {
+    return (
+      <Redirect
+        to={`/portal/accounting/home/loandetails/${searchData.data[0].loadID}`}
+      />
+    );
+  }
   return (
     <>
       <Row className="g-3 mb-3">
