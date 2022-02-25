@@ -182,23 +182,64 @@ const DepositForm = ({
                 </Form.Select>
               </Row>
               {paymentType === '1' && (
-                <Row>
-                  <FormInput
-                    label="Payment Amount"
-                    name="paymentAmount"
-                    errors={errors}
-                    formGroupProps={{
-                      as: Row,
-                      // md: 4,
-                      // xl: 3,
-                      className: 'md-8'
-                    }}
-                    formControlProps={{
-                      ...register('paymentAmount'),
-                      placeholder: '$'
-                    }}
-                  />
-                </Row>
+                <>
+                  <Row>
+                    <FormInput
+                      label="Payment Amount"
+                      name="paymentAmount"
+                      errors={errors}
+                      formGroupProps={{
+                        as: Row,
+                        // md: 4,
+                        // xl: 3,
+                        className: 'md-8'
+                      }}
+                      formControlProps={{
+                        ...register('paymentAmount'),
+                        placeholder: '$'
+                      }}
+                    />
+                  </Row>
+                  <Row>
+                    <Col>
+                      <lable>Payment Type</lable>
+                    </Col>
+                    <Col>
+                      <Form.Check
+                        inline
+                        type="radio"
+                        id="flexRadioDefault1"
+                        label="Regular Payment"
+                        name="PaymentType"
+                        className="form-label-nogutter"
+                        defaultChecked
+                      />
+                    </Col>
+                    <Col>
+                      <Form.Check
+                        inline
+                        type="radio"
+                        id="flexRadioDefault2"
+                        label="Principal Only Payment"
+                        name="PaymentType"
+                        className="form-label-nogutter"
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <FormInput
+                      label="Add notes"
+                      name="addNotes"
+                      errors={errors}
+                      formGroupProps={{
+                        as: Row,
+                        // md: 4,
+                        // xl: 3,
+                        className: 'md-8'
+                      }}
+                    />
+                  </Row>
+                </>
               )}
               {paymentType === '0' && (
                 <>
