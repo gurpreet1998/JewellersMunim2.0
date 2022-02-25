@@ -194,19 +194,19 @@ export const ACHService = {
           resolve(r.data);
         });
     }).catch(err => console.log('ERROR (UnMatchRecords):', err));
-  }
+  },
 
-  // savePostACHTransaction: function (id) {
-  //   return new Promise(resolve => {
-  //     axiosinstance
-  //       .post(
-  //         `${API_URI}/Accounting/UpdateDataForPostACHTransactionButton?paymentBatchId=${id}`
-  //       )
-  //       .then(r => {
-  //         resolve(r.data);
-  //       });
-  //   }).catch(err => console.log('ERROR (PostTransaction):', err));
-  // }
+  savePostACHTransaction: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/PostTransactionForACH?paymentBatchId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (PostTransaction):', err));
+  }
 };
 
 export const searchService = {

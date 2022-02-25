@@ -81,6 +81,10 @@ const AccountDetails = () => {
     });
   };
 
+  const postOnClick = () => {
+    ACHService.savePostACHTransaction(paymentbatch);
+  };
+
   // Last Edited till here
 
   // useEffect(() => {
@@ -202,7 +206,7 @@ const AccountDetails = () => {
                     variant={'falcon-success'}
                     disabled={!flag}
                     className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
-                    // onClick={() => postOnClick()}
+                    onClick={() => postOnClick()}
                   >
                     Post Transactions
                   </Button>
