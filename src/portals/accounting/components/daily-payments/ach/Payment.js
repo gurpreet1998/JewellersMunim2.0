@@ -14,7 +14,7 @@ export default class Payment extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
       this.setState({
-        data: [...this.props?.data || []]
+        data: [...(this.props?.data || [])]
       });
     }
     if (this.state.SelectedRowID !== prevState.SelectedRowID) {
