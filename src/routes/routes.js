@@ -164,6 +164,12 @@ export const accountingPortalRoutes = {
           keyword: 'ACH',
           to: '/portal/accounting/payments/daily/ach',
           active: true
+        },
+        {
+          name: 'Cash/Checks/Money Orders',
+          keyword: 'Cash/Checks/MoneyOrders',
+          to: '/portal/accounting/payments/daily/cash',
+          active: true
         }
       ]
     },

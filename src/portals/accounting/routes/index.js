@@ -12,6 +12,7 @@ import LockBox from '../components/bank-reconciliations/lock-box';
 import CPPReconciliation from '../components/bank-reconciliations/cpp';
 import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
+import Cash from '../components/daily-payments/cash/checks/moneyorders';
 import { AuthContext } from 'api/authentication/auth-context';
 import { roleBased_Permission } from '_services/userService';
 import SearchResults from '../components/search-results';
@@ -131,6 +132,14 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           <Route path={`${url}/payments/daily/ach`} exact>
             {checkForAccess('ACH', ExtensionRole) ? (
               <ACHPayments />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+
+          <Route path={`${url}/payments/daily/cash`} exact>
+            {checkForAccess('Cash/Checks/MoneyOrders', ExtensionRole) ? (
+              <Cash />
             ) : (
               <Redirect to="/errors/404" />
             )}
