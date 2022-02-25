@@ -36,8 +36,8 @@ const AccountDetails = () => {
   useEffect(() => {
     if (bank > 0) {
       depositService.getGetReconciledCMLData(bank).then(res => {
-        setLoanData(res.paymentDataModel);
-        setDepositData(res.bankDepositDataModel);
+        setLoanData(res.result.paymentDataModel);
+        setDepositData(res.result.bankDepositDataModel);
       });
     }
   }, [bank]);
@@ -50,16 +50,16 @@ const AccountDetails = () => {
 
   const reconcileOnClick = event => {
     depositService.getGetReconciledCMLData(event).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setBflag(true);
     });
   };
 
   const unreconciledOnClick = e => {
     depositService.getGetUnReconciledCMLData(e).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setBflag(false);
     });
   };
@@ -83,15 +83,15 @@ const AccountDetails = () => {
 
   const matchOnClick = () => {
     depositService.saveMatchRecords(bank, selectedData).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
     });
   };
 
   const unMatchOnClick = () => {
     depositService.saveUnMatchRecords(bank, selectedData).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setCflag(false);
     });
   };

@@ -30,8 +30,8 @@ const AccountDetails = () => {
   useEffect(() => {
     if (paymentbatch !== undefined) {
       ACHService.getGetReconciledACHData(paymentbatch).then(res => {
-        setLoanData(res.paymentDataModel);
-        setDepositData(res.bankDepositDataModel);
+        setLoanData(res.result.paymentDataModel);
+        setDepositData(res.result.bankDepositDataModel);
       });
     }
   }, [paymentbatch]);
@@ -40,16 +40,16 @@ const AccountDetails = () => {
 
   const reconcileOnClick = event => {
     ACHService.getGetReconciledACHData(event).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setBflag(true);
     });
   };
 
   const unreconciledOnClick = e => {
     ACHService.getGetUnReconciledACHData(e).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setBflag(false);
     });
   };
@@ -68,15 +68,15 @@ const AccountDetails = () => {
   console.log(selectedData);
   const matchOnClick = () => {
     ACHService.saveMatchACHRecords(paymentbatch, selectedData).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
     });
   };
 
   const unMatchOnClick = () => {
     ACHService.saveUnMatchACHRecords(paymentbatch, selectedData).then(res => {
-      setDepositData(res.bankDepositDataModel);
-      setLoanData(res.paymentDataModel);
+      setDepositData(res.result.bankDepositDataModel);
+      setLoanData(res.result.paymentDataModel);
       setCflag(false);
     });
   };
