@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Card } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import Flex from 'components/common/Flex';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
@@ -63,6 +64,7 @@ const AccountDetails = () => {
 
   const postOnClick = () => {
     depositService.savePostTransaction(bank);
+    toast.success(`Post transaction(s) successful`);
   };
 
   const reconcileOnClick = event => {
@@ -98,6 +100,7 @@ const AccountDetails = () => {
     depositService.saveMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
+      toast.success(`Match record successful`);
     });
   };
 
@@ -105,6 +108,7 @@ const AccountDetails = () => {
     depositService.saveUnMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
+      toast.success(`Un-match record successful`);
       // setCflag(false);
     });
   };
