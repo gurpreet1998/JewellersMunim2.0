@@ -19977,101 +19977,6 @@ samp {
 }
 
 /*-----------------------------------------------
-|   Documentation link and Prism
------------------------------------------------*/
-.code-block {
-  padding: 0;
-  overflow: auto;
-}
-.code-block pre[class*=language-] {
-  padding: 1.6rem;
-  border: 0;
-  margin: 0;
-  border-radius: 0;
-}
-
-:not(pre) > code[class*=language-], pre[class*=language-] {
-  background-color: #232e3c;
-  border: 1px solid var(--falcon-border-color);
-  border-radius: 0.25rem;
-}
-
-code.language-html:first-child {
-  display: block;
-}
-
-code[class*=language-], pre[class*=language-] {
-  color: #d8e2ef;
-  font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-pre[class*=language-] {
-  margin: 0;
-}
-
-.contains-anchor a {
-  opacity: 0;
-  transition-property: opacity;
-}
-.contains-anchor:hover a, .contains-anchor:focus a {
-  opacity: 1;
-  text-decoration: none;
-}
-
-.token.property, .token.tag, .token.constant, .token.symbol, .token.deleted {
-  color: #e63757;
-}
-
-.token.punctuation {
-  color: #b6c1d2;
-}
-
-.components-nav {
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 0.85rem;
-}
-
-/*-----------------------------------------------
-|   Component examples
------------------------------------------------*/
-/*-----------------------------------------------
-|   Borders
------------------------------------------------*/
-.component-example {
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-.component-example [class^=border] {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 8rem;
-  height: 8rem;
-  margin: 0.75rem;
-  background-color: #f9fafd;
-}
-
-/*-----------------------------------------------
-|   Utilities
------------------------------------------------*/
-.border-component [class^=border],
-.border-component [class^=rounded-] {
-  display: inline-block;
-  width: 5rem;
-  height: 5rem;
-  margin: 0.25rem;
-}
-.border-component [class^=border] {
-  background-color: var(--falcon-200);
-}
-.border-component [class^=rounded-] {
-  background-color: var(--falcon-200);
-}
-
-#loaders [class^=spinner] {
-  margin-right: 0.5rem;
-}
-
-/*-----------------------------------------------
 |   Hover Box
 -----------------------------------------------*/
 .hoverbox {
@@ -21097,80 +21002,6 @@ td .dropdown-toggle:after, td .dropdown-toggle:before {
 }
 
 /*-----------------------------------------------
-|   Headers
------------------------------------------------*/
-h5, .h5 {
-  margin-bottom: 0.25rem;
-}
-
-/*-----------------------------------------------
-|   Drop cap
------------------------------------------------*/
-.dropcap::first-letter {
-  font-size: 3em;
-  float: left;
-  line-height: 0.92;
-  margin-right: 0.375rem;
-}
-
-/*-----------------------------------------------
-|   Letter Spacing
------------------------------------------------*/
-.ls {
-  letter-spacing: 0.04em;
-}
-
-.ls-2 {
-  letter-spacing: 0.25em;
-}
-
-/*-----------------------------------------------
-|   List
------------------------------------------------*/
-.bullet-inside {
-  list-style-position: inside;
-}
-
-.style-check li {
-  position: relative;
-  list-style-type: none;
-  padding-left: 0.25rem;
-}
-.style-check li:before {
-  content: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZGF0YS1mYS1wcm9jZXNzZWQ9IiIgZGF0YS1wcmVmaXg9ImZhbCIgZGF0YS1pY29uPSJjaGVjayIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIiBjbGFzcz0ic3ZnLWlubGluZS0tZmEgZmEtY2hlY2sgZmEtdy0xNCIgc3R5bGU9ImZvbnQtc2l6ZTogNDhweDsiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTQxMy41MDUgOTEuOTUxTDEzMy40OSAzNzEuOTY2bC05OC45OTUtOTguOTk1Yy00LjY4Ni00LjY4Ni0xMi4yODQtNC42ODYtMTYuOTcxIDBMNi4yMTEgMjg0LjI4NGMtNC42ODYgNC42ODYtNC42ODYgMTIuMjg0IDAgMTYuOTcxbDExOC43OTQgMTE4Ljc5NGM0LjY4NiA0LjY4NiAxMi4yODQgNC42ODYgMTYuOTcxIDBsMjk5LjgxMy0yOTkuODEzYzQuNjg2LTQuNjg2IDQuNjg2LTEyLjI4NCAwLTE2Ljk3MWwtMTEuMzE0LTExLjMxNGMtNC42ODYtNC42ODYtMTIuMjg0LTQuNjg2LTE2Ljk3IDB6IiBjbGFzcz0iIj48L3BhdGg+PC9zdmc+);
-  padding-right: 0.1875rem;
-  position: absolute;
-  top: 0.0625rem;
-  left: -1rem;
-  background-repeat: no-repeat;
-  width: 1rem;
-}
-
-/*-----------------------------------------------
-|   Blockquote
------------------------------------------------*/
-.blockquote-content {
-  font-style: italic;
-  position: relative;
-}
-.blockquote-content:before {
-  position: absolute;
-  left: -3rem;
-  top: -0.5rem;
-  line-height: 1;
-  content: "“";
-  display: inline-block;
-  color: #d8e2ef;
-  font-size: 2.985984rem;
-}
-
-.blockquote-footer::before {
-  transform: translateY(0.125rem);
-  font-weight: 400;
-  display: inline-block;
-}
-
-/*-----------------------------------------------
 |   Cursor
 -----------------------------------------------*/
 .cursor-default {
@@ -21179,6 +21010,10 @@ h5, .h5 {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.cursor-help {
+  cursor: help;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -23656,7 +23491,7 @@ html[dir=rtl] .img-dropdown {
 }
 
 /*-----------------------------------------------
-|   Dashboard
+|   HomeDashboard
 -----------------------------------------------*/
 .file-thumbnail {
   height: 2.25rem;
@@ -24092,7 +23927,7 @@ a[href].bg-200:hover, a[href].bg-200:focus {
   }
 }
 /*-----------------------------------------------
-|  Back to top button
+|  Back to top button   
 -----------------------------------------------*/
 .btn-back-to-top {
   background-color: #0b1727;

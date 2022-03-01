@@ -13,56 +13,63 @@ const AdvanceTable = ({
   tableProps
 }) => {
   return (
-    <SimpleBarReact>
-      <Table {...getTableProps(tableProps)}>
-        <thead className={headerClassName}>
-          <tr>
-            {headers.map((column, index) => (
-              <th
-                key={index}
-                {...column.getHeaderProps(
-                  column.getSortByToggleProps(column.headerProps)
-                )}
-              >
-                {column.render('Header')}
-                {column.canSort ? (
-                  column.isSorted ? (
-                    column.isSortedDesc ? (
-                      <span className="sort desc" />
+    <>
+      <SimpleBarReact>
+        <Table {...getTableProps(tableProps)}>
+          <thead className={headerClassName}>
+            <tr>
+              {headers.map((column, index) => (
+                <th
+                  key={index}
+                  {...column.getHeaderProps(
+                    column.getSortByToggleProps(column.headerProps)
+                  )}
+                >
+                  {column.render('Header')}
+                  {column.canSort ? (
+                    column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <span className="sort desc" />
+                      ) : (
+                        <span className="sort asc" />
+                      )
                     ) : (
-                      <span className="sort asc" />
+                      <span className="sort" />
                     )
                   ) : (
-                    <span className="sort" />
-                  )
-                ) : (
-                  ''
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {page.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr key={i} className={rowClassName} {...row.getRowProps()}>
-                {row.cells.map((cell, index) => {
-                  return (
-                    <td
-                      key={index}
-                      {...cell.getCellProps(cell.column.cellProps)}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    </SimpleBarReact>
+                    ''
+                  )}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr key={i} className={rowClassName} {...row.getRowProps()}>
+                  {row.cells.map((cell, index) => {
+                    return (
+                      <td
+                        key={index}
+                        {...cell.getCellProps(cell.column.cellProps)}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      </SimpleBarReact>
+      {page.length === 0 && (
+        <div className="text-center">
+          <p className="fw-semi-bold text-500 fs-0 mt-3">No data found</p>
+        </div>
+      )}
+    </>
   );
 };
 AdvanceTable.propTypes = {

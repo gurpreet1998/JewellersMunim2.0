@@ -1,17 +1,16 @@
 import React, { useContext, useEffect } from 'react';
-import { Route, Switch, useLocation } from 'react-router-dom';
-import HomeDashboard from 'portals/merchant/components/landing';
-import Users from 'portals/admin/components/users';
+import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
+
+import Login from 'components/authentication/Login';
+import Footer from 'components/footer/Footer';
 import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
-import AppContext from 'context/Context';
-import MainRoutes from './MainRoutes';
-import Footer from 'components/footer/Footer';
-import { AuthContext } from '../api/authentication/auth-context';
 import AccountingStats from 'portals/accounting/components/landing';
-import Login from 'components/authentication/Login';
-import { Redirect } from 'react-router-dom';
+import HomeDashboard from 'portals/merchant/components/landing';
+import Users from 'portals/admin/components/users';
+import MainRoutes from './MainRoutes';
 
+import AppContext, { AuthContext } from 'context/Context';
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
 

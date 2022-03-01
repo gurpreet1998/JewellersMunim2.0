@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'react-bootstrap';
-import Avatar from 'components/common/Avatar';
-import avatarIcon from 'assets/img/team/avatar.png';
 
-import { AuthContext } from 'api/authentication/auth-context';
+import Avatar from 'components/common/Avatar';
+
+import avatarIcon from 'assets/img/team/avatar.png';
+import { AuthContext } from 'context/Context';
 
 const ProfileDropdown = () => {
   const auth = useContext(AuthContext);

@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import logoutImg from 'assets/img/icons/spot-illustrations/45.png';
-import { AuthContext } from 'api/authentication/auth-context';
+import { AuthContext } from 'context/Context';
 
 const LogoutContent = ({ titleTag: TitleTag }) => {
   const auth = useContext(AuthContext);

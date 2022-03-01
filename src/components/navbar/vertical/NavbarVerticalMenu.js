@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink, useLocation } from 'react-router-dom';
 import { Nav, Collapse } from 'react-bootstrap';
+import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
-import AppContext from 'context/Context';
-import { AuthContext } from 'api/authentication/auth-context';
+import AppContext, { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 
 const CollapseItems = ({ route }) => {

@@ -495,3 +495,13 @@ export const getSubtotal = items =>
 
 export const getDiscountPrice = (total, discount) =>
   total - total * (discount / 100);
+
+/*
+Converts data from a table column to the
+properly formatted date. Default format is MM/DD/YYYY.
+Used in the `Cell` object when defining table columns
+*/
+export const formatDateCol = (rowData, accessor, dateStr = 'MM/DD/YYYY') => {
+  let cell = rowData.data[rowData.row.index].accessor;
+  return moment(cell).format(dateStr);
+};

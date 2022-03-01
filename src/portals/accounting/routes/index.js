@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+
 import AccountingHomeDashboard from '../components/landing';
 import PendingMerchantSettlements from '../components/pending-settlements/merchants';
 import PendingLenderSettlements from '../components/pending-settlements/lender';
@@ -12,10 +13,11 @@ import LockBox from '../components/bank-reconciliations/lock-box';
 import CPPReconciliation from '../components/bank-reconciliations/cpp';
 import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
-import Cash from '../components/daily-payments/cash/checks/moneyorders';
-import { AuthContext } from 'api/authentication/auth-context';
-import { roleBased_Permission } from '_services/userService';
+import Cash from '../components/daily-payments/cash-checks-money-orders';
 import SearchResults from '../components/search-results';
+
+import { AuthContext } from 'context/Context';
+import { roleBased_Permission } from '_services/userService';
 
 export default function AccountingPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);

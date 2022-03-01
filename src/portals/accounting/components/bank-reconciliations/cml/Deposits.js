@@ -5,6 +5,7 @@ import NumberFormat from 'react-number-format';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import BasicCardHeader from 'components/common/BasicCardHeader';
+import { formatDateCol } from 'helpers/utils';
 
 export default class Deposits extends React.Component {
   constructor(props) {
@@ -36,7 +37,10 @@ export default class Deposits extends React.Component {
       },
       {
         accessor: 'depositDate',
-        Header: 'Date'
+        Header: 'Date',
+        Cell: rowData => {
+          return formatDateCol(rowData, 'depositDate');
+        }
       },
       {
         accessor: 'depositDescription',
@@ -72,7 +76,7 @@ export default class Deposits extends React.Component {
         perPage={7}
         rowCount={this.state.data.length}
       >
-        <Card>
+        <Card className={'h-100'}>
           <BasicCardHeader name={'Deposits'} />
           <Card.Body className="px-0 pt-0 pb-3">
             <AdvanceTable
@@ -81,7 +85,7 @@ export default class Deposits extends React.Component {
               rowClassName="btn-reveal-trigger text-nowrap align-middle"
               tableProps={{
                 size: 'sm',
-                className: 'fs--1 mb-0 overflow-hidden'
+                className: 'fs--2 mb-0 overflow-hidden'
               }}
             />
           </Card.Body>

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Card, Col, Row } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
+
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import BasicCardHeader from 'components/common/BasicCardHeader';
@@ -27,8 +29,6 @@ export default class Payment extends React.Component {
       res.push(this.props.data[parseInt(event[i])]);
     }
     this.props.chooseLoan(res);
-    // console.log(this.props.data);
-    // console.log('LoanData Selected', res);
   }
 
   render() {
@@ -45,7 +45,11 @@ export default class Payment extends React.Component {
       },
       {
         accessor: 'date',
-        Header: 'Payment Date'
+        Header: 'Payment Date',
+        Cell: rowData => {
+          let dateStr = rowData.data[rowData.row.index].date;
+          return moment(dateStr).format('MM/DD/YYYY');
+        }
       },
       {
         accessor: 'amount',
@@ -80,7 +84,7 @@ export default class Payment extends React.Component {
         perPage={7}
         rowCount={this.state.data.length}
       >
-        <Card>
+        <Card className={'h-100'}>
           <BasicCardHeader name={'Payments'} />
           <Card.Body className="p-0">
             <AdvanceTable
@@ -89,7 +93,7 @@ export default class Payment extends React.Component {
               rowClassName="btn-reveal-trigger text-nowrap align-middle"
               tableProps={{
                 size: 'sm',
-                className: 'fs--1 mb-0 overflow-hidden'
+                className: 'fs--2 mb-0 overflow-hidden'
               }}
             />
           </Card.Body>

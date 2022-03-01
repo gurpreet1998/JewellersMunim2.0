@@ -6,12 +6,16 @@ import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AddTransaction from './AddTransaction';
 import { transactionHistoryService } from '_services/accounting';
 import { useForm } from 'react-hook-form';
+import { formatDateCol } from 'helpers/utils';
 
 export default function TransactionHistory(props) {
   const columns = [
     {
-      accessor: 'date',
-      Header: 'Date'
+      accessor: 'transactionDate',
+      Header: 'Date',
+      Cell: rowData => {
+        return formatDateCol(rowData, 'transactionDate');
+      }
     },
     {
       accessor: 'paymentAmount',

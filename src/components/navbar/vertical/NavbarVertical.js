@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Nav, Navbar, Row, Col } from 'react-bootstrap';
-import { navbarBreakPoint } from 'config';
-import AppContext from 'context/Context';
+
 import Flex from 'components/common/Flex';
 import Logo from 'components/common/Logo';
+import { LoadingDots } from '../../loading-spinner/LoadingDots';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
-import routes from 'routes/routes';
+
+import { navbarBreakPoint } from 'config';
 import { capitalize } from 'helpers/utils';
-import { AuthContext } from 'api/authentication/auth-context';
+import routes from 'routes/routes';
+
+import AppContext, { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
-import { LoadingDots } from '../../loading-spinner/LoadingDots';
 
 const NavbarVertical = () => {
   const [permissions, setPermissions] = useState([]);

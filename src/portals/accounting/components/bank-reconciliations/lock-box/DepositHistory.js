@@ -5,6 +5,7 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import { paymentHistoryData } from 'data/accounting/lockBox';
+import { formatDateCol } from 'helpers/utils';
 
 export default function DepositHistory() {
   // eslint-disable-next-line no-unused-vars
@@ -25,7 +26,10 @@ export default function DepositHistory() {
     },
     {
       accessor: 'date',
-      Header: 'Date'
+      Header: 'Date',
+      Cell: rowData => {
+        return formatDateCol(rowData, 'date');
+      }
     },
     {
       accessor: 'paymentAmount',

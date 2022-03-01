@@ -144,7 +144,7 @@ export const accountingPortalRoutes = {
     {
       name: 'Daily Payments',
       keyword: 'DailyPayments',
-      icon: 'sun',
+      icon: 'calendar-day',
       active: true,
       children: [
         {

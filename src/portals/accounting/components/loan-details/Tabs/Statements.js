@@ -1,20 +1,20 @@
 import React from 'react';
-
-// import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-// import Header from './Header';
+import { formatDateCol } from 'helpers/utils';
 
 export default function Statements() {
   const columns = [
     {
       accessor: 'statementDate',
-      Header: 'Date'
+      Header: 'Date',
+      Cell: rowData => {
+        return formatDateCol(rowData, 'statementDate');
+      }
     },
     {
-      accessor: 'decsription',
+      accessor: 'description',
       Header: 'Description'
     },
     {
@@ -42,9 +42,6 @@ export default function Statements() {
       //   rowCount={this.state.data.length}
     >
       <Card>
-        {/* <Card.Header>
-          <Header name={'Transaction'} />
-        </Card.Header> */}
         <Card.Body className="p-3">
           <AdvanceTable
             table

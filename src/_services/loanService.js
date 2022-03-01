@@ -1,5 +1,5 @@
 let API_URI = process.env.REACT_APP_API_URI;
-import axiosinstance from 'AxiosInstance';
+import axiosinstance from '_services/AxiosInstance';
 
 export const loanService = {
   getLoanDataStatusWise: function (id) {

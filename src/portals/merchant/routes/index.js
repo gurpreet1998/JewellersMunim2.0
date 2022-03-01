@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import NewApplication from '../components/new-application';
-import MyApplications from '../components/my-applications';
-import LoanCalculator from '../components/loan-calculator';
+
 import InviteConsumer from '../components/invite-consumer';
 import InviteHistory from '../components/invitation-history';
+import LoanCalculator from '../components/loan-calculator';
+import MyApplications from '../components/my-applications';
+import NewApplication from '../components/new-application';
 import PowerBi from '../components/power-bi/PowerBi';
 
-import { AuthContext } from 'api/authentication/auth-context';
+import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 
 export default function MerchantPortalRoutes({ match: { url } }) {

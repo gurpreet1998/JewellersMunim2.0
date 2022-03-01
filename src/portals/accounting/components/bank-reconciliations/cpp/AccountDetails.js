@@ -3,20 +3,21 @@ import { Row, Col, Card } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
 import Deposits from './Deposits';
+import ReconciliationHandler from '../../ReconciliationHandler';
 
 import { LoanTableData } from 'data/accounting/unmatcheddeposits';
 import { BulkDepositsTableData } from 'data/accounting/unmatcheddeposits';
-import TransactionHandler from '../TransactionHandler';
 
 const AccountDetails = () => {
-  // const [bank, setBank] = useState(0);
   const [loanData, setLoanData] = useState(LoanTableData);
-  const [flag, setFlag] = useState(false);
   const [depositData, setDepositData] = useState(BulkDepositsTableData);
+  const [disabled] = useState(true);
+  const [reconciledChecked, setReconciledChecked] = useState(true);
+
   const tempLoanData = LoanTableData;
   const tempDepositData = BulkDepositsTableData;
 
-  const reconcileData = () => {
+  const reconcileOnClick = () => {
     const result1 = loanData.filter(o =>
       depositData.some(({ depositAmount }) => o.paymentAmount === depositAmount)
     );
@@ -25,19 +26,31 @@ const AccountDetails = () => {
     const result2 = depositData.filter(o =>
       loanData.some(({ paymentAmount }) => o.depositAmount === paymentAmount)
     );
-    setFlag(true);
+    setReconciledChecked(true);
     setDepositData(result2);
   };
 
-  const unReconcileData = () => {
+  const unreconciledOnClick = () => {
     setLoanData(tempLoanData);
     console.log('tempLoanData', tempLoanData);
     setDepositData(tempDepositData);
-    setFlag(false);
+    setReconciledChecked(false);
+  };
+
+  const matchOnClick = () => {
+    return console.log('matchOnClick placeholder');
+  };
+
+  const unMatchOnClick = () => {
+    return console.log('unMatchOnClick placeholder');
   };
 
   const resetOnClick = () => {
     return console.log('resetOnClick placeholder');
+  };
+
+  const postOnClick = () => {
+    return console.log('postOnClick placeholder');
   };
 
   useEffect(() => {
@@ -54,11 +67,15 @@ const AccountDetails = () => {
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
           <Col lg={{ span: 2, order: 2 }}>
-            <TransactionHandler
-              reconcileData={reconcileData}
-              unReconcileData={unReconcileData}
+            <ReconciliationHandler
+              reconciledAction={reconcileOnClick}
+              unReconciledAction={unreconciledOnClick}
+              matchAction={matchOnClick}
+              unMatchAction={unMatchOnClick}
               resetAction={resetOnClick}
-              flag={flag}
+              postAction={postOnClick}
+              disabled={disabled}
+              reconciledChecked={reconciledChecked}
             />
           </Col>
           <Col lg={{ span: 5, order: 1 }}>

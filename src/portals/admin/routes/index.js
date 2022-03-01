@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { AuthContext } from 'api/authentication/auth-context';
+import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 import Overview from '../components/overview';
 import Merchants from '../components/merchants';

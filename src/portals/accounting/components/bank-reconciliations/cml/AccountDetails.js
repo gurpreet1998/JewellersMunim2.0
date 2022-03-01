@@ -1,32 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Card, Button } from 'react-bootstrap';
+import { Row, Col, Form, Card } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
 import Deposits from './Deposits';
 
+import { getItemFromStore, setItemToStore } from 'helpers/utils';
 import { depositService } from '_services/accounting';
+import ReconciliationHandler from '../../ReconciliationHandler';
 
 const AccountDetails = () => {
-  const [bank, setBank] = useState(0);
-  const [lender, setLender] = useState();
-  const [banks, setBanks] = useState([]);
+  const initValues = {
+    lender: '',
+    bank: ''
+  };
+
+  const [lender, setLender] = useState(initValues.lender);
+  const [bank, setBank] = useState(initValues.bank);
   const [lenders, setLenders] = useState([]);
-  const [loanData, setLoanData] = useState([]);
-  const [flag] = useState(true);
-  const [Bflag, setBflag] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [Cflag, setCflag] = useState(true);
+  const [banks, setBanks] = useState([]);
   const [depositData, setDepositData] = useState([]);
+  const [loanData, setLoanData] = useState([]);
+  const [disabled] = useState(true);
+  const [reconciledChecked, setReconciledChecked] = useState(true);
+
+  // todo: NOTE: What is this used for? If needed, can we name it something more descriptive
+  // const [Cflag, setCflag] = useState(true);
 
   // Lender Id 1 until we get login return lender info
   const [selectedDeposit, setSelectedDeposit] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState([]);
 
-  // const [postData, setPostData] = useState({
-  //   loanSelectedData: [],
-  //   depositSelectedData: []
-  // });
+  useEffect(() => {
+    const formData = getItemFromStore(
+      'bank-reconciliation-cml-store',
+      initValues
+    );
+    setBank(formData.bank);
+    setLender(formData.lender);
+  }, []);
+
+  useEffect(() => {
+    const valuesToSave = { lender, bank };
+    setItemToStore('bank-reconciliation-cml-store', valuesToSave);
+  });
 
   useEffect(() => {
     depositService.getLendersNames(1).then(res => setLenders(res));
@@ -34,7 +51,7 @@ const AccountDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (bank > 0) {
+    if (bank.length > 0) {
       depositService.getGetReconciledCMLData(bank).then(res => {
         setLoanData(res.result.paymentDataModel);
         setDepositData(res.result.bankDepositDataModel);
@@ -52,7 +69,7 @@ const AccountDetails = () => {
     depositService.getGetReconciledCMLData(event).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setBflag(true);
+      setReconciledChecked(true);
     });
   };
 
@@ -60,20 +77,16 @@ const AccountDetails = () => {
     depositService.getGetUnReconciledCMLData(e).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setBflag(false);
+      setReconciledChecked(false);
     });
   };
+
   const chooseLoan = val => {
     setSelectedLoan(val);
-    // console.log('loan VALLLLL:', val);
-    // setPostData({ ...postData, loanSelectedData: selectedLoan });
-    // console.log(postData);
   };
+
   const chooseDeposit = val => {
     setSelectedDeposit(val);
-    // console.log('Deposit VALLLLL:', val);
-    // setPostData({ ...postData, depositSelectedData: selectedDeposit });
-    // console.log(postData);
   };
 
   let selectedData = {
@@ -92,9 +105,10 @@ const AccountDetails = () => {
     depositService.saveUnMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setCflag(false);
+      // setCflag(false);
     });
   };
+
   const resetOnClick = () => {
     setSelectedDeposit([]);
   };
@@ -120,7 +134,7 @@ const AccountDetails = () => {
                     </option>
                   ))}
                 </Form.Select>
-                {lender !== undefined ? (
+                {lender.length !== 0 ? (
                   <Form.Select
                     size="sm"
                     value={bank}
@@ -144,96 +158,43 @@ const AccountDetails = () => {
       </Row>
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          <Col lg={{ span: 2, order: 2 }}>
-            {bank !== 0 ? (
-              <Card className="bg-transparent-50 shadow-none border border-200">
-                <Card.Body>
-                  <div>
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault1"
-                      label="Reconciled"
-                      name="ReconcileRadio"
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        reconcileOnClick(bank);
-                      }}
-                      defaultChecked
-                    />
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault2"
-                      label="Un-Reconciled"
-                      name="ReconcileRadio"
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        unreconciledOnClick(bank);
-                      }}
-                    />
-                  </div>
-                  <div className="border-dashed-bottom my-3" />
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    disabled={Bflag}
-                    onClick={() => matchOnClick()}
-                  >
-                    Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0 mb-lg-2"
-                    disabled={!Bflag}
-                    onClick={() => {
-                      unMatchOnClick();
-                    }}
-                  >
-                    Un-Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-warning'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    onClick={() => resetOnClick()}
-                  >
-                    Reset
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-success'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
-                    onClick={() => postOnClick()}
-                  >
-                    Post Transactions
-                  </Button>
-                </Card.Body>
-              </Card>
-            ) : (
-              <></>
-            )}
-          </Col>
-
-          <Col lg={{ span: 5, order: 1 }}>
-            {bank !== 0 ? (
-              <Payment data={loanData} chooseLoan={chooseLoan} />
-            ) : (
-              <></>
-            )}
-          </Col>
-
-          <Col lg={{ span: 5, order: 3 }}>
-            {bank !== 0 ? (
-              <Deposits data={depositData} chooseDeposit={chooseDeposit} />
-            ) : (
-              <></>
-            )}
-          </Col>
+          {bank.length !== 0 ? (
+            <>
+              <Col lg={{ span: 2, order: 2 }}>
+                <ReconciliationHandler
+                  reconciledAction={reconcileOnClick}
+                  unReconciledAction={unreconciledOnClick}
+                  matchAction={matchOnClick}
+                  unMatchAction={unMatchOnClick}
+                  resetAction={resetOnClick}
+                  postAction={postOnClick}
+                  disabled={disabled}
+                  reconciledChecked={reconciledChecked}
+                  selectedFilter={bank}
+                />
+              </Col>
+              <Col lg={{ span: 5, order: 1 }}>
+                <Payment data={loanData} chooseLoan={chooseLoan} />
+              </Col>
+              <Col lg={{ span: 5, order: 3 }}>
+                <Deposits data={depositData} chooseDeposit={chooseDeposit} />
+              </Col>
+            </>
+          ) : (
+            <>
+              <Card.Body className="overflow-hidden p-lg-6">
+                <Row className="align-items-center justify-content-between">
+                  <Col sm={12} className=" my-5 text-center">
+                    <h3 className="mt-1">Nothing Selected!</h3>
+                    <p>
+                      Select a Lender and Bank Account to review loans for
+                      reconciliation
+                    </p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </>
+          )}
         </Row>
       </Card>
     </>

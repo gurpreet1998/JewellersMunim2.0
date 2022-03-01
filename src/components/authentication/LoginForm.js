@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
 import { Button, Form, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import Divider from 'components/common/Divider';
-import Flex from '../common/Flex';
-import { AuthContext } from '../../api/authentication/auth-context';
+import Flex from 'components/common/Flex';
+
+import { AuthContext } from 'context/Context';
 
 class LoginForm extends React.Component {
   constructor(props) {

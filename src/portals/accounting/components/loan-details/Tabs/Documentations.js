@@ -1,20 +1,20 @@
 import React from 'react';
-
-// import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-// import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-// import Header from './Header';
+import { formatDateCol } from 'helpers/utils';
 
 export default function Documentations() {
   const columns = [
     {
       accessor: 'date',
-      Header: 'Date'
+      Header: 'Date',
+      Cell: rowData => {
+        return formatDateCol(rowData, 'date');
+      }
     },
     {
-      accessor: 'decsription',
+      accessor: 'description',
       Header: 'Description'
     },
     {

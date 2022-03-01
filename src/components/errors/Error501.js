@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import { Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from 'react-router-dom';
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
-import { AuthContext } from 'api/authentication/auth-context';
+import { Link } from 'react-router-dom';
+
+import { AuthContext } from 'context/Context';
 
 const Error501 = () => {
   const auth = useContext(AuthContext);

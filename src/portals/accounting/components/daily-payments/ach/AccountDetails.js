@@ -4,21 +4,21 @@ import { Row, Col, Form, Card } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
 import Deposits from './Deposits';
-import { ACHService } from '_services/accounting';
-import { Button } from 'react-bootstrap';
 
-// import { LoanTableDataACH } from 'data/accounting/unmatcheddeposits';
-// import { BulkDepositsTableDataACH } from 'data/accounting/unmatcheddeposits';
-// import TransactionHandler from '../TransactionHandler';
+import { getItemFromStore, setItemToStore } from 'helpers/utils';
+import { ACHService } from '_services/accounting';
+import ReconciliationHandler from '../../ReconciliationHandler';
 
 const AccountDetails = () => {
-  const [paymentbatch, setPaymentBatch] = useState();
-  const [paymentbatches, setPaymentBatches] = useState([]);
+  const [paymentBatch, setPaymentBatch] = useState('');
+  const [paymentBatches, setPaymentBatches] = useState([]);
   const [loanData, setLoanData] = useState([]);
-  const [flag] = useState(true);
-  const [Bflag, setBflag] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [Cflag, setCflag] = useState(true);
+  const [disabled] = useState(true);
+  const [reconciledChecked, setReconciledChecked] = useState(true);
+
+  // todo: NOTE: What is this used for? If needed, can we name it something more descriptive
+  // const [Cflag, setCflag] = useState(true);
+
   const [depositData, setDepositData] = useState([]);
   const [selectedDeposit, setSelectedDeposit] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState([]);
@@ -28,21 +28,37 @@ const AccountDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (paymentbatch !== undefined) {
-      ACHService.getGetReconciledACHData(paymentbatch).then(res => {
+    if (paymentBatch.length > 0) {
+      ACHService.getGetReconciledACHData(paymentBatch).then(res => {
         setLoanData(res.result.paymentDataModel);
         setDepositData(res.result.bankDepositDataModel);
       });
     }
-  }, [paymentbatch]);
+  }, [paymentBatch]);
 
   useEffect(() => {}, [loanData, depositData]);
+
+  useEffect(() => {
+    const batchData = getItemFromStore('daily-payments-ach-batch-store', {
+      paymentBatch: ''
+    });
+    setPaymentBatch(batchData.paymentBatch);
+  }, []);
+
+  useEffect(() => {
+    const valuesToSave = { paymentBatch };
+    setItemToStore('daily-payments-ach-batch-store', valuesToSave);
+  });
+
+  const postOnClick = () => {
+    ACHService.savePostACHTransaction(paymentBatch);
+  };
 
   const reconcileOnClick = event => {
     ACHService.getGetReconciledACHData(event).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setBflag(true);
+      setReconciledChecked(true);
     });
   };
 
@@ -50,13 +66,14 @@ const AccountDetails = () => {
     ACHService.getGetUnReconciledACHData(e).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setBflag(false);
+      setReconciledChecked(false);
     });
   };
 
   const chooseLoan = val => {
     setSelectedLoan(val);
   };
+
   const chooseDeposit = val => {
     setSelectedDeposit(val);
   };
@@ -65,179 +82,88 @@ const AccountDetails = () => {
     paymentDataModel: selectedLoan,
     bankDepositDataModel: selectedDeposit
   };
-  console.log(selectedData);
+
   const matchOnClick = () => {
-    ACHService.saveMatchACHRecords(paymentbatch, selectedData).then(res => {
+    ACHService.saveMatchACHRecords(paymentBatch, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
     });
   };
 
   const unMatchOnClick = () => {
-    ACHService.saveUnMatchACHRecords(paymentbatch, selectedData).then(res => {
+    ACHService.saveUnMatchACHRecords(paymentBatch, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setCflag(false);
+      // setCflag(false);
     });
   };
 
-  const postOnClick = () => {
-    ACHService.savePostACHTransaction(paymentbatch);
+  const resetOnClick = () => {
+    console.log('PLACEHOLDER: Add Reset on Click Functionality');
   };
 
-  // Last Edited till here
-
-  // useEffect(() => {
-  //   console.log('UseEffect ', loanData);
-  // }, [loanData]);
   return (
     <>
       <Row className="g-3 mb-3">
         <Col>
-          <TitleCard title="Payment Reconciliation &gt; ACH" />
-        </Col>
-      </Row>
-      <Row className="g-3 mb-3">
-        <Col>
-          <Card>
-            <Card.Body>
-              <Row className="align-items-center">
-                <Col className="pe-xl-8">Payment Batch</Col>
-                <Col xs="12" md="5" className="ms-auto">
-                  <Flex>
-                    <Form.Select
-                      size="sm"
-                      value={paymentbatch}
-                      onChange={e => setPaymentBatch(e.target.value)}
-                      className="me-2"
-                    >
-                      <option value="">Select Payment Batch</option>
-                      {paymentbatches.map((batch, index) => (
-                        <option value={batch.paymentBatchId} key={index}>
-                          {batch.paymentBatchTypeName}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Flex>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      {/* <TitleCard title="Payment Reconciliation &gt; ACH"
+          <TitleCard
+            title="Payment Reconciliation &gt; ACH"
             endEl={
               <Flex>
                 <Form.Select
                   size="sm"
-                  value={paymentbatch}
+                  value={paymentBatch}
                   onChange={e => setPaymentBatch(e.target.value)}
                   className="me-2"
                 >
                   <option value="">Select Payment Batch</option>
-                  <option onClick={change} value="20220207-ACHPersonalChecking">20220207-ACHPersonalChecking</option>
+                  {paymentBatches.map((batch, index) => (
+                    <option value={batch.paymentBatchId} key={index}>
+                      {batch.paymentBatchTypeName}
+                    </option>
+                  ))}
                 </Form.Select>
               </Flex>
             }
-          /> */}
+          />
+        </Col>
+      </Row>
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          <Col lg={{ span: 2, order: 2 }}>
-            {paymentbatch !== undefined ? (
-              <Card className="bg-transparent-50 shadow-none border border-200">
-                <Card.Body>
-                  <div>
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault1"
-                      label="Reconciled"
-                      name="ReconcileRadio"
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        reconcileOnClick(paymentbatch);
-                      }}
-                      defaultChecked
-                    />
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault2"
-                      label="Un-Reconciled"
-                      name="ReconcileRadio"
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        unreconciledOnClick(paymentbatch);
-                      }}
-                    />
-                  </div>
-                  <div className="border-dashed-bottom my-3" />
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    disabled={Bflag}
-                    onClick={() => matchOnClick()}
-                  >
-                    Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0 mb-lg-2"
-                    disabled={!Bflag}
-                    onClick={() => {
-                      unMatchOnClick();
-                    }}
-                  >
-                    Un-Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-warning'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    // onClick={() => resetOnClick()}
-                  >
-                    Reset
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-success'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
-                    onClick={() => postOnClick()}
-                  >
-                    Post Transactions
-                  </Button>
-                </Card.Body>
-              </Card>
-            ) : (
-              // <TransactionHandler
-              //   flag={flag}
-              //   reconcileData={reconcileOnClick}
-              //   unReconcileData={unreconcileOnClick}
-              //   matchData={matchOnClick}
-              //   unMatchData={unMatchOnClick}
-              //   postData={postOnClick}
-              // />
-              <></>
-            )}
-          </Col>
-          <Col lg={{ span: 5, order: 1 }}>
-            {paymentbatch !== undefined ? (
-              <Payment data={loanData} chooseLoan={chooseLoan} />
-            ) : (
-              <></>
-            )}
-          </Col>
-          <Col lg={{ span: 5, order: 3 }}>
-            {paymentbatch !== undefined ? (
-              <Deposits data={depositData} chooseDeposit={chooseDeposit} />
-            ) : (
-              <></>
-            )}
-          </Col>
+          {paymentBatch.length !== 0 ? (
+            <>
+              <Col lg={{ span: 2, order: 2 }}>
+                <ReconciliationHandler
+                  reconciledAction={reconcileOnClick}
+                  unReconciledAction={unreconciledOnClick}
+                  matchAction={matchOnClick}
+                  unMatchAction={unMatchOnClick}
+                  resetAction={resetOnClick}
+                  postAction={postOnClick}
+                  disabled={disabled}
+                  reconciledChecked={reconciledChecked}
+                  selectedFilter={paymentBatch}
+                />
+              </Col>
+              <Col lg={{ span: 5, order: 1 }}>
+                <Payment data={loanData} chooseLoan={chooseLoan} />
+              </Col>
+              <Col lg={{ span: 5, order: 3 }}>
+                <Deposits data={depositData} chooseDeposit={chooseDeposit} />
+              </Col>
+            </>
+          ) : (
+            <>
+              <Card.Body className="overflow-hidden p-lg-6">
+                <Row className="align-items-center justify-content-between">
+                  <Col sm={12} className=" my-5 text-center">
+                    <h3 className="mt-1">Nothing Selected!</h3>
+                    <p>Select a Payment Batch to review for reconciliation</p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </>
+          )}
         </Row>
       </Card>
     </>

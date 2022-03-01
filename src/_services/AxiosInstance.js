@@ -1,5 +1,7 @@
 import axios from 'axios';
+
 const axiosinstance = axios.create({});
+
 axiosinstance.defaults.headers.common['Authorization'] =
   sessionStorage.getItem('msal.idtoken');
 

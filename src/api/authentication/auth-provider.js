@@ -7,7 +7,7 @@ import {
   AUTH_SCOPES
 } from './auth-utils';
 
-import { AuthContext } from './auth-context';
+import { AuthContext } from 'context/Context';
 
 // If you support IE, our recommendation is that you sign-in using Redirect APIs
 const useRedirectFlow = isIE();
