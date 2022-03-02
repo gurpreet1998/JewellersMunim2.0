@@ -58,7 +58,7 @@ export default class Deposits extends React.Component {
         rowCount={this.state.data.length}
       >
         <Card className={'h-100'}>
-          <BasicCardHeader name={'Deposits'} />
+          <BasicCardHeader name={'Deposits'} fontSize={'fs-0'} />
           <Card.Body className="px-0 pt-0 pb-3">
             <AdvanceTable
               table

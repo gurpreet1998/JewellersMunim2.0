@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Col, Row, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const BasicCardHeader = props => {
   return (
-    <Card.Header className={'py-2 py-xl-3'}>
-      <Row className="flex-between-center">
-        <Col xs={4} sm="auto" className="d-flex align-items-center pe-0">
-          <h5 className="text-800 fs-0 mb-0 text-nowrap py-2 py-xl-0">
-            {props.name}
-          </h5>
-        </Col>
-      </Row>
+    <Card.Header>
+      <h5
+        className={`fw-normal text-800 mb-0 text-nowrap py-2 py-xl-0 ${props.fontSize}`}
+      >
+        {props.name}
+      </h5>
     </Card.Header>
   );
 };
 
 BasicCardHeader.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string.isRequired,
+  fontSize: PropTypes.string
 };
 export default BasicCardHeader;

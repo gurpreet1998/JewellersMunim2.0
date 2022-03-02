@@ -4,6 +4,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import BasicCardHeader from 'components/common/BasicCardHeader';
 import IconItem from 'components/common/icon/IconItem';
 
 // Placeholder Data
@@ -43,10 +44,8 @@ const AccountingStats = () => {
   const [stats] = useState(accountingStatsData);
   return (
     <Card className={'h-lg-100'}>
-      <Card.Header className="pb-0">
-        <h5 className="fw-normal text-800 mb-0 mt-2">Loan Stats</h5>
-      </Card.Header>
-      <Card.Body>
+      <BasicCardHeader name={'Loan Stats'} />
+      <Card.Body className={'pt-0'}>
         <Row>
           {stats.map((stat, index) => (
             <Col

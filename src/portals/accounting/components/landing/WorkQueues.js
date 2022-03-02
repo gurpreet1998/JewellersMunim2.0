@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Accordion, Card, Col, Row } from 'react-bootstrap';
+import { Accordion, Card } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody';
+import BasicCardHeader from 'components/common/BasicCardHeader';
 
 import {
   todaysStatements,
@@ -25,16 +26,8 @@ const AppStatus = () => {
   return (
     <>
       <Card className="mt-3">
-        <Card.Header>
-          <Row className="flex-between-center">
-            <Col xs="auto" sm={8} lg={9}>
-              <h5 className="fw-normal text-800 mb-0 text-nowrap py-2 py-xl-0">
-                Work Queues
-              </h5>
-            </Col>
-          </Row>
-        </Card.Header>
-        <Card.Body>
+        <BasicCardHeader name={'Work Queues'} />
+        <Card.Body className={'pt-0'}>
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
               <Accordion.Header>

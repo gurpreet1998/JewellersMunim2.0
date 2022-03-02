@@ -83,7 +83,7 @@ export default class Payment extends React.Component {
         rowCount={this.state.data.length}
       >
         <Card className={'h-100'}>
-          <BasicCardHeader name={'Payments'} />
+          <BasicCardHeader name={'Payments'} fontSize={'fs-0'} />
           <Card.Body className="px-0 pt-0 pb-3">
             <AdvanceTable
               table
