@@ -228,7 +228,7 @@ export const searchResult = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${tableData.loadID}`
+              pathname: `/portal/accounting/home/loandetails/${tableData.loanID}`
             }}
             className="text-primary fw-semi-bold"
           >
