@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import AppContext from 'context/Context';
 import Logo from 'components/common/Logo';
 import SearchBox from './SearchBox';
+import MerchantHierarchy from './MerchantHierarchy';
 import { navbarBreakPoint, topNavbarBreakpoint } from 'config';
 import autoCompleteInitialItem from 'data/autocomplete/autocomplete';
 import TopNavRightSideNavItem from './TopNavRightSideNavItem';
@@ -50,10 +51,20 @@ const NavbarTop = () => {
         as="ul"
       >
         <Nav.Item as="li">
-          <SearchBox autoCompleteItem={autoCompleteInitialItem} />
+          <div style={{ marginRight: '1.2rem', paddingTop: '1rem' }}>
+            <SearchBox autoCompleteItem={autoCompleteInitialItem} />
+          </div>
         </Nav.Item>
       </Nav>
-
+      <Nav
+        navbar
+        className={`align-items-center d-none d-${topNavbarBreakpoint}-block`}
+        as="ul"
+      >
+        <Nav.Item as="li">
+          <MerchantHierarchy />
+        </Nav.Item>
+      </Nav>
       <TopNavRightSideNavItem />
     </Navbar>
   );
