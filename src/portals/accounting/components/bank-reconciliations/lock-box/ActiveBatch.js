@@ -1,13 +1,28 @@
-import React from 'react';
-import { Button, Card, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Col, Row } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import { formatDateCol } from 'helpers/utils';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import { batchData } from 'data/accounting/lockBox';
-import { Link } from 'react-router-dom';
-export default function BatchHistory() {
+import FindLoan from './FindLoan';
+export default function ActiveBatch() {
+  const {
+    register,
+    // handleSubmit,
+    formState: { errors },
+    watch,
+    setValue
+    // clearErrors
+  } = useForm();
+  const [show, setShow] = useState(false);
+  const closeModal = () => {
+    setShow(!show);
+  };
   const columns = [
     {
       accessor: 'batchName',
@@ -63,24 +78,60 @@ export default function BatchHistory() {
   return (
     <>
       <Card className={'h-lg-100'}>
-        <Card.Header>
-          <h5>20220116-Cash/Money1-{batchData[0].createdBy}</h5>
-
-          <Row md={6}>
-            <Button
-              size="sm"
-              variant={'falcon-primary'}
-              onClick={() => window.print()}
-            >
-              Print
-            </Button>
-
-            <Button size="sm" variant={'falcon-primary'}>
-              Edit
-            </Button>
-          </Row>
-        </Card.Header>
         <Card.Body>
+          <Row>
+            <Col xs={3} lg={3}>
+              <Button
+                size="sm"
+                variant={'falcon-primary'}
+                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+                onClick={() => window.print()}
+              >
+                Print
+              </Button>
+            </Col>
+            <Col xs={3} lg={4}>
+              <Button
+                size="sm"
+                variant={'falcon-primary'}
+                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+              >
+                Close Batch
+              </Button>
+            </Col>
+            <Col xs={3} lg={4}>
+              <Button
+                size="sm"
+                variant={'falcon-primary'}
+                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+              >
+                Mark Batch as submitted
+              </Button>
+            </Col>
+            {/* </Row> */}
+            {/* <Row> */}
+            <Col xs={3} lg={4}>
+              <Button
+                size="sm"
+                variant={'falcon-primary'}
+                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+                onClick={() => closeModal()}
+              >
+                Post Payments
+              </Button>
+            </Col>
+          </Row>
+          {show && (
+            <FindLoan
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              watch={watch}
+              closeModal={closeModal}
+              show={show}
+            />
+          )}
+
           <AdvanceTableWrapper
             columns={columns}
             data={batchData}
@@ -108,6 +159,7 @@ export default function BatchHistory() {
           </AdvanceTableWrapper>
         </Card.Body>
       </Card>
+      {/* <PostPayment show={show} closeModal={closeModal} /> */}
     </>
   );
 }

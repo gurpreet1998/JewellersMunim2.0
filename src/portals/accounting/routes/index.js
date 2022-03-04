@@ -18,6 +18,7 @@ import SearchResults from '../components/search-results';
 
 import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
+import BatchDetails from '../components/bank-reconciliations/lock-box/BatchDetails';
 
 export default function AccountingPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
@@ -75,6 +76,13 @@ export default function AccountingPortalRoutes({ match: { url } }) {
             )}
           </Route>
 
+          <Route path={`${url}/reconciliations/lock-box/batchdetails/:batchId`}>
+            {checkForAccess('AccountingHome', ExtensionRole) ? (
+              <BatchDetails />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
           <Route path={`${url}/home/loandetails/:loanId`}>
             {checkForAccess('AccountingHome', ExtensionRole) ? (
               <LoanDetails />

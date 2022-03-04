@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import SubTitleCard from 'components/common/SubTitleCard';
-// import { useForm } from 'react-hook-form';
-import BatchAccordion from './BatchAccordion';
+import { Tab, TabPanel, Tabs, TabList } from 'react-tabs';
+import ActiveBatch from './ActiveBatch';
 import BatchHistory from './BatchHistory';
+
 const lockbox = () => {
   // const {
   //   register,
@@ -22,18 +23,19 @@ const lockbox = () => {
             <SubTitleCard title="Lock Box | Post Payments" />
           </Col>
         </Col>
-        <Col md={12}>
-          {/* <DepositForm
-            register={register}
-            setValue={setValue}
-            errors={errors}
-            watch={watch}
-            show={true}
-          /> */}
-          <BatchAccordion />
-          <BatchHistory></BatchHistory>
-        </Col>
       </Row>
+      <Tabs>
+        <TabList className="mb-0 navbar-glass fs--1 sticky-kit border-bottom border-1">
+          <Tab>Active Batches</Tab>
+          <Tab>Batch History</Tab>
+        </TabList>
+        <TabPanel>
+          <ActiveBatch />
+        </TabPanel>
+        <TabPanel>
+          <BatchHistory />
+        </TabPanel>
+      </Tabs>
     </>
   );
 };

@@ -63,8 +63,14 @@ const AccountDetails = () => {
   useEffect(() => {}, [loanData, depositData]);
 
   const postOnClick = () => {
-    depositService.savePostTransaction(bank);
-    toast.success(`Post transaction(s) successful`);
+    // let message = '';
+    depositService.savePostTransaction(bank).then(res => {
+      if (res.result === 'Please try again') {
+        toast.warning(res.result);
+      } else {
+        toast.success(res.result);
+      }
+    });
   };
 
   const reconcileOnClick = event => {
@@ -100,7 +106,20 @@ const AccountDetails = () => {
     depositService.saveMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      toast.success(`Match record successful`);
+      let paymentSum = 0;
+      let depositSum = 0;
+      selectedData.paymentDataModel.forEach(item => {
+        paymentSum += item.amount;
+      });
+      selectedData.bankDepositDataModel.forEach(item => {
+        depositSum += item.depositAmount;
+        console.log(item);
+      });
+      console.log('Payment sum', paymentSum);
+      console.log('Deposit sum', depositSum);
+      if (depositSum != paymentSum) {
+        toast.warning(`Match record failed`);
+      }
     });
   };
 
@@ -108,7 +127,6 @@ const AccountDetails = () => {
     depositService.saveUnMatchRecords(bank, selectedData).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      toast.success(`Un-match record successful`);
       // setCflag(false);
     });
   };
