@@ -210,11 +210,13 @@ export const ACHService = {
 };
 
 export const searchService = {
-  getSearchResults: function (id) {
+  getSearchResults: function (id, UserId) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/Loan/Accountsearch?input=${id}`).then(r => {
-        resolve(r.data);
-      });
+      axiosinstance
+        .get(`${API_URI}/Loan/Accountsearch?input=${id}&userId=${UserId}`)
+        .then(r => {
+          resolve(r.data);
+        });
     });
   }
 };
