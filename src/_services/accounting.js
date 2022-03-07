@@ -220,3 +220,91 @@ export const searchService = {
     });
   }
 };
+
+// cash check money order service
+
+export const CashCheckMoneyOrderService = {
+  // getPaymentBatchACH: function () {
+  //   return new Promise(resolve => {
+  //     axiosinstance.get(`${API_URI}/Accounting/PaymentBatchACH`).then(r => {
+  //       resolve(r.data);
+  //     });
+  //   });
+  // },
+  getGetReconciledDataForCashCheckAndMoneyOrder: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(`${API_URI}/Accounting/GetReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${id}`)
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  getGetUnReconciledDataForCashCheckAndMoneyOrder: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Accounting/GetUnReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  saveMatchRecordsForCashCheckAndMoneyOrder: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/MatchRecordsForCashCheckAndMoneyOrder?paymentBatchId=${id}`,
+          data
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (MatchRecords):', err));
+  },
+
+  saveUnMatchRecordsForCashCheckAndMoneyOrder: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/UnMatchRecordsForCashCheckAndMoneyOrder?paymentBatchId=${id}`,
+          data
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (UnMatchRecords):', err));
+  },
+
+  savePostTransactionForCashCheckAndMoneyOrder: function (id1,id2) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/PostTransactionForCashCheckAndMoneyOrder?paymentBatchId=${id1}&paymentBatchtypeId=${id2}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (PostTransaction):', err));
+  }
+
+};
+
+export const CashCheckMoneyOrderPaymentBatchService = {
+  getPaymentBatchType: function () {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/PaymentBatch/GetPaymentBatchType`).then(r => {
+        resolve(r.data);
+      });
+    });
+  },
+  getPaymentBatch: function (id) {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`).then(r => {
+        resolve(r.data);
+      });
+    });
+  }
+};

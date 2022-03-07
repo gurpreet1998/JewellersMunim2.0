@@ -13,7 +13,7 @@ import LockBox from '../components/bank-reconciliations/lock-box';
 import CPPReconciliation from '../components/bank-reconciliations/cpp';
 import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
-import Cash from '../components/daily-payments/cash-checks-money-orders';
+import Cash from '../components/daily-payments/CashCheckMoneyOrder';
 import SearchResults from '../components/search-results';
 
 import { AuthContext } from 'context/Context';
