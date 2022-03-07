@@ -234,7 +234,9 @@ export const CashCheckMoneyOrderService = {
   getGetReconciledDataForCashCheckAndMoneyOrder: function (id) {
     return new Promise(resolve => {
       axiosinstance
-        .get(`${API_URI}/Accounting/GetReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${id}`)
+        .get(
+          `${API_URI}/Accounting/GetReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${id}`
+        )
         .then(r => {
           resolve(r.data);
         });
@@ -278,7 +280,7 @@ export const CashCheckMoneyOrderService = {
     }).catch(err => console.log('ERROR (UnMatchRecords):', err));
   },
 
-  savePostTransactionForCashCheckAndMoneyOrder: function (id1,id2) {
+  savePostTransactionForCashCheckAndMoneyOrder: function (id1, id2) {
     return new Promise(resolve => {
       axiosinstance
         .post(
@@ -289,22 +291,25 @@ export const CashCheckMoneyOrderService = {
         });
     }).catch(err => console.log('ERROR (PostTransaction):', err));
   }
-
 };
 
 export const CashCheckMoneyOrderPaymentBatchService = {
   getPaymentBatchType: function () {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/PaymentBatch/GetPaymentBatchType`).then(r => {
-        resolve(r.data);
-      });
+      axiosinstance
+        .get(`${API_URI}/PaymentBatch/GetPaymentBatchType`)
+        .then(r => {
+          resolve(r.data);
+        });
     });
   },
   getPaymentBatch: function (id) {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`).then(r => {
-        resolve(r.data);
-      });
+      axiosinstance
+        .get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`)
+        .then(r => {
+          resolve(r.data);
+        });
     });
   }
 };

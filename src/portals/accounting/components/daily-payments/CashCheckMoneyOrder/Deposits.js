@@ -15,7 +15,7 @@ export default class Deposits extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ data: [...this.props?.data || []] });
+      this.setState({ data: [...(this.props?.data || [])] });
     }
     if (this.state.SelectedRowID !== prevState.SelectedRowID) {
       this.handleChooseDeposit(Object.keys(this.state.SelectedRowID));
@@ -71,7 +71,10 @@ export default class Deposits extends React.Component {
       >
         <Card>
           <BasicCardHeader name={'Deposits'} />
-          <Card.Body style={{ maxHeight:'17rem', overflow:'auto'}} className="px-0 pt-0 pb-3">
+          <Card.Body
+            style={{ maxHeight: '17rem', overflow: 'auto' }}
+            className="px-0 pt-0 pb-3"
+          >
             <AdvanceTable
               table
               headerClassName="bg-200 text-900 text-nowrap align-middle"

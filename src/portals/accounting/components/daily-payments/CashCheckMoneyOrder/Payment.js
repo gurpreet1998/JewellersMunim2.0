@@ -14,7 +14,7 @@ export default class Payment extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.data !== this.props.data) {
-      this.setState({ data: [...this.props?.data || []] });
+      this.setState({ data: [...(this.props?.data || [])] });
     }
     if (this.state.SelectedRowID !== prevState.SelectedRowID) {
       this.handleChooseLoan(Object.keys(this.state.SelectedRowID));
@@ -82,7 +82,10 @@ export default class Payment extends React.Component {
       >
         <Card>
           <BasicCardHeader name={'Payments'} />
-          <Card.Body className="p-0" style={{ maxHeight:'17rem', overflow:'auto'}}>
+          <Card.Body
+            className="p-0"
+            style={{ maxHeight: '17rem', overflow: 'auto' }}
+          >
             <AdvanceTable
               table
               headerClassName="bg-200 text-900 text-nowrap align-middle"
@@ -118,5 +121,6 @@ export default class Payment extends React.Component {
 }
 
 Payment.propTypes = {
-  data: PropTypes.array
+  data: PropTypes.array,
+  chooseLoan: PropTypes.func
 };
