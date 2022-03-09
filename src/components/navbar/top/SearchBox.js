@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { Form, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Fuse from 'fuse.js';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, Route } from 'react-router-dom';
 import Avatar from 'components/common/Avatar';
 import { isIterableArray } from 'helpers/utils';
 import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 // import SoftBadge from 'components/common/SoftBadge';
 import SearchResults from 'portals/accounting/components/search-results';
+import { getItemFromStore } from 'helpers/utils';
 
 const MediaSearchContent = ({ item }) => {
   return (
@@ -46,7 +47,7 @@ const SearchBox = () => {
   const handleSubmit = () => {
     setFlag(true);
   };
-
+  console.log(getItemFromStore('limit-search').inputVal);
   return (
     <Dropdown onToggle={toggle} className="search-box">
       <Dropdown.Toggle
@@ -62,8 +63,15 @@ const SearchBox = () => {
           {flag && (
             <Redirect
               to={`/portal/accounting/home/searchresults/${searchInputValue}`}
-            />
+            >
+              <SearchResults />
+            </Redirect>
           )}
+          {/* {flag && (
+            <Redirect
+              to={`/portal/accounting/home/searchresults/${searchInputValue}`}
+            />
+          )} */}
           <Form.Control
             type="search"
             placeholder="Search..."

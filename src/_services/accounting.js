@@ -221,6 +221,19 @@ export const searchService = {
   }
 };
 
+export const limitSearchService = {
+  getLimitAccountSearch: function (input, UserId, globalMerchantId) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Loan/LimitAccountSearch?input=${input}&userId=${UserId}&globalMerchantId=${globalMerchantId}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  }
+};
 // cash check money order service
 
 export const CashCheckMoneyOrderService = {

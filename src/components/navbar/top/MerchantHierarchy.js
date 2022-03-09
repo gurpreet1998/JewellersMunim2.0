@@ -7,8 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import { Typeahead } from 'react-bootstrap-typeahead';
 import './NavbarTop.css';
 import { merchantService } from '_services/merchantService';
+import { getItemFromStore, setItemToStore } from 'helpers/utils';
 
 const MerchantHierarchy = () => {
+  const initValues = {
+    inputId: ''
+  };
   //const [merchant, setMerchant] = useState('');
   //const [dropdownValue, setDropdownValue] = useState('');
   const [top, setTop] = useState('');
@@ -20,6 +24,7 @@ const MerchantHierarchy = () => {
   const [regionVal, setRegionVal] = useState('');
   const [locationVal, setLocationVal] = useState('');
   const [inputVal, setinputVal] = useState('');
+  const [inputId, setInputId] = useState();
 
   // Reference of Button
   const btnEl = useRef(null);
@@ -35,6 +40,16 @@ const MerchantHierarchy = () => {
     //   window.alert('Merchant Not Selected');
     // }
   };
+  useEffect(() => {
+    const formData = getItemFromStore('limit-search', initValues);
+    // console.log(formData);
+    setInputId(formData.inputId);
+  }, []);
+
+  useEffect(() => {
+    const valuesToSave = { inputId };
+    setItemToStore('limit-search', valuesToSave);
+  });
 
   const ResetSelection = () => {
     console.log('Resetting Selection..');
@@ -67,14 +82,20 @@ const MerchantHierarchy = () => {
     // const istAvailable = region.length !== 0 && region !== null;
     if (isCorporateAvailabe && top !== '') {
       setinputVal(getNameById(top, tops));
+      setInputId(top);
+      // console.log(top);
+      // console.log(inputId);
       if (isRegionAvailable && regionVal !== '') {
         setinputVal(getNameById(regionVal, region));
+        setInputId(regionVal);
       }
       if (isDistrictAvailable && districtVal !== '') {
         setinputVal(getNameById(districtVal, district));
+        setInputId(districtVal);
       }
       if (isLocationAvailable && locationVal !== '') {
         setinputVal(getNameById(locationVal, location));
+        setInputId(locationVal);
       }
 
       reset();

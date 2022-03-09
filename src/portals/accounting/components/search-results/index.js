@@ -4,8 +4,9 @@ import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody
 // import TitleCard from 'components/common/TitleCard';
 import { searchResult } from '../landing/TableMaps';
 import { useLocation, Redirect } from 'react-router-dom';
-import { searchService } from '_services/accounting';
+import { limitSearchService } from '_services/accounting';
 import { AuthContext } from 'context/Context';
+import { getItemFromStore } from 'helpers/utils';
 
 const SearchResults = () => {
   const [searchData, setSearchData] = useState(searchResult);
@@ -15,10 +16,17 @@ const SearchResults = () => {
     location.pathname.split('/')[location.pathname.split('/').length - 1];
 
   useEffect(() => {
-    searchService
-      .getSearchResults(input, auth.account.idTokenClaims.oid)
+    limitSearchService
+      .getLimitAccountSearch(
+        input,
+        auth.account.idTokenClaims.oid,
+        // 186
+        getItemFromStore('limit-search').inputId
+      )
       .then(res => setSearchData({ ...searchData, data: res }));
   }, []);
+  console.log(getItemFromStore('limit-search').inputId);
+
   if (searchData.data.length == 1) {
     return (
       <Redirect
