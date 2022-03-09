@@ -47,7 +47,6 @@ const SearchBox = () => {
   const handleSubmit = () => {
     setFlag(true);
   };
-  console.log(getItemFromStore('limit-search').inputVal);
   return (
     <Dropdown onToggle={toggle} className="search-box">
       <Dropdown.Toggle
