@@ -16,9 +16,10 @@ const PostPayment = ({ show, closeModal, data }) => {
   const handlePostPayment = () => {
     closeModal();
   };
-  console.log('Data in post', data);
+  const d = new Date();
+  console.log('Data in post', d);
   const paymentTypeData = ['Check/Cheque', 'Cash', 'Money Order'];
-  const paymentTypeData1 = ['Regular', 'Postal Money order'];
+  const paymentTypeData1 = ['Regular', 'Principal Only'];
   return (
     <>
       <Modal
@@ -28,6 +29,9 @@ const PostPayment = ({ show, closeModal, data }) => {
         centered
       >
         <Modal.Header>
+          <h5 className="fw-normal text-800 mb-0 text-nowrap py-2 py-xl-0">
+            Post Payment
+          </h5>
           <FalconCloseButton
             size="sm"
             className="position-absolute top-0 end-0 me-2 mt-2"
@@ -42,99 +46,122 @@ const PostPayment = ({ show, closeModal, data }) => {
             <label>First Name: {data.borrowerName.split(' ')[0]}</label>
           </Row>
           <Row>
-            <label>Last Name: {data.borrowerName.split(' ')[1]}</label>
+            <label>
+              Last Name:{' '}
+              {
+                data.borrowerName.split(' ')[
+                  data.borrowerName.split(' ').length - 1
+                ]
+              }
+            </label>
           </Row>
           <Row>
-            <label>Date: </label>
+            <label>Date: {d.toString()}</label>
           </Row>
-          <Row>
-            <label className="sm-6 xl-3">Payment Method</label>
-            <Form.Select
-              label={'Payment Method'}
-              size="sm"
-              setValue={setValue}
-              typeof="select"
-              className="me-2 mb-2"
-            >
-              <option value="">Select Payment Method...</option>
-              {paymentTypeData.map((payment, index) => (
-                <option value={index} key={payment}>
-                  {payment}
-                </option>
-              ))}
-            </Form.Select>
+          <Row className="g-2 align-items-sm-center">
+            <Col>
+              <label className="sm-6 xl-3">Payment Method</label>
+            </Col>
+            <Col>
+              <Form.Select
+                label={'Payment Method'}
+                size="sm"
+                setValue={setValue}
+                typeof="select"
+                className="me-2 mb-2"
+              >
+                <option value="">Select Payment Method...</option>
+                {paymentTypeData.map((payment, index) => (
+                  <option value={index} key={payment}>
+                    {payment}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
           </Row>
-          <Row>
-            <FormInput
-              label="Payment Amount"
-              name="paymentAmount"
-              errors={errors}
-              formGroupProps={{
-                as: Row,
-                // md: 4,
-                // xl: 3,
-                className: 'md-8'
-              }}
-              formControlProps={{
-                ...register('paymentAmount'),
-                placeholder: '$'
-              }}
-            />
+          <Row className="g-2 align-items-sm-center">
+            <Col>
+              {' '}
+              <FormInput
+                label="Payment Amount"
+                name="paymentAmount"
+                errors={errors}
+                formGroupProps={{
+                  as: Row,
+                  // md: 4,
+                  // xl: 3,
+                  className: 'md-8'
+                }}
+                formControlProps={{
+                  ...register('paymentAmount'),
+                  placeholder: '$'
+                }}
+              />
+            </Col>
           </Row>
-          <Row>
+          <Row className="g-2 align-items-sm-center">
             <label className="sm-6 xl-3">Payment Type</label>
-            <Form.Select
-              label={'Payment Type'}
-              size="sm"
-              setValue={setValue}
-              typeof="select"
-              //   onChange={e => {
-              //     setPaymentType(e.target.value);
-              //     // console.log(paymentType);
-              //   }}
-              className="me-2 mb-2"
-            >
-              <option value="">Select Payment Type...</option>
-              {paymentTypeData1.map((payment, index) => (
-                <option value={index} key={payment}>
-                  {payment}
-                </option>
-              ))}
-            </Form.Select>
+            <Col>
+              <Form.Select
+                label={'Payment Type'}
+                size="sm"
+                setValue={setValue}
+                typeof="select"
+                //   onChange={e => {
+                //     setPaymentType(e.target.value);
+                //     // console.log(paymentType);
+                //   }}
+                className="me-2 mb-2"
+              >
+                <option value="">Select Payment Type...</option>
+                {paymentTypeData1.map((payment, index) => (
+                  <option value={index} key={payment}>
+                    {payment}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
           </Row>
-          <Row>
-            <FormInput
-              label="Add notes"
-              name="addNotes"
-              errors={errors}
-              formGroupProps={{
-                as: Row,
-                // md: 4,
-                // xl: 3,
-                className: 'md-8'
-              }}
-            />
+          <Row className="g-2 align-items-sm-center">
+            <Col>
+              <FormInput
+                label="Add notes"
+                name="addNotes"
+                errors={errors}
+                formGroupProps={{
+                  as: Row,
+                  // md: 4,
+                  // xl: 3,
+                  className: 'md-8'
+                }}
+              />
+            </Col>
           </Row>
-          <Row>
-            <label className="sm-6 xl-3">Payment Batch</label>
-            <Form.Select
-              label={'Payment Batch'}
-              size="sm"
-              setValue={setValue}
-              typeof="select"
-              //   onChange={e => {
-              //     setPaymentType(e.target.value);
-              //     // console.log(paymentType);
-              //   }}
-              className="me-2 mb-2"
-            >
-              <option value="">Select Payment Batch...</option>
-              {paymentTypeData.map((payment, index) => (
-                <option value={index} key={payment}>
-                  {payment}
-                </option>
-              ))}
-            </Form.Select>
+
+          <Row className="g-2 align-items-sm-center">
+            <Col>
+              <label className="sm-6 xl-3">Payment Batch</label>
+              <Form.Select
+                label={'Payment Batch'}
+                size="sm"
+                setValue={setValue}
+                disabled={true}
+                value={paymentTypeData[1]}
+                typeof="select"
+                //   onChange={e => {
+                //     setPaymentType(e.target.value);
+                //     // console.log(paymentType);
+                //   }}
+                className="me-2 mb-2"
+              >
+                <option value="">{paymentTypeData[0]}</option>
+                {paymentTypeData.map((payment, index) => (
+                  <option value={index} key={payment}>
+                    {payment}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
           </Row>
         </Modal.Body>
         <Modal.Footer>

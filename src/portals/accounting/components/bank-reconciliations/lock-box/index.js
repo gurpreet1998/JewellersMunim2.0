@@ -17,11 +17,9 @@ const lockbox = () => {
 
   return (
     <>
-      <Row className="g-3 mb-3">
+      <Row className="g-5 mb-2">
         <Col md={12}>
-          <Col md={12}>
-            <SubTitleCard title="Lock Box | Post Payments" />
-          </Col>
+          <SubTitleCard title="Lock Box | Post Payments" />
         </Col>
       </Row>
       <Tabs>

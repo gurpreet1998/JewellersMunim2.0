@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import PropTypes from 'prop-types';
 import PostPayment from './PostPayment';
@@ -57,7 +57,9 @@ const FindLoan = ({ show, closeModal }) => {
             className="position-absolute top-0 end-0 me-2 mt-2"
             onClick={() => handleFindLoan()}
           />
-          <Modal.Title id="contained-modal-title-vcenter">Deposit</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Find Loan
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="ml-3">
           <Row xs={3}>
@@ -77,6 +79,9 @@ const FindLoan = ({ show, closeModal }) => {
             )}
           </Row>
         </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => handleFindLoan()}>Cancel</Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

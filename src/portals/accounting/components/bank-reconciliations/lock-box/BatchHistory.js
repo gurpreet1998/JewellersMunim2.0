@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Card, Row } from 'react-bootstrap';
+import { Button, Card, Col, Row } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-import { formatDateCol } from 'helpers/utils';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import { batchData } from 'data/accounting/lockBox';
+import { batchHistoryData } from 'data/accounting/lockBox';
+import SearchBox from 'components/navbar/top/SearchBox';
 import { Link } from 'react-router-dom';
 export default function BatchHistory() {
   const columns = [
@@ -30,16 +30,17 @@ export default function BatchHistory() {
       accessor: 'batchType',
       Header: 'Batch Type'
     },
+
     {
       accessor: 'batchStatus',
       Header: 'Batch Status'
     },
     {
-      accessor: 'batchAmount',
-      Header: ' Batch Amount',
+      accessor: 'amount',
+      Header: ' Amount',
       Cell: cellInfo => (
         <NumberFormat
-          value={cellInfo.data[cellInfo.row.index].depositAmount}
+          value={cellInfo.data[cellInfo.row.index].amount}
           displayType={'text'}
           thousandSeparator={true}
           prefix={'$'}
@@ -53,43 +54,45 @@ export default function BatchHistory() {
       Header: 'Batch Owner'
     },
     {
-      accessor: 'timeCreated',
-      Header: 'Time Created',
-      Cell: rowData => {
-        return formatDateCol(rowData, 'depositDate');
-      }
+      accessor: 'dateCreated',
+      Header: 'Date Created'
     }
   ];
   return (
     <>
       <Card className={'h-lg-100'}>
         <Card.Header>
-          <h5>20220116-Cash/Money1-{batchData[0].createdBy}</h5>
-
           <Row md={6}>
-            <Button
-              size="sm"
-              variant={'falcon-primary'}
-              onClick={() => window.print()}
-            >
-              Print
-            </Button>
-
-            <Button size="sm" variant={'falcon-primary'}>
-              Edit
-            </Button>
+            <Col>
+              {' '}
+              <Button
+                size="sm"
+                variant={'falcon-primary'}
+                onClick={() => window.print()}
+              >
+                Print
+              </Button>
+            </Col>
+            <Col>
+              <Button size="sm" variant={'falcon-primary'}>
+                Edit
+              </Button>
+            </Col>
+            <Col>
+              <SearchBox />
+            </Col>
           </Row>
         </Card.Header>
         <Card.Body>
           <AdvanceTableWrapper
             columns={columns}
-            data={batchData}
+            data={batchHistoryData}
             selection
             sortable
             setSelectedRowIDs={val => this.setState({ SelectedRowID: val })}
             pagination
             perPage={7}
-            rowCount={batchData.length}
+            rowCount={batchHistoryData.length}
           >
             <Card className={'h-100'}>
               <BasicCardHeader name={''} fontSize={'fs-0'} />

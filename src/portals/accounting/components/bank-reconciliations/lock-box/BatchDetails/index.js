@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Button } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import TitleCard from 'components/common/TitleCard';
 import { batchData } from 'data/accounting/lockBox';
+import SubTitleCard from 'components/common/SubTitleCard';
+import BatchDetailsTable from './BatchDetailsTable';
 const BatchDetails = () => {
   //   const [batchdetail, setD] = useState([]);
   const location = useLocation();
@@ -16,55 +17,65 @@ const BatchDetails = () => {
   batchData.filter(item => {
     if (item.batchId == batchId) x = item;
   });
+  // const [edit, setEdit] = useState(false);
+  // const handleSubmit = e => {
+  //   setEdit(false);
+  // };
+  // const editOnClick = e => {
+  //   setEdit(true);
+  // };
+  // const handleCancel = () => {
+  //   setEdit(false);
+  // };
   console.log('x', x);
   useEffect(() => {}, []);
   return (
     <>
       <Row className="g-3 mb-3">
         <Col md={12}>
-          <TitleCard title="Batch details" />
+          <SubTitleCard title="Lock Box|Post Payment" />
         </Col>
       </Row>
-
+      <Row>
+        <Col
+          xxl={4}
+          sm={6}
+          className={'border-bottom border-sm-0 border-xxl-0 border-xxl-end'}
+        >
+          <Button
+            size="sm"
+            variant={'falcon-primary'}
+            className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+            onClick={() => window.print()}
+          >
+            Print
+          </Button>
+        </Col>
+        <Col
+          xxl={4}
+          sm={6}
+          className={'border-bottom border-sm-0 border-xxl-0 border-xxl-end'}
+        >
+          <Button
+            size="sm"
+            variant={'falcon-primary'}
+            className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+            // onClick={() => editOnClick()}
+          >
+            Edit
+          </Button>
+        </Col>
+      </Row>
       <Card className={'h-lg-100 mb-4'}>
         <Card.Header>
           <Row className="align-items-center">
-            <Col>
-              <h5 className="mb-0 fs-1">Batch Number: {batchId}</h5>
-            </Col>
+            <h4>Batch Details</h4>
           </Row>
         </Card.Header>
         <Card.Body className="bg-light border-top">
-          <Row className="align-items-center">
-            <Col>
-              <h6 className="mb-0 fs-1">Batch Name: {x.batchName}</h6>
-            </Col>
-            <Col>
-              <h6 className="mb-0 fs-1">Deposit Date: {x.depositDate}</h6>
-            </Col>
-          </Row>
-          <Row className="align-items-center">
-            <Col>
-              <h6 className="mb-0 fs-1">Batch Amount: {x.batchAmount}</h6>
-            </Col>
-            <Col>
-              <h6 className="mb-0 fs-1">Batch Status: {x.batchStatus}</h6>
-            </Col>
-          </Row>
-          <Row className="align-items-center">
-            <Col>
-              <h6 className="mb-0 fs-1">Batch Type: {x.batchType}</h6>
-            </Col>
-            <Col>
-              <h6 className="mb-0 fs-1">Created by: {x.createdBy}</h6>
-            </Col>
-          </Row>
-          <Row className="align-items-center">
-            <h6 className="mb-0 fs-1"> Batch Owner: {x.batchOwner}</h6>
-          </Row>
+          <BatchDetailsTable />
         </Card.Body>
       </Card>
-      {/* <Col md={12}>{!tabData && <DTab loanId={loanId} />}</Col> */}
     </>
   );
 };

@@ -123,7 +123,7 @@ export const loanData = [
 export const batchData = [
   {
     batchId: 1234,
-    batchName: 'John Smith',
+    batchName: '20220116-Cash/Money1-AB',
     depositDate: '01/03/2020',
     batchAmount: 456.6,
     batchStatus: 'Closed',
@@ -133,7 +133,7 @@ export const batchData = [
   },
   {
     batchId: 7893,
-    batchName: 'Natasha',
+    batchName: '20220116-Cash/Money2-SB',
     depositDate: '03/04/2020',
     batchAmount: 456.6,
     batchStatus: 'Closed',
@@ -143,7 +143,7 @@ export const batchData = [
   },
   {
     batchId: 3432,
-    batchName: 'Paul',
+    batchName: '20220116-Cash/Money3-PB',
     depositDate: '11/11/2020',
     batchAmount: 656.6,
     batchStatus: 'Open',
@@ -153,12 +153,105 @@ export const batchData = [
   },
   {
     batchId: 9875,
-    batchName: 'Roman',
+    batchName: '20220116-Cash/Money4-B',
     depositDate: '30/09/2020',
     batchAmount: 896.6,
     batchStatus: 'Open',
     batchType: 'Check',
     batchOwner: 'B',
     createdBy: 'A'
+  }
+];
+export const batchdetailsData = [
+  {
+    loanNumber: 'CH349008',
+    loanId: 15,
+    name: 'John Smith',
+    date: '01/03/2020',
+    paymentType: 'check',
+    amount: 456.6,
+    checkNumber: 31213132,
+    depositedBy: 'John Smith',
+    validatedBy: 'John Smith',
+    submittedBy: 'John Smith'
+  },
+  {
+    loanNumber: 1235,
+    loanId: 11,
+    name: 'John Smith',
+    date: '01/03/2020',
+    paymentType: 'check',
+    amount: 456.6,
+    checkNumber: 31213132,
+    depositedBy: 'John Smith',
+    validatedBy: 'John Smith',
+    submittedBy: 'John Smith'
+  },
+
+  {
+    loanNumber: 1236,
+    name: 'John Smith',
+    loanId: 3,
+    date: '01/03/2020',
+    paymentType: 'check',
+    amount: 456.6,
+    checkNumber: 31213132,
+    depositedBy: 'John Smith',
+    validatedBy: 'John Smith',
+    submittedBy: 'John Smith'
+  },
+  {
+    loanNumber: 1237,
+    name: 'John Smith',
+    loanId: 5,
+    date: '01/03/2020',
+    paymentType: 'check',
+    amount: 456.6,
+    checkNumber: 31213132,
+    depositedBy: 'John Smith',
+    validatedBy: 'John Smith',
+    submittedBy: 'John Smith'
+  }
+];
+
+export const batchHistoryData = [
+  {
+    batchId: 1234,
+    batchName: '20220116-Cash/Money1-AB',
+    dateCreated: '01/03/2020',
+    batchAmount: 456.6,
+    batchStatus: 'Closed',
+    batchType: 'Cash',
+    batchOwner: 'AB',
+    createdBy: 'A'
+  },
+  {
+    batchId: 7893,
+    batchName: '20220116-Cash/Money2-SB',
+    dateCreated: '03/04/2020',
+    batchAmount: 456.6,
+    batchStatus: 'Closed',
+    batchOwner: 'SB',
+    batchType: 'Check',
+    createdBy: 'A'
+  },
+  {
+    batchId: 3432,
+    batchName: '20220116-Cash/Money3-PB',
+    dateCreated: '11/11/2020',
+    batchAmount: 656.6,
+    batchStatus: 'Open',
+    batchType: 'Cash',
+    batchOwner: 'PB',
+    createdBy: 'A'
+  },
+  {
+    batchId: 9875,
+    batchName: '20220116-Cash/Money4-B',
+    dateCreated: '30/09/2020',
+    batchAmount: 896.6,
+    batchStatus: 'Open',
+    batchType: 'Check',
+    batchOwner: 'B'
   }
 ];

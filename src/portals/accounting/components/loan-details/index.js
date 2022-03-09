@@ -17,7 +17,7 @@ const loanDetails = () => {
   const [tabData, setTabData] = useState(false);
   let loanId =
     location.pathname.split('/')[location.pathname.split('/').length - 1];
-  console.log(loanDetails);
+  console.log(location);
 
   useEffect(() => {
     loanDetailsByLoanId

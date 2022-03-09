@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Col, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
 import { formatDateCol } from 'helpers/utils';
+import NumberFormat from 'react-number-format';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import { batchData } from 'data/accounting/lockBox';
 import FindLoan from './FindLoan';
+import SubmitBatch from './SubmitBatch';
 export default function ActiveBatch() {
+  //For now as a testting purpose of the buttons this opeb/close functionailty is implemented.
+
+  const [batchData1, setBatchData] = useState(batchData);
+  const [showSubmitted, setShowSubmitted] = useState(false);
   const {
     register,
     // handleSubmit,
@@ -19,10 +24,49 @@ export default function ActiveBatch() {
     setValue
     // clearErrors
   } = useForm();
+
+  const [SelectedRowID, setSelectedRowID] = useState([]);
   const [show, setShow] = useState(false);
   const closeModal = () => {
     setShow(!show);
   };
+  const closeBatches = () => {
+    setShowSubmitted(!showSubmitted);
+    // const rows = Object.keys(SelectedRowID);
+    // let res = [];
+    // for (let i = 0; i < rows.length; i++) {
+    //   if (batchData[rows[i]].batchStatus == 'Open') {
+    //     batchData[rows[i]].batchStatus = 'Closed';
+    //     res.push(batchData[rows[i]]);
+    //   } else {
+    //     batchData[rows[i]].batchStatus = 'Open';
+    //     res.push(batchData[rows[i]]);
+    //   }
+    // }
+    // console.log(res);
+  };
+
+  const handleMatchSubmittedPopUp = () => {
+    setShowSubmitted(!showSubmitted);
+  };
+  const markBatchSubmitted = () => {
+    const rows = Object.keys(SelectedRowID);
+    let res = [];
+    for (let i = 0; i < rows.length; i++) {
+      if (batchData[rows[i]].batchStatus == 'Closed')
+        res.push(batchData[rows[i]]);
+    }
+    console.log(res);
+    setBatchData(res);
+    console.log('New batchData', batchData1);
+    setShowSubmitted(!showSubmitted);
+  };
+  useEffect(() => {
+    console.log(SelectedRowID);
+  }, [SelectedRowID]);
+  useEffect(() => {
+    console.log('Batch data changed', batchData1);
+  }, [batchData1]);
   const columns = [
     {
       accessor: 'batchName',
@@ -54,7 +98,7 @@ export default function ActiveBatch() {
       Header: ' Batch Amount',
       Cell: cellInfo => (
         <NumberFormat
-          value={cellInfo.data[cellInfo.row.index].depositAmount}
+          value={cellInfo.data[cellInfo.row.index].batchAmount}
           displayType={'text'}
           thousandSeparator={true}
           prefix={'$'}
@@ -68,8 +112,8 @@ export default function ActiveBatch() {
       Header: 'Batch Owner'
     },
     {
-      accessor: 'timeCreated',
-      Header: 'Time Created',
+      accessor: 'dateCreated',
+      Header: 'Date Created',
       Cell: rowData => {
         return formatDateCol(rowData, 'depositDate');
       }
@@ -80,7 +124,7 @@ export default function ActiveBatch() {
       <Card className={'h-lg-100'}>
         <Card.Body>
           <Row>
-            <Col xs={3} lg={3}>
+            <Col xs={3} lg={5}>
               <Button
                 size="sm"
                 variant={'falcon-primary'}
@@ -90,27 +134,29 @@ export default function ActiveBatch() {
                 Print
               </Button>
             </Col>
-            <Col xs={3} lg={4}>
+            <Col xs={3} lg={5}>
               <Button
                 size="sm"
                 variant={'falcon-primary'}
                 className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+                onClick={closeBatches}
               >
                 Close Batch
               </Button>
             </Col>
-            <Col xs={3} lg={4}>
+
+            <Col xs={3} lg={5}>
               <Button
-                size="sm"
+                // size="sm"
                 variant={'falcon-primary'}
                 className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-50 text-truncate mb-2"
+                onClick={markBatchSubmitted}
               >
                 Mark Batch as submitted
               </Button>
             </Col>
-            {/* </Row> */}
-            {/* <Row> */}
-            <Col xs={3} lg={4}>
+
+            <Col xs={3} lg={5}>
               <Button
                 size="sm"
                 variant={'falcon-primary'}
@@ -131,13 +177,24 @@ export default function ActiveBatch() {
               show={show}
             />
           )}
+          {showSubmitted && (
+            <SubmitBatch
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              watch={watch}
+              closeModal={handleMatchSubmittedPopUp}
+              show={showSubmitted}
+              SelectedRowID={SelectedRowID}
+            />
+          )}
 
           <AdvanceTableWrapper
             columns={columns}
-            data={batchData}
+            data={batchData1}
             selection
             sortable
-            setSelectedRowIDs={val => this.setState({ SelectedRowID: val })}
+            setSelectedRowIDs={val => setSelectedRowID(val)}
             pagination
             perPage={7}
             rowCount={batchData.length}
