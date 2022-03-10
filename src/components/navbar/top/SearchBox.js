@@ -11,7 +11,6 @@ import Flex from 'components/common/Flex';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 // import SoftBadge from 'components/common/SoftBadge';
 import SearchResults from 'portals/accounting/components/search-results';
-import { getItemFromStore } from 'helpers/utils';
 
 const MediaSearchContent = ({ item }) => {
   return (

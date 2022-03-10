@@ -20,12 +20,12 @@ const SearchResults = () => {
       .getLimitAccountSearch(
         input,
         auth.account.idTokenClaims.oid,
-        // 186
-        getItemFromStore('limit-search').inputId
+        getItemFromStore('limit-search')?.inputId
       )
-      .then(res => setSearchData({ ...searchData, data: res }));
+      .then(res => {
+        setSearchData({ ...searchData, data: res });
+      });
   }, []);
-  console.log(getItemFromStore('limit-search').inputId);
 
   if (searchData.data.length == 1) {
     return (

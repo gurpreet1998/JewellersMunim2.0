@@ -11,7 +11,7 @@ import { getItemFromStore, setItemToStore } from 'helpers/utils';
 
 const MerchantHierarchy = () => {
   const initValues = {
-    inputId: ''
+    inputId: '0'
   };
   //const [merchant, setMerchant] = useState('');
   //const [dropdownValue, setDropdownValue] = useState('');
