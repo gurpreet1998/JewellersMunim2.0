@@ -28,7 +28,7 @@ const MerchantSettlementDetails = () => {
       <Row className="g-3 mb-3">
         <Col xs={12}>
           <TitleCard
-            title="Bank Reconciliations &gt; CML Lender"
+            title="Merchant Settlement Details"
             endEl={
               <Flex>
                 <Form.Select
