@@ -15,7 +15,7 @@ import DepositRec from '../components/manual-payments/deposit-rec';
 import LoanDetails from '../components/loan-details';
 import Cash from '../components/daily-payments/CashCheckMoneyOrder';
 import SearchResults from '../components/search-results';
-
+import MerchantSettlementDetails from '../components/pending-settlements/merchants/Details';
 import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 import BatchDetails from '../components/bank-reconciliations/lock-box/BatchDetails';
@@ -166,6 +166,17 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           <Route path={`${url}/pending-settlements/merchants`} exact>
             {checkForAccess('Merchants', ExtensionRole) ? (
               <PendingMerchantSettlements />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+
+          <Route
+            path={`${url}/pending-settlements/merchants/:merchantId`}
+            exact
+          >
+            {checkForAccess('Merchants', ExtensionRole) ? (
+              <MerchantSettlementDetails />
             ) : (
               <Redirect to="/errors/404" />
             )}

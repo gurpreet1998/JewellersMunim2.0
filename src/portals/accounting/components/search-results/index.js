@@ -27,7 +27,19 @@ const SearchResults = () => {
       });
   }, []);
 
-  if (searchData.data.length == 1) {
+  if (searchData.data.ClassName == 'System.Exception') {
+    return (
+      <div className="h-100">
+        <Card>
+          <Card.Body className="p-0">
+            <div className="text-center">
+              <p className="fw-bold fs-1 mt-3">{searchData.data.Message}</p>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
+    );
+  } else if (searchData.data.length == 1) {
     return (
       <Redirect
         to={`/portal/accounting/home/loandetails/${searchData.data[0].loanID}`}

@@ -326,3 +326,61 @@ export const CashCheckMoneyOrderPaymentBatchService = {
     });
   }
 };
+
+// pending settlement services
+
+export const pendingSettlementService = {
+  getMerchantSettlementSummary: function () {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(`${API_URI}/Merchant/GetMerchantSettlementSummary`)
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  getMerchantSettlementForCMLPayment: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementForCMLPayMent?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  GetMerchantSettlementForCPPayMent: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementForCPPayMent?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  GetMerchantSettlementForCMLRefund: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementForCMLRefund?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  GetMerchantSettlementForCPRefund: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementForCPRefund?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  }
+};

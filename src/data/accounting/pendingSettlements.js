@@ -1,66 +1,126 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+export const PendingSettelmentsSummaryColumns = {
+  columns: [
+    {
+      Header: 'Merchant Name',
+      accessor: 'merchantName',
+      Cell: rowData => {
+        const tableData = rowData.data[rowData.row.index];
+        return (
+          <Link
+            to={{
+              pathname: `/portal/accounting/pending-settlements/merchants/${tableData?.merchantId}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {tableData?.merchantName || 'Merchant Name'}
+          </Link>
+        );
+      }
+    },
+    {
+      Header: 'Merchant Location',
+      accessor: 'merchantLocation'
+    },
+    {
+      Header: 'CML Payment Amount',
+      accessor: 'cmlPaymentAmount'
+    },
+    {
+      Header: 'CML Refund Amount',
+      accessor: 'cmlRefundAmount'
+    },
+    {
+      Header: 'CP+ Payment Amount',
+      accessor: 'cpPaymentAmount'
+    },
+    {
+      Header: 'CP+ Refund Amount',
+      accessor: 'cpRefundAmount'
+    },
+    {
+      Header: 'CP+ Promo Amount',
+      accessor: 'cpPromoAmount'
+    },
+    {
+      Header: 'All Transactions Selected',
+      accessor: 'allTransactionsSelected'
+    }
+  ]
+  // data: [
+  //   {
+  //     id: 1,
+  //     merchantName: 'Jane Doe',
+  //     merchantLocation: 'Brain Balance- Henderson',
+  //     cmlPaymentAmount: 9500.55,
+  //     cmlRefundAmount: 9500.1,
+  //     cpPaymentAmount: 9500.1,
+  //     cpRefundAmount: 9500
+  //   },
+  //   {
+  //     id: 2,
+  //     merchantName: 'Mary Doe',
+  //     merchantLocation: 'Brain Balance- Las Vegas',
+  //     cmlPaymentAmount: 5466,
+  //     cmlRefundAmount: 9500.1,
+  //     cpPaymentAmount: 9500.1,
+  //     cpRefundAmount: 9500
+  //   }]
+};
+
 export const CMLPaymentsTableData = {
   columns: [
     {
-      accessor: 'loanId',
-      Header: 'Loan ID'
+      accessor: 'loanNumber',
+      Header: 'Loan Number',
+      Cell: rowData => {
+        const batchdetail = rowData.data[rowData.row.index];
+        console.log(batchdetail.loanId);
+        return (
+          <Link
+            to={{
+              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {batchdetail.loanNumber}
+          </Link>
+        );
+      }
     },
     {
-      accessor: 'applicantName',
-      Header: 'Applicant Name'
+      Header: 'Pending Settlement Date',
+      accessor: 'pendingSettlementDate'
     },
     {
-      accessor: 'location',
-      Header: 'Location'
+      Header: 'Lender Name',
+      accessor: 'lenderName'
     },
     {
-      accessor: 'accountNumber',
-      Header: 'Account Number'
+      Header: 'Loan Amount',
+      accessor: 'loanAmount'
     },
     {
-      accessor: 'settlementType',
-      Header: 'Settlement Type'
+      Header: 'MDR',
+      accessor: 'mdr'
     },
     {
-      accessor: 'loanAmount',
-      Header: 'Loan Amount'
-    }
-  ],
-  data: [
-    {
-      id: 1,
-      loanId: '34445541',
-      applicantName: 'Jane Doe',
-      location: 'Brain Balance- Henderson',
-      accountNumber: '12345677876',
-      settlementType: 'Other',
-      loanAmount: 9500.55
+      Header: 'Total Amount',
+      accessor: 'totalAmount'
     },
     {
-      id: 2,
-      loanId: '832558877',
-      applicantName: 'Mary Doe',
-      location: 'Brain Balance- Las Vegas',
-      accountNumber: '5556688747',
-      settlementType: 'Principle',
-      loanAmount: 5466
+      Header: 'First Name',
+      accessor: 'borrowerFirstName'
     },
     {
-      id: 3,
-      loanId: '832558877',
-      applicantName: 'John Doe',
-      location: 'Brain Balance- Henderson',
-      accountNumber: '765332211',
-      settlementType: 'Interest',
-      loanAmount: 2544
+      Header: 'Last Name',
+      accessor: 'borrowerLastName'
     },
     {
-      id: 4,
-      loanId: '5558741155',
-      applicantName: 'Mark Doe',
-      location: 'Brain Balance- Summerlin',
-      accountNumber: '65498777456',
-      settlementType: 'Principle',
-      loanAmount: 2900
+      Header: 'Bank Account Number',
+      accessor: 'bankAccountNumber'
     }
   ]
 };
@@ -108,48 +168,58 @@ export const CMLExceptionsTableData = {
 export const CPPPaymentsTableData = {
   columns: [
     {
-      accessor: 'loanId',
-      Header: 'Loan ID'
+      accessor: 'loanNumber',
+      Header: 'Loan Number',
+      Cell: rowData => {
+        const batchdetail = rowData.data[rowData.row.index];
+        console.log(batchdetail.loanId);
+        return (
+          <Link
+            to={{
+              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {batchdetail.loanNumber}
+          </Link>
+        );
+      }
     },
     {
-      accessor: 'applicantName',
-      Header: 'Applicant Name'
+      Header: 'Pending Settlement Date',
+      accessor: 'pendingSettlementDate'
     },
     {
-      accessor: 'location',
-      Header: 'Location'
+      Header: 'Principal Amount',
+      accessor: 'principalAmount'
     },
     {
-      accessor: 'accountNumber',
-      Header: 'Account Number'
+      Header: 'Merchant Interest',
+      accessor: 'merchantInterest'
     },
     {
-      accessor: 'settlementType',
-      Header: 'Settlement Type'
+      Header: 'Choice Interest',
+      accessor: 'choiceInterest'
     },
     {
-      accessor: 'loanAmount',
-      Header: 'Loan Amount'
-    }
-  ],
-  data: [
-    {
-      id: 1,
-      loanId: '34445541',
-      applicantName: 'Jane Doe',
-      location: 'Brain Balance- Henderson',
-      accountNumber: '12345677876',
-      settlementType: 'Other',
-      loanAmount: 9500.55
+      Header: 'Total Interest',
+      accessor: 'totalInterest'
     },
     {
-      id: 2,
-      loanId: '832558877',
-      applicantName: 'Mary Doe',
-      location: 'Brain Balance- Las Vegas',
-      accountNumber: '5556688747',
-      settlementType: 'Principle',
-      loanAmount: 5466
+      Header: 'Total Amount',
+      accessor: 'totalAmount'
+    },
+    {
+      Header: 'First Name',
+      accessor: 'borrowerFirstName'
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'borrowerLastName'
+    },
+    {
+      Header: 'Bank Account Number',
+      accessor: 'bankAccountNumber'
     }
   ]
 };
@@ -196,4 +266,12 @@ export const CPPExceptionsTableData = {
 
 export const merchants = ['Brain Balance', 'Peak Performance', 'Hair Club'];
 
-export const bankAccounts = ['Checking', 'Savings'];
+export const bankAccounts = ['Bank of America'];
+
+export const paymentCategory = [
+  'CML Payments',
+  'CML Refunds',
+  'CP+ Payments',
+  'CP+ Refunds',
+  'CP+Promos'
+];
