@@ -11,7 +11,8 @@ import { getItemFromStore, setItemToStore } from 'helpers/utils';
 
 const MerchantHierarchy = () => {
   const initValues = {
-    inputId: '0'
+    inputId: '0',
+    inputVal: ''
   };
   //const [merchant, setMerchant] = useState('');
   //const [dropdownValue, setDropdownValue] = useState('');
@@ -23,8 +24,10 @@ const MerchantHierarchy = () => {
   const [districtVal, setDistrictVal] = useState('');
   const [regionVal, setRegionVal] = useState('');
   const [locationVal, setLocationVal] = useState('');
-  const [inputVal, setinputVal] = useState('');
-  const [inputId, setInputId] = useState();
+  const [inputVal, setinputVal] = useState(
+    getItemFromStore('limit-search', initValues).inputVal
+  );
+  const [inputId, setInputId] = useState('0');
 
   // Reference of Button
   const btnEl = useRef(null);
@@ -42,14 +45,15 @@ const MerchantHierarchy = () => {
   };
   useEffect(() => {
     const formData = getItemFromStore('limit-search', initValues);
-    // console.log(formData);
+    // console.log(formData.inputId);
     setInputId(formData.inputId);
   }, []);
 
   useEffect(() => {
-    const valuesToSave = { inputId };
+    const valuesToSave = { inputId, inputVal };
+    // console.log('aaaaaaaaaaaaaaaaaa formData');
     setItemToStore('limit-search', valuesToSave);
-  });
+  }, [inputId]);
 
   const ResetSelection = () => {
     console.log('Resetting Selection..');
@@ -62,6 +66,10 @@ const MerchantHierarchy = () => {
     setRegion([]);
     // setMerchantVal('');
     setLocation([]);
+    const valuesToRemove = { inputId: '0', inputVal: '' };
+    setItemToStore('limit-search', valuesToRemove);
+    setinputVal('');
+    reset();
   };
 
   useEffect(() => {
@@ -71,37 +79,38 @@ const MerchantHierarchy = () => {
   const getNameById = (Id, objArray) => {
     const objArr = [...objArray];
     const obj = objArr.find(elem => elem.id?.toString() === Id?.toString());
-    return obj?.name || 'Name';
+    return obj?.name || 'Please choose...';
   };
 
   const Done = () => {
+    // eslint-disable-next-line no-unused-vars
     const isCorporateAvailabe = tops.length !== 0 && tops !== [];
     const isLocationAvailable = location.length !== 0 && location !== null;
     const isDistrictAvailable = district.length !== 0 && district !== null;
     const isRegionAvailable = region.length !== 0 && region !== null;
     // const istAvailable = region.length !== 0 && region !== null;
-    if (isCorporateAvailabe && top !== '') {
-      setinputVal(getNameById(top, tops));
-      setInputId(top);
-      // console.log(top);
-      // console.log(inputId);
-      if (isRegionAvailable && regionVal !== '') {
-        setinputVal(getNameById(regionVal, region));
-        setInputId(regionVal);
-      }
-      if (isDistrictAvailable && districtVal !== '') {
-        setinputVal(getNameById(districtVal, district));
-        setInputId(districtVal);
-      }
-      if (isLocationAvailable && locationVal !== '') {
-        setinputVal(getNameById(locationVal, location));
-        setInputId(locationVal);
-      }
-
-      reset();
-    } else {
-      window.alert('Please Select Corporate');
+    // if (isCorporateAvailabe && top !== '') {
+    setinputVal(getNameById(top, tops));
+    setInputId(top);
+    // console.log(top);
+    // console.log(inputId);
+    if (isRegionAvailable && regionVal !== '') {
+      setinputVal(getNameById(regionVal, region));
+      setInputId(regionVal);
     }
+    if (isDistrictAvailable && districtVal !== '') {
+      setinputVal(getNameById(districtVal, district));
+      setInputId(districtVal);
+    }
+    if (isLocationAvailable && locationVal !== '') {
+      setinputVal(getNameById(locationVal, location));
+      setInputId(locationVal);
+    }
+
+    reset();
+    // } else {
+    //   window.alert('Please Select Corporate');
+    // }
   };
 
   const GetChildren = id => {
@@ -263,8 +272,23 @@ const MerchantHierarchy = () => {
               {/* </Col> */}
               {/* </Row> */}
             </Popover.Body>
-            <Popover.Header style={{ textAlign: 'right' }}>
-              <Button onClick={Done}>Done</Button>
+            <Popover.Header>
+              <Button
+                className="btn-sm ms-2 px-4"
+                variant={'falcon-warning'}
+                onClick={() => {
+                  ResetSelection();
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                className="btn-sm ms-10 px-4"
+                variant={'falcon-primary'}
+                onClick={Done}
+              >
+                Done
+              </Button>
             </Popover.Header>
           </Popover>
         }
@@ -273,7 +297,7 @@ const MerchantHierarchy = () => {
       </OverlayTrigger>
       <Button
         onClick={() => {
-          ResetSelection();
+          // ResetSelection();
           MerchantHierarchyHandler();
         }}
         style={{
