@@ -11,6 +11,14 @@ export const roleBased_Permission = {
           resolve(r.data);
         });
     });
+  },
+
+  getRoles: function () {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/User/GetRoles`).then(r => {
+        resolve(r.data);
+      });
+    });
   }
 };
 
@@ -89,7 +97,7 @@ export const Disclosure = {
 export const Users = {
   getAllUsers: function () {
     return new Promise(resolve => {
-      axiosinstance.get(`${API_URI}/User/getUsers`).then(r => {
+      axiosinstance.get(`${API_URI}/User/GetUsers`).then(r => {
         resolve(r.data);
       });
     });
@@ -103,6 +111,19 @@ export const Users = {
   addNewUser: async function (data) {
     const resp = await axiosinstance.post(`${API_URI}/User/AddUser`, data);
     return resp;
+  },
+  deleteuser: async function (id) {
+    const resp = await axiosinstance.delete(
+      `${API_URI}/User/DeleteUser?AADId=${id}`
+    );
+    return resp.data;
+  },
+  edituser: async function (id, data) {
+    const resp = await axiosinstance.put(
+      `${API_URI}/User/UpdateUser?AADId=${id}`,
+      data
+    );
+    return resp.data;
   }
 };
 

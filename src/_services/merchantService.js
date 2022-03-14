@@ -18,5 +18,13 @@ export const merchantService = {
         resolve(r.data);
       });
     });
+  },
+
+  getAllMerchants: function () {
+    return new Promise(resolve => {
+      axiosinstance.get(`${API_URI}/Merchant/GetAllMerchants`).then(r => {
+        resolve(r.data);
+      });
+    });
   }
 };

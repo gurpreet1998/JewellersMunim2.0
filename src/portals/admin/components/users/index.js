@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Row, Col, Button, Form } from 'react-bootstrap';
 import SubTitleCard from 'components/common/SubTitleCard';
 import Flex from 'components/common/Flex';
 import AddNewUserForm from './AddNewUserForm';
 import AllUsersTable from './AllUsersTable';
+import EditUser from './EditUser';
 
 const Users = () => {
   const [addNewUserFormShow, setaddNewUserFormShow] = useState(false);
   const [searchKeyword, setsearchKeyword] = useState('');
+  const [editUserState, seteditUserState] = useState({});
+
+  useEffect(() => {
+    console.log(Object.keys(editUserState || {}).length !== 0);
+    seteditUserState({});
+  }, [addNewUserFormShow]);
 
   return (
     <>
@@ -18,7 +25,7 @@ const Users = () => {
               title={
                 addNewUserFormShow ? (
                   <>
-                    Users | <span>Add Users</span>
+                    Users | <span>Add User</span>
                   </>
                 ) : (
                   <>Users</>
@@ -36,6 +43,9 @@ const Users = () => {
               onChange={e => setsearchKeyword(e.target.value)}
               value={searchKeyword}
             />
+            <Button size="xm" className="px-3 ms-1 mb-2 w-0 float-right">
+              Delete
+            </Button>
             <Button
               size="xm"
               variant={'primary'}
@@ -51,7 +61,19 @@ const Users = () => {
           {addNewUserFormShow ? (
             <AddNewUserForm setaddNewUserFormShow={setaddNewUserFormShow} />
           ) : (
-            <AllUsersTable searchKeyword={searchKeyword} />
+            <>
+              {Object.keys(editUserState).length !== 0 ? (
+                <EditUser
+                  seteditUserState={seteditUserState}
+                  FormData={editUserState}
+                />
+              ) : (
+                <AllUsersTable
+                  seteditUserState={seteditUserState}
+                  searchKeyword={searchKeyword}
+                />
+              )}
+            </>
           )}
         </Col>
       </Row>

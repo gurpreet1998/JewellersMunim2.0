@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import React from 'react';
 import { Button } from 'react-bootstrap';
+//import { propTypes } from 'react-bootstrap/esm/Image';
 import Flex from '../Flex';
 
 export const AdvanceTablePagination = ({
@@ -12,17 +13,19 @@ export const AdvanceTablePagination = ({
   nextPage,
   pageCount,
   pageIndex,
-  gotoPage
+  gotoPage,
+  align,
+  showicon
 }) => {
   return (
-    <Flex alignItems="center" justifyContent="center">
+    <Flex alignItems={align} justifyContent={align}>
       <Button
         size="sm"
         variant="falcon-default"
         onClick={() => previousPage()}
         className={classNames({ disabled: !canPreviousPage })}
       >
-        <FontAwesomeIcon icon="chevron-left" />
+        {showicon ? 'Previous' : <FontAwesomeIcon icon="chevron-left" />}
       </Button>
       <ul className="pagination mb-0 mx-1">
         {Array.from(Array(pageCount).keys()).map((page, index) => (
@@ -46,10 +49,15 @@ export const AdvanceTablePagination = ({
         onClick={() => nextPage()}
         className={classNames({ disabled: !canNextPage })}
       >
-        <FontAwesomeIcon icon="chevron-right" />
+        {showicon ? 'Next' : <FontAwesomeIcon icon="chevron-left" />}
       </Button>
     </Flex>
   );
+};
+
+AdvanceTablePagination.defaultProps = {
+  align: 'center',
+  showicon: false
 };
 
 export default AdvanceTablePagination;

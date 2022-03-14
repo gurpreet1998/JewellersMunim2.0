@@ -1,58 +1,61 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button, Card, Col, Form, Row } from 'react-bootstrap';
 import {
   Users,
-  roleBased_Permission,
-  userService
+  roleBased_Permission
+  //userService
 } from '_services/userService';
-import { Col, Row, Button, Form, Card } from 'react-bootstrap';
 import styles from './Users.module.css';
 import PropTypes from 'prop-types';
 import { merchantService } from '_services/merchantService';
 
-const AddNewUserForm = ({ setaddNewUserFormShow }) => {
-  const [FormData, setFormData] = useState({});
-  const [Error, setError] = useState('');
+export default function EditUser({ FormData, seteditUserState }) {
+  const [formData, setformData] = useState({ ...FormData });
   const [MerchantDatas, setMerchantDatas] = useState([]);
   const [RolesData, setRolesData] = useState([]);
+  const [errorState, seterrorState] = useState('');
 
-  const inputHandler = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setFormData({ ...FormData, [name]: value });
+  const EditUserHandler = async () => {
+    // let form_data = { ...FormData };
+    let form_data = {
+      FirstName: formData?.firstName,
+      LastName: formData?.lastName,
+      UserName: formData?.userName,
+      mailNickname: formData?.mailNickname || 'Nickname',
+      PhoneNumber: formData?.phoneNumber,
+      IsActive: formData?.isActive,
+      CreatedOn: formData?.createdOn,
+      ModifiedOn: new Date().toLocaleString(),
+      RoleId: formData?.roleId,
+      Merchant: formData?.merchant,
+      Borrower: formData?.borrower,
+      Email: formData?.email
+    };
+
+    if (FormData.email !== form_data.Email) {
+      // Check If User Exists
+      const resp = await Users.checkIfUserExists(form_data.Email);
+
+      if (resp.status == 200) {
+        // User Exists
+        seterrorState('User ALready Exists');
+        return;
+      } else {
+        // console.log('New User');
+        seterrorState('');
+      }
+    }
+    await Users.edituser(FormData.aadId, form_data);
+    // Refreshing All User Details
+    seteditUserState({});
   };
 
-  const AddNewUserHandler = async () => {
-    let form_data = { ...FormData };
-    form_data = {
-      ...form_data,
-      CreatedOn: new Date().toLocaleString(),
-      ModifiedOn: new Date().toLocaleString(),
-      Borrower: 'string',
-      //Merchant: "string",
-      mailNickname: 'string'
-      //   passwordProfile: {
-      //     forceChangePasswordNextSignIn: true,
-      //     password: FormData.Password
-      //   }
-    };
-    // delete form_data.Password;
-    // delete form_data.RoleId;
+  useEffect(() => {
+    setformData({ ...FormData });
+  }, [FormData]);
 
-    // Check If User Exists
-    const resp = await Users.checkIfUserExists(form_data.Email);
-
-    if (resp.status == 200) {
-      // User Exists
-      setError('User ALready Exists');
-      return;
-    } else {
-      // console.log('New User');
-      setError('');
-    }
-    const data = await Users.addNewUser(form_data);
-    // Refreshing All User Details
-    setaddNewUserFormShow(false);
+  const inputHandler = e => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
@@ -61,22 +64,22 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
     roleBased_Permission.getRoles().then(res => setRolesData(res));
   }, []);
 
-  //console.log(RolesData);
-
   return (
     <>
       <Card className={styles.addUserForm}>
         <Card.Header style={{ borderBottom: '1px solid gray' }}>
-          Add User
+          Edit User
         </Card.Header>
         <Card.Body style={{ fontSize: '12px' }}>
           <Form
             action="javascript:void(0)"
             method="POST"
             id="add-new-user-form"
-            onSubmit={AddNewUserHandler}
+            onSubmit={EditUserHandler}
           >
-            {Error !== '' && <h6 style={{ color: 'red' }}>Error: {Error} </h6>}
+            {errorState !== '' && (
+              <h6 style={{ color: 'red' }}>Error: {errorState} </h6>
+            )}
             <Row>
               <Col md={4}>
                 <Form.Group as={Row} className="mb-3" controlId="formName">
@@ -86,8 +89,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   <Col sm="8">
                     <Form.Control
                       required
+                      value={formData?.firstName}
                       onChange={inputHandler}
-                      name="FirstName"
+                      name="firstName"
                       type="text"
                       placeholder="Enter Name"
                     />
@@ -96,7 +100,7 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                 <Form.Group
                   as={Row}
                   className="mb-3"
-                  name="Password"
+                  name="password"
                   controlId="formUsername"
                 >
                   <Form.Label column sm="4">
@@ -104,10 +108,11 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Control
-                      required
-                      //disabled
+                      //required
+                      disabled
+                      value={formData?.password}
                       onChange={inputHandler}
-                      name="Password"
+                      name="password"
                       type="password"
                       placeholder="Enter Temp Password"
                     />
@@ -119,8 +124,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Select
-                      name="RoleId"
-                      required
+                      name="roleId"
+                      value={formData?.roleId}
+                      //required
                       onChange={inputHandler}
                       aria-label="Default select example"
                       // placeholder="Select Role"
@@ -145,8 +151,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   <Col sm="8">
                     <Form.Control
                       required
+                      value={formData?.lastName}
                       onChange={inputHandler}
-                      name="LastName"
+                      name="lastName"
                       type="text"
                       placeholder="Enter First Name"
                     />
@@ -160,8 +167,10 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   <Col sm="8">
                     <Form.Control
                       required
+                      value={formData?.email}
                       onChange={inputHandler}
-                      name="Email"
+                      name="email"
+                      disabled={true}
                       type="email"
                       placeholder="Enter Email"
                     />
@@ -174,7 +183,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   </Form.Label>
                   <Col sm="8">
                     <Form.Select
-                      name="Merchant"
+                      disabled
+                      value={formData?.merchant}
+                      name="merchant"
                       aria-label="Default select example"
                       onChange={inputHandler}
                     >
@@ -198,8 +209,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   <Col sm="8">
                     <Form.Control
                       required
+                      value={formData?.userName}
                       onChange={inputHandler}
-                      name="UserName"
+                      name="userName"
                       type="text"
                       placeholder="Enter Temp Username"
                     />
@@ -213,9 +225,10 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                   <Col sm="8">
                     <Form.Control
                       required
+                      value={formData?.phoneNumber}
                       className={styles.phoneNumberInput}
                       onChange={inputHandler}
-                      name="PhoneNumber"
+                      name="phoneNumber"
                       type="number"
                       // maxLength="10"
                       placeholder="Enter Phone"
@@ -235,7 +248,7 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
           <Button
             type="button"
             style={{ marginLeft: '2rem' }}
-            onClick={() => setaddNewUserFormShow(false)}
+            onClick={() => seteditUserState({})}
             variant="secondary"
           >
             CANCEL
@@ -244,8 +257,9 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
       </Card>
     </>
   );
+}
+
+EditUser.propTypes = {
+  FormData: PropTypes.any,
+  seteditUserState: PropTypes.any
 };
-
-AddNewUserForm.propTypes = { setaddNewUserFormShow: PropTypes.func.isRequired };
-
-export default AddNewUserForm;
