@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import CustomerCareHome from '../components/landing';
-
+import CustomerLoanDetails from '../components/loan-details';
 import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 // import BatchDetails from '../components/bank-reconciliations/lock-box/BatchDetails';
@@ -70,6 +70,15 @@ export default function CustomerCarePortalRoutes({ match: { url } }) {
               <Redirect to="/errors/404" />
             )}
           </Route>
+
+          <Route path={`${url}/home/loandetails/:loanId`}>
+            {checkForAccess('CustomerCareHome', ExtensionRole) ? (
+              <CustomerLoanDetails />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+
           <Route path={`${url}/loanapplications/hardstops`} exact>
             {checkForAccess('HardStops', ExtensionRole) ? (
               <HardStops />

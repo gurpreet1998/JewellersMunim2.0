@@ -3,6 +3,7 @@ import { Row, Col, Card } from 'react-bootstrap';
 import TitleCard from 'components/common/TitleCard';
 import Payment from './Payment';
 import Deposits from './Deposits';
+import PostTransaction from './postTransaction';
 import ReconciliationHandler from '../../ReconciliationHandler';
 
 import { LoanTableData } from 'data/accounting/unmatcheddeposits';
@@ -13,6 +14,7 @@ const AccountDetails = () => {
   const [depositData, setDepositData] = useState(BulkDepositsTableData);
   const [disabled] = useState(true);
   const [reconciledChecked, setReconciledChecked] = useState(true);
+  const [show, setShow] = useState(false);
 
   const tempLoanData = LoanTableData;
   const tempDepositData = BulkDepositsTableData;
@@ -50,7 +52,12 @@ const AccountDetails = () => {
   };
 
   const postOnClick = () => {
+    closeModal();
     return console.log('postOnClick placeholder');
+  };
+
+  const closeModal = () => {
+    setShow(!show);
   };
 
   useEffect(() => {
@@ -85,6 +92,7 @@ const AccountDetails = () => {
             <Deposits data={depositData} />
           </Col>
         </Row>
+        {show && <PostTransaction closeModal={closeModal} show={show} />}
       </Card>
     </>
   );
