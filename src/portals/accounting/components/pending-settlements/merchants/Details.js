@@ -7,20 +7,23 @@ import CMLTransaction from './CMLPayments';
 import CMLRefund from './CMLRefund';
 import CPPTransaction from './CPPayments';
 import CPRefund from './CPRefund';
-// import AdvanceTableSearchBox from 'components/common/advance-table/AdvanceTableSearchBox';
-
-// Placeholder data - todo: Replace with API
+import { pendingSettlementService } from '_services/accounting';
 import { paymentCategory } from 'data/accounting/pendingSettlements';
 
 const MerchantSettlementDetails = () => {
-  const [paymentCat, setpaymentCat] = useState('');
+  const [paymentCat, setpaymentCat] = useState('CML Payments');
   // eslint-disable-next-line no-unused-vars
   const [paymentCategories, setpaymentCategories] = useState(paymentCategory);
   const location = useLocation();
+  const [merchantName, setMerchantName] = useState('');
   let merchantId =
     location.pathname.split('/')[location.pathname.split('/').length - 1];
-  // console.log(merchantId);
-
+  // console.log('merchantId', merchantId);
+  useEffect(() => {
+    pendingSettlementService
+      .GetMerchantSettlementFindName(merchantId)
+      .then(res => setMerchantName(res));
+  }, []);
   useEffect(() => {}, [paymentCat]);
 
   return (
@@ -28,7 +31,7 @@ const MerchantSettlementDetails = () => {
       <Row className="g-3 mb-3">
         <Col xs={12}>
           <TitleCard
-            title="Merchant Settlement Details"
+            title={`Merchant Settlement Details> ${merchantName}`}
             endEl={
               <Flex>
                 <Form.Select
@@ -39,7 +42,7 @@ const MerchantSettlementDetails = () => {
                   }}
                   className="me-2"
                 >
-                  <option value="">Select Payment Category...</option>
+                  <option value="">Select payment</option>
                   {paymentCategories.map((category, index) => (
                     <option value={category} key={index}>
                       {category}
@@ -53,7 +56,7 @@ const MerchantSettlementDetails = () => {
       </Row>
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          {paymentCat === 'CML Payments' ? (
+          {paymentCat == 'CML Payments' ? (
             <CMLTransaction merchantId={merchantId} />
           ) : paymentCat === 'CML Refunds' ? (
             <CMLRefund merchantId={merchantId} />
@@ -61,7 +64,7 @@ const MerchantSettlementDetails = () => {
             <CPPTransaction merchantId={merchantId} />
           ) : paymentCat === 'CP+ Refunds' ? (
             <CPRefund merchantId={merchantId} />
-          ) : paymentCat === 'CP+Promos' ? (
+          ) : paymentCat === 'CP+ Promos' ? (
             <CPPTransaction merchantId={merchantId} />
           ) : (
             <>

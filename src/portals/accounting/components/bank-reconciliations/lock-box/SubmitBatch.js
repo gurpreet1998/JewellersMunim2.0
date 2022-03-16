@@ -45,33 +45,54 @@ function SubmitBatch({ show, closeModal, SelectedRowID }) {
             onClick={() => handleSubmitBatch()}
           />
           <Modal.Title id="contained-modal-title-vcenter">
-            Batch Submitted
+            <Row> Batch Submitted</Row>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="ml-3">
-          <Row className="g-2 align-items-sm-center">
-            {closedBatchesData[0].batchName}
-          </Row>
-          <Row className="g-2 align-items-sm-center">
-            <FormInput
-              label="Deposit reference Id (Optional)"
-              name="referenceId"
-              errors={errors}
-              setValue={setValue}
-              formGroupProps={{
-                as: Row,
-                // md: 4,
-                // xl: 3,
-                className: 'md-8'
-              }}
-              formControlProps={{
-                ...register('referenceId'),
-                placeholder: 'Deposit reference Id'
-              }}
-            />
-          </Row>
+          {closedBatchesData[0].batchName}
+          <FormInput
+            label="Deposit reference Id (Optional)"
+            name="referenceId"
+            errors={errors}
+            setValue={setValue}
+            formGroupProps={{
+              as: Row,
+              // md: 4,
+              // xl: 3,
+              className: 'md-8'
+            }}
+            formControlProps={{
+              ...register('referenceId'),
+              placeholder: 'Deposit reference Id'
+            }}
+          />
+          <FormInput
+            type="date"
+            label="Date"
+            name="date"
+            errors={errors}
+            setValue={setValue}
+            formGroupProps={{
+              //   as: Row,
+              sm: 6,
+              xl: 3,
+              className: 'mb-3'
+            }}
+            formControlProps={{
+              placeholder: 'E.g. 12/01/2028',
+              ...register('date')
+            }}
+            datepickerProps={{
+              dateFormat: 'MM/dd/yyyy',
+              showMonthDropdown: true,
+              showYearDropdown: true,
+              dropdownMode: 'select'
+              // minDate: idExpStartDate
+            }}
+          />
         </Modal.Body>
         <Modal.Footer>
+          <Button onClick={() => handleSubmitBatch()}>Cancel</Button>
           <Button onClick={() => handleSubmitBatch()}>Submit Batch</Button>
         </Modal.Footer>
       </Modal>

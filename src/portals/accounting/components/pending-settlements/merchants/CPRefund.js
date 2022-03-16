@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
+import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 // import { Link } from 'react-router-dom';
@@ -29,7 +30,18 @@ const CMLRefund = ({ merchantId }) => {
       pendingSettlementService.GetMerchantSettlementForCPRefund(merchantId);
     res.then(res => setTableData(res));
   };
-
+  let totalPrincipalAmount = 0;
+  let totalMerchantInterest = 0;
+  let totalChoiceInterest = 0;
+  let sumTotalInterest = 0;
+  let totalSumAmount = 0;
+  for (let i = 0; i < tableData.length; i++) {
+    totalPrincipalAmount += tableData[i].principalAmount;
+    totalChoiceInterest += tableData[i].choiceInterest;
+    totalMerchantInterest += tableData[i].merchantInterest;
+    sumTotalInterest += tableData[i].totalInterest;
+    totalSumAmount += tableData[i].totalAmount;
+  }
   return (
     <>
       <Card className={'h-lg-100'}>
@@ -57,6 +69,80 @@ const CMLRefund = ({ merchantId }) => {
                   }}
                 />
               </Card.Body>
+              <Row className="flex-end-center">
+                <Col xs="auto" className="d-flex align-items-end pe-6">
+                  <h6 className="mb-0 text-nowrap">Total: </h6>
+                </Col>
+
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={totalPrincipalAmount}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={totalMerchantInterest}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={totalChoiceInterest}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={sumTotalInterest}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={totalSumAmount}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
+                <Col xs="auto" className="d-flex align-items-end pe-8" />
+                <Col xs="auto" className="d-flex align-items-end pe-8" />
+                <Col xs="auto" className="d-flex align-items-end pe-4" />
+              </Row>
               <Card.Footer>
                 <AdvanceTableFooter
                   rowCount={tableData.length}

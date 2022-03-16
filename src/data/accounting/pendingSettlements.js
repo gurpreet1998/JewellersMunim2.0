@@ -273,5 +273,5 @@ export const paymentCategory = [
   'CML Refunds',
   'CP+ Payments',
   'CP+ Refunds',
-  'CP+Promos'
+  'CP+ Promos'
 ];

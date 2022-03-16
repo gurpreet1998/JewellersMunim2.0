@@ -339,6 +339,17 @@ export const pendingSettlementService = {
         });
     });
   },
+  GetMerchantSettlementFindName: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementFindName?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
   getMerchantSettlementForCMLPayment: function (id) {
     return new Promise(resolve => {
       axiosinstance
@@ -377,6 +388,18 @@ export const pendingSettlementService = {
       axiosinstance
         .get(
           `${API_URI}/Merchant/GetMerchantSettlementForCPRefund?merchanctId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  GetMerchantSettlementPaymentCategory: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Merchant/GetMerchantSettlementPaymentCategory?merchanctId=${id}`
         )
         .then(r => {
           resolve(r.data);

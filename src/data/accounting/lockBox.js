@@ -220,7 +220,7 @@ export const batchHistoryData = [
     batchName: '20220116-Cash/Money1-AB',
     dateCreated: '01/03/2020',
     batchAmount: 456.6,
-    batchStatus: 'Closed',
+    batchStatus: 'Submitted',
     batchType: 'Cash',
     batchOwner: 'AB',
     createdBy: 'A'
@@ -230,7 +230,7 @@ export const batchHistoryData = [
     batchName: '20220116-Cash/Money2-SB',
     dateCreated: '03/04/2020',
     batchAmount: 456.6,
-    batchStatus: 'Closed',
+    batchStatus: 'Submitted',
     batchOwner: 'SB',
     batchType: 'Check',
     createdBy: 'A'
@@ -240,7 +240,7 @@ export const batchHistoryData = [
     batchName: '20220116-Cash/Money3-PB',
     dateCreated: '11/11/2020',
     batchAmount: 656.6,
-    batchStatus: 'Open',
+    batchStatus: 'Submitted',
     batchType: 'Cash',
     batchOwner: 'PB',
     createdBy: 'A'
@@ -250,7 +250,7 @@ export const batchHistoryData = [
     batchName: '20220116-Cash/Money4-B',
     dateCreated: '30/09/2020',
     batchAmount: 896.6,
-    batchStatus: 'Open',
+    batchStatus: 'Submitted',
     batchType: 'Check',
     batchOwner: 'B'
   }

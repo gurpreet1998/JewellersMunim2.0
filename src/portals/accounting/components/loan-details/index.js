@@ -116,6 +116,7 @@ const loanDetails = () => {
                   <p className="fw-semi-bold mb-2">Current Due</p>
                   <p className="fw-semi-bold mb-2">Current Principal</p>
                   <p className="fw-semi-bold mb-2">Next Due Date</p>
+                  <p className="fw-semi-bold mb-2">Next Contact Date</p>
                 </Col>
                 <Col>
                   <p className="mb-2">{loanDetails.location || 'Not Found'}</p>
@@ -165,6 +166,9 @@ const loanDetails = () => {
                     {loanDetails.nextDueDate !== null
                       ? loanDetails.nextDueDate
                       : 'Not Found'}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.nextContactDate || 'Not Found'}
                   </p>
                 </Col>
               </Row>

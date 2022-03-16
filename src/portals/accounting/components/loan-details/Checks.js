@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form';
 import ValidateCaller from './ValidateCaller';
 import PropTypes from 'prop-types';
 
+import { Dropdown } from 'react-bootstrap';
+import { selectScriptData } from 'data/accounting/loandetails';
+
 export default function Checks(props) {
   const [modal, setModal] = useState(false);
   const {
@@ -14,7 +17,6 @@ export default function Checks(props) {
     setValue
     // clearErrors
   } = useForm();
-
   const closeModal = () => {
     setModal(false);
     console.log('Heyyy');
@@ -101,6 +103,26 @@ export default function Checks(props) {
             loanId={props.loanId}
           />
         )}
+      </label>
+      <label className="p-2" />
+      <Button className="btn-sm">Add Notes</Button>
+      <label className="p-2">
+        <Dropdown className="e-caret-hide">
+          <Dropdown.Toggle className="btn-sm">Select Script</Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item type="button">Welcome Call Script</Dropdown.Item>
+            {selectScriptData.map(item => (
+              <Dropdown.Item
+                key={item.key}
+                onClick={e =>
+                  console.log('Event at dropdown', e.target.text, item.key)
+                }
+              >
+                {item.value}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
       </label>
     </div>
   );

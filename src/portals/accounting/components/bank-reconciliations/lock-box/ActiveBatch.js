@@ -11,9 +11,11 @@ import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import { batchData } from 'data/accounting/lockBox';
 import FindLoan from './FindLoan';
 import SubmitBatch from './SubmitBatch';
+import { toast } from 'react-toastify';
 export default function ActiveBatch() {
   //For now as a testting purpose of the buttons this opeb/close functionailty is implemented.
 
+  // eslint-disable-next-line no-unused-vars
   const [batchData1, setBatchData] = useState(batchData);
   const [showSubmitted, setShowSubmitted] = useState(false);
   const {
@@ -31,19 +33,20 @@ export default function ActiveBatch() {
     setShow(!show);
   };
   const closeBatches = () => {
-    setShowSubmitted(!showSubmitted);
-    // const rows = Object.keys(SelectedRowID);
-    // let res = [];
-    // for (let i = 0; i < rows.length; i++) {
-    //   if (batchData[rows[i]].batchStatus == 'Open') {
-    //     batchData[rows[i]].batchStatus = 'Closed';
-    //     res.push(batchData[rows[i]]);
-    //   } else {
-    //     batchData[rows[i]].batchStatus = 'Open';
-    //     res.push(batchData[rows[i]]);
-    //   }
-    // }
-    // console.log(res);
+    // setShowSubmitted(!showSubmitted);
+    const rows = Object.keys(SelectedRowID);
+    let res = [];
+    if (rows.length > 0) {
+      for (let i = 0; i < rows.length; i++) {
+        if (batchData[rows[i]].batchStatus == 'Open') {
+          batchData[rows[i]].batchStatus = 'Closed';
+          res.push(batchData[rows[i]]);
+        }
+      }
+      console.log(res);
+    } else {
+      toast.warning('Select one row atleast');
+    }
   };
 
   const handleMatchSubmittedPopUp = () => {
@@ -51,15 +54,22 @@ export default function ActiveBatch() {
   };
   const markBatchSubmitted = () => {
     const rows = Object.keys(SelectedRowID);
-    let res = [];
-    for (let i = 0; i < rows.length; i++) {
-      if (batchData[rows[i]].batchStatus == 'Closed')
-        res.push(batchData[rows[i]]);
+    if (rows.length > 0) {
+      let res = [];
+      for (let i = 0; i < rows.length; i++) {
+        if (batchData[rows[i]].batchStatus === 'Closed') {
+          res.push(batchData[rows[i]]);
+          setShowSubmitted(!showSubmitted);
+        } else {
+          toast.warning('Batch not closed');
+        }
+      }
+      console.log(res);
+      // setBatchData(res);
+      // console.log('New batchData', batchData1);
+    } else {
+      toast.warning('Select one row atleast');
     }
-    console.log(res);
-    setBatchData(res);
-    console.log('New batchData', batchData1);
-    setShowSubmitted(!showSubmitted);
   };
   useEffect(() => {
     console.log(SelectedRowID);

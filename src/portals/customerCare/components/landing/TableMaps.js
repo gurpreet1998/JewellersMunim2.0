@@ -13,7 +13,7 @@ export const todaysStatements = {
         return (
           <Link
             to={{
-              pathname: `/portal/customercare/home/loandetails/${tableData.loanId}`
+              pathname: `/portal/customercare/home/loandetails/${tableData.id}`
             }}
             className="text-primary fw-semi-bold"
           >
