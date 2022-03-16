@@ -11,6 +11,7 @@ import Users from 'portals/admin/components/users';
 import MainRoutes from './MainRoutes';
 
 import AppContext, { AuthContext } from 'context/Context';
+import CustomerCareHome from 'portals/customerCare/components/home';
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
 
@@ -76,6 +77,9 @@ function ShowDesiredLandingPage() {
 
       case 'Admin':
         return <Route path="/" exact component={Users} />;
+
+      case 'Customer-Care':
+        return <Route path="/" exact component={CustomerCareHome} />;
 
       default:
         return <Redirect to={`errors/501`} />; // When role is not defined

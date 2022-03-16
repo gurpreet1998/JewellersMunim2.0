@@ -9,6 +9,7 @@ import ComingSoon from 'components/pages/ComingSoon';
 import MerchantPortalRoutes from 'portals/merchant/routes';
 import AccountingPortalRoutes from 'portals/accounting/routes';
 import AdminPortalRoutes from 'portals/admin/routes';
+import CustomerCarePortalRoutes from 'portals/customerCare/routes';
 
 const inActiveRoutes = flatRoutes(routes).filter(route => !route.active);
 
@@ -21,6 +22,8 @@ const MainRoutes = () => (
     <Route path="/portal/accounting/" component={AccountingPortalRoutes} />
 
     <Route path="/portal/admin/" component={AdminPortalRoutes} />
+
+    <Route path="/portal/customercare/" component={CustomerCarePortalRoutes} />
 
     {/*Coming Soon*/}
     <Route

@@ -210,6 +210,81 @@ export const accountingPortalRoutes = {
   ]
 };
 
+export const customerCarePortalRoutes = {
+  label: 'Customer Care Portal',
+  labelDisable: false,
+  children: [
+    {
+      name: 'Home',
+      keyword: 'CustomerCareHome',
+      icon: 'home',
+      to: '/portal/customercare/home',
+      active: true
+    },
+    {
+      name: 'Loan Applications',
+      keyword: 'LoanApplications',
+      icon: 'university',
+      active: true,
+      children: [
+        {
+          name: 'Hard Stops',
+          keyword: 'HardStops',
+          to: '/portal/customercare/loanapplications/hardstops',
+          active: true
+        }
+      ]
+    },
+    {
+      name: 'Loans',
+      keyword: 'Loans',
+      icon: 'calendar-day',
+      active: true,
+      children: [
+        {
+          name: 'Dispute And Complaints',
+          keyword: 'DisputeAndComplaints',
+          to: '/portal/customercare/loans/dispute&complaints',
+          active: true
+        },
+        {
+          name: 'Red Flags',
+          keyword: 'RedFlags',
+          to: '/portal/customercare/loans/redflags',
+          active: true
+        },
+        {
+          name: 'NSF',
+          keyword: 'NSF',
+          to: '/portal/customercare/loans/nsf',
+          active: true
+        }
+      ]
+    },
+    {
+      name: 'Merchants',
+      keyword: 'CustomerCareMerchants',
+      icon: 'home',
+      to: '/portal/customercare/merchants',
+      active: true
+    },
+    {
+      name: 'Lenders',
+      keyword: 'CustomerCareLenders',
+      icon: 'home',
+      to: '/portal/customercare/lenders',
+      active: true
+    },
+    {
+      name: 'Reports',
+      keyword: 'CustomerCareReports',
+      icon: 'home',
+      to: '/portal/customercare/reports',
+      active: true
+    }
+  ]
+};
+
 export const appRoutes = {
   label: 'other',
   children: [
@@ -233,5 +308,6 @@ export const appRoutes = {
 export default [
   merchantPortalRoutes,
   accountingPortalRoutes,
-  adminPortalRoutes
+  adminPortalRoutes,
+  customerCarePortalRoutes
 ];
