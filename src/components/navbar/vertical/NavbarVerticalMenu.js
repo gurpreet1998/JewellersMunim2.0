@@ -87,7 +87,10 @@ const NavbarVerticalMenu = ({ routes }) => {
     // navigation menu items
     for (let i = 0; i < arr.length; i++) {
       const element = arr[i];
-      if (AccessArr?.includes(element.name)) {
+      if (
+        AccessArr?.includes(element.keyword) ||
+        AccessArr?.includes(element.name)
+      ) {
         return true;
       }
     }
