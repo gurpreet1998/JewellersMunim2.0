@@ -11,7 +11,7 @@ import Users from 'portals/admin/components/users';
 import MainRoutes from './MainRoutes';
 
 import AppContext, { AuthContext } from 'context/Context';
-import CustomerCareHome from 'portals/customerCare/components/home';
+import CustomerCareHome from 'portals/customerCare/components/landing';
 const MainLayout = () => {
   const { hash, pathname } = useLocation();
 

@@ -2,20 +2,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
-import AccountingHomeDashboard from 'portals/accounting/components/landing';
-// import PendingMerchantSettlements from '../components/pending-settlements/merchants';
-// import PendingLenderSettlements from '../components/pending-settlements/lender';
-// import CPPAutoPayLoans from '../components/daily-payments/autopay-loans';
-// import DebitCreditCardPayments from '../components/daily-payments/debit-credit';
-// import ACHPayments from '../components/daily-payments/ach';
-// import CMLReconciliation from '../components/bank-reconciliations/cml';
-// import LockBox from '../components/bank-reconciliations/lock-box';
-// import CPPReconciliation from '../components/bank-reconciliations/cpp';
-// import DepositRec from '../components/manual-payments/deposit-rec';
-// import LoanDetails from '../components/loan-details';
-// import Cash from '../components/daily-payments/CashCheckMoneyOrder';
-// import SearchResults from '../components/search-results';
-// import MerchantSettlementDetails from '../components/pending-settlements/merchants/Details';
+import CustomerCareHome from '../components/landing';
+
 import { AuthContext } from 'context/Context';
 import { roleBased_Permission } from '_services/userService';
 // import BatchDetails from '../components/bank-reconciliations/lock-box/BatchDetails';
@@ -77,35 +65,11 @@ export default function CustomerCarePortalRoutes({ match: { url } }) {
         <Switch>
           <Route path={`${url}/home`} exact>
             {checkForAccess('CustomerCareHome', ExtensionRole) ? (
-              <AccountingHomeDashboard />
+              <CustomerCareHome />
             ) : (
               <Redirect to="/errors/404" />
             )}
           </Route>
-
-          {/* <Route path={`${url}/reconciliations/lock-box/batchdetails/:batchId`}>
-            {checkForAccess('AccountingHome', ExtensionRole) ? (
-              <BatchDetails />
-            ) : (
-              <Redirect to="/errors/404" />
-            )}
-          </Route> */}
-          {/* <Route path={`${url}/home/loandetails/:loanId`}>
-            {checkForAccess('AccountingHome', ExtensionRole) ? (
-              <LoanDetails />
-            ) : (
-              <Redirect to="/errors/404" />
-            )}
-          </Route> */}
-
-          {/* <Route path={`${url}/home/searchresults`}>
-            {checkForAccess('AccountingHome', ExtensionRole) ? (
-              <SearchResults />
-            ) : (
-              <Redirect to="/errors/404" />
-            )}
-          </Route> */}
-
           <Route path={`${url}/loanapplications/hardstops`} exact>
             {checkForAccess('HardStops', ExtensionRole) ? (
               <HardStops />
