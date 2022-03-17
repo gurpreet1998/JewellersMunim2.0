@@ -3,9 +3,13 @@ import { Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import ValidateCaller from './ValidateCaller';
 import PropTypes from 'prop-types';
-
+import { Dropdown } from 'react-bootstrap';
+import { selectScriptData } from 'data/accounting/loandetails';
+import ScriptMessage from './ScriptMessage';
 export default function Checks(props) {
   const [modal, setModal] = useState(false);
+
+  const [scriptModal, setScriptModal] = useState(false);
   const {
     register,
     // handleSubmit,
@@ -14,10 +18,12 @@ export default function Checks(props) {
     setValue
     // clearErrors
   } = useForm();
-
+  const [selectedScript, setSelectedScript] = useState('');
   const closeModal = () => {
     setModal(false);
-    console.log('Heyyy');
+  };
+  const closeScript = () => {
+    setScriptModal(false);
   };
   return (
     <div>
@@ -86,9 +92,31 @@ export default function Checks(props) {
         />
         Do Not Call
       </label>
+
+      <label className="p-2" />
+      <Button className="btn-sm">Add Notes</Button>
+      <label className="p-2">
+        <Dropdown className="e-caret-hide">
+          <Dropdown.Toggle className="btn-sm">Select Script</Dropdown.Toggle>
+          <Dropdown.Menu>
+            {selectScriptData.map(item => (
+              <Dropdown.Item
+                key={item.key}
+                onClick={e => {
+                  setScriptModal(true);
+                  setSelectedScript(e.target.text);
+                  console.log('Event at dropdown', e.target.text, item.key);
+                }}
+              >
+                {item.value}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown>
+      </label>
       <label className="p-0">
         <Button onClick={() => setModal(true)} className={'btn-sm'}>
-          Validate Caller
+          Validate/Update
         </Button>
         {modal && (
           <ValidateCaller
@@ -99,6 +127,13 @@ export default function Checks(props) {
             show={true}
             closeModal={closeModal}
             loanId={props.loanId}
+          />
+        )}
+        {scriptModal && (
+          <ScriptMessage
+            show={true}
+            closeModal={closeScript}
+            message={selectedScript}
           />
         )}
       </label>

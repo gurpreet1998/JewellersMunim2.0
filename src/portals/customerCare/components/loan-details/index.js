@@ -35,21 +35,21 @@ const customerLoanDetails = () => {
                 ? 'Loan Details'
                 : `Loan Details > ${loanDetails.borrowerName}`
             }
-            endEl={
-              <Flex>
-                <Form.Select size="sm" className="me-4">
-                  <option value="">Notes</option>
-                  {/* {banks.map((bank, index) => (
-                    <option value={index} key={bank}>
-                      {bank}
-                    </option>
-                  ))} */}
-                </Form.Select>
-                <Form.Select size="sm" className="me-4">
-                  <option value="">Select Script</option>
-                </Form.Select>
-              </Flex>
-            }
+            // endEl={
+            //   <Flex>
+            //     <Form.Select size="sm" className="me-4">
+            //       <option value="">Notes</option>
+            //       {/* {banks.map((bank, index) => (
+            //         <option value={index} key={bank}>
+            //           {bank}
+            //         </option>
+            //       ))} */}
+            //     </Form.Select>
+            //     <Form.Select size="sm" className="me-4">
+            //       <option value="">Select Script</option>
+            //     </Form.Select>
+            //   </Flex>
+            // }
           />
         </Col>
       </Row>
@@ -117,6 +117,7 @@ const customerLoanDetails = () => {
                   <p className="fw-semi-bold mb-2">Current Due</p>
                   <p className="fw-semi-bold mb-2">Current Principal</p>
                   <p className="fw-semi-bold mb-2">Next Due Date</p>
+                  <p className="fw-semi-bold mb-2">Next Contact Date</p>
                 </Col>
                 <Col>
                   <p className="mb-2">{loanDetails.location || 'Not Found'}</p>
@@ -166,6 +167,9 @@ const customerLoanDetails = () => {
                     {loanDetails.nextDueDate !== null
                       ? loanDetails.nextDueDate
                       : 'Not Found'}
+                  </p>
+                  <p className="mb-2">
+                    {loanDetails.nextContactDate || 'Not Found'}
                   </p>
                 </Col>
               </Row>

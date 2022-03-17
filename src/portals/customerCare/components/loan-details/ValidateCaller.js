@@ -26,9 +26,9 @@ const ValidateCaller = props => {
   });
 
   useEffect(() => {
-    transactionHistoryService
-      .getBorrowerVerification(props.loanId)
-      .then(res => setValidateCaller(res[0]));
+    // transactionHistoryService
+    //   .getBorrowerVerification(props.loanId)
+    //   .then(res => setValidateCaller(res[0]));
   }, []);
 
   const [edit, setEdit] = useState(false);
@@ -39,13 +39,13 @@ const ValidateCaller = props => {
   };
 
   const handleSubmit = e => {
-    setValidateCaller(validateCaller);
+    // setValidateCaller(validateCaller);
     setEdit(false);
-    transactionHistoryService.updateBorrowerVerification(
-      props.loanId,
-      validateCaller
-    );
-    // console.log(validateCaller);
+    // transactionHistoryService.updateBorrowerVerification(
+    //   props.loanId,
+    //   validateCaller
+    // );
+    console.log(validateCaller);
   };
   const [modal, setModal] = useState(props.show);
 

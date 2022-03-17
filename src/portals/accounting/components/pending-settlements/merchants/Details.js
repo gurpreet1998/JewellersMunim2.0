@@ -23,6 +23,9 @@ const MerchantSettlementDetails = () => {
     pendingSettlementService
       .GetMerchantSettlementFindName(merchantId)
       .then(res => setMerchantName(res));
+    pendingSettlementService
+      .GetMerchantSettlementPaymentCategory(merchantId)
+      .then(res => setpaymentCat(res));
   }, []);
   useEffect(() => {}, [paymentCat]);
 
@@ -56,7 +59,7 @@ const MerchantSettlementDetails = () => {
       </Row>
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          {paymentCat == 'CML Payments' ? (
+          {paymentCat === 'CML PayMent' ? (
             <CMLTransaction merchantId={merchantId} />
           ) : paymentCat === 'CML Refunds' ? (
             <CMLRefund merchantId={merchantId} />
