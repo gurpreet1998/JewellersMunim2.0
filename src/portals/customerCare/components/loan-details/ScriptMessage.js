@@ -14,11 +14,27 @@ const ScriptMessage = props => {
       <Modal
         show={modal}
         size="lg"
-        // aria-labelledby="contained-modal-title-vcenter"
+        centered
+        aria-labelledby="contained-modal-title-vcenter"
       >
         <Modal.Body className="ml-3">
           <Row>
-            <h5>{props.message}</h5>
+            <h5>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </h5>
+            <h5
+              className={
+                'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
+              }
+            >
+              {props.message}
+            </h5>
           </Row>
         </Modal.Body>
         <Modal.Footer>
