@@ -25,7 +25,7 @@ jobs:
   displayName: Building Choice Pays Web
   continueOnError: false
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-latest
 
   steps:
   - task: Npm@1
