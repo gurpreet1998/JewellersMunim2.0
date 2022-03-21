@@ -41,13 +41,15 @@ const AccountDetails = () => {
   }, [paymentbatchtype]);
 
   useEffect(() => {
-    DebitCreditCardService.getGetReconciledDataForDebitCreditCard(
-      paymentbatch
-    ).then(res => {
-      setLoanData(res.result.paymentDataModel);
-      setDepositData(res.result.bankDepositDataModel);
-      setreconcileCheck(true);
-    });
+    if (paymentbatch != 0) {
+      DebitCreditCardService.getGetReconciledDataForDebitCreditCard(
+        paymentbatch
+      ).then(res => {
+        setLoanData(res.result.paymentDataModel);
+        setDepositData(res.result.bankDepositDataModel);
+        setreconcileCheck(true);
+      });
+    }
   }, [paymentbatch]);
 
   //   useEffect(() => {}, [loanData, depositData]);
@@ -61,13 +63,15 @@ const AccountDetails = () => {
   }, [reconcileCheck]);
 
   const reconcileOnClick = event => {
-    DebitCreditCardService.getGetReconciledDataForDebitCreditCard(event).then(
-      res => {
-        setDepositData(res.result.bankDepositDataModel);
-        setLoanData(res.result.paymentDataModel);
-        setBflag(true);
-      }
-    );
+    if (paymentbatch != 0) {
+      DebitCreditCardService.getGetReconciledDataForDebitCreditCard(event).then(
+        res => {
+          setDepositData(res.result.bankDepositDataModel);
+          setLoanData(res.result.paymentDataModel);
+          setBflag(true);
+        }
+      );
+    }
   };
 
   const unreconciledOnClick = e => {
@@ -136,6 +140,8 @@ const AccountDetails = () => {
         toast.warning(res.result);
       } else {
         toast.success(res.result);
+        setDepositData([]);
+        setLoanData([]);
       }
     });
   };
