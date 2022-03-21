@@ -182,7 +182,7 @@ const AddNewUserForm = ({ setaddNewUserFormShow }) => {
                         Select Merchant
                       </option>
                       {MerchantDatas.map((MerchantData, index) => (
-                        <option value={MerchantData.name} key={index}>
+                        <option value={MerchantData.merchantId} key={index}>
                           {MerchantData.name}
                         </option>
                       ))}

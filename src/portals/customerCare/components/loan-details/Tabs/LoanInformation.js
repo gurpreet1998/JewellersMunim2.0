@@ -92,6 +92,24 @@ export default function LoanInformation() {
                 {loanInformation.currentInterestOwed}
               </h6>
             </Row>
+            <Row>
+              <h6 className="mb-1 flex-1">Count of Open Late Fees</h6>
+              <h6 className="mb-1 flex-1" text-align="right">
+                {loanInformation.openLateFeesCount}
+              </h6>
+            </Row>
+            <Row>
+              <h6 className="mb-1 flex-1">Count of Other Fees</h6>
+              <h6 className="mb-1 flex-1" text-align="right">
+                {loanInformation.countOfOtherFees}
+              </h6>
+            </Row>
+            <Row>
+              <h6 className="mb-1 flex-1">Count of Late Fee's Reversed</h6>
+              <h6 className="mb-1 flex-1" text-align="right">
+                {loanInformation.lateFeesReversed}
+              </h6>
+            </Row>
           </Col>
         </Row>
       </Card.Body>

@@ -407,3 +407,96 @@ export const pendingSettlementService = {
     });
   }
 };
+
+// debit/credit Card order service
+
+export const DebitCreditCardService = {
+  // getPaymentBatchACH: function () {
+  //   return new Promise(resolve => {
+  //     axiosinstance.get(`${API_URI}/Accounting/PaymentBatchACH`).then(r => {
+  //       resolve(r.data);
+  //     });
+  //   });
+  // },
+  getGetReconciledDataForDebitCreditCard: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Accounting/GetReconciledDataForDebitCreditCard?paymentBatchId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  getGetUnReconciledDataForDebitCreditCard: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(
+          `${API_URI}/Accounting/GetUnReconciledDataForDebitCreditCard?paymentBatchId=${id}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+  saveMatchRecordsForDebitCreditCard: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/MatchRecordsForDebitCreditCard?paymentBatchId=${id}`,
+          data
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (MatchRecords):', err));
+  },
+
+  saveUnMatchRecordsForDebitCreditCard: function (id, data) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/UnMatchRecordsForDebitCreditCard?paymentBatchId=${id}`,
+          data
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (UnMatchRecords):', err));
+  },
+
+  savePostTransactionForDebitCreditCard: function (id1) {
+    return new Promise(resolve => {
+      axiosinstance
+        .post(
+          `${API_URI}/Accounting/PostTransactionForDebitCreditCard?paymentBatchId=${id1}`
+        )
+        .then(r => {
+          resolve(r.data);
+        });
+    }).catch(err => console.log('ERROR (PostTransaction):', err));
+  }
+};
+
+export const DebitCreditCardPaymentBatchService = {
+  getGetPaymentBatchTypeSelection: function () {
+    return new Promise(resolve => {
+      axiosinstance
+        .get(`${API_URI}/PaymentBatch/GetPaymentBatchTypeSelection`)
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  }
+  // getPaymentBatch: function (id) {
+  //   return new Promise(resolve => {
+  //     axiosinstance
+  //       .get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`)
+  //       .then(r => {
+  //         resolve(r.data);
+  //       });
+  //   });
+  // }
+};

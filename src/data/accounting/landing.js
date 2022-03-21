@@ -490,5 +490,8 @@ export const LoanInformationTable = {
   dailyInterestAmount: '$24.6',
   interestPaidToDate: '$301.55',
   interestDays: 106,
-  currentInterestOwed: '4.6%'
+  currentInterestOwed: '4.6%',
+  openLateFeesCount: '6',
+  countOfOtherFees: '6',
+  lateFeesReversed: '$20.00'
 };
