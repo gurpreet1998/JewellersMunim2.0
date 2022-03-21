@@ -116,7 +116,9 @@ const customerLoanDetails = () => {
                   <p className="fw-semi-bold mb-2">Location</p>
                   <p className="fw-semi-bold mb-2">Current Due</p>
                   <p className="fw-semi-bold mb-2">Current Principal</p>
-                  <p className="fw-semi-bold mb-2">Next Due Date</p>
+                  <p className="fw-semi-bold mb-2 text-warning">
+                    Next Due Date
+                  </p>
                   <p className="fw-semi-bold mb-2">Next Contact Date</p>
                 </Col>
                 <Col>
