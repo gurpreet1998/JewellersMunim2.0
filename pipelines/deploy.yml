@@ -55,7 +55,7 @@ jobs:
   environment: $(environmentCode)
   continueOnError: false
   pool:
-    vmImage: vs2017-win2016
+    vmImage: windows-latest
   strategy:
     runOnce:
       deploy:
