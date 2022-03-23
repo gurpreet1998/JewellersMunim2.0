@@ -1,15 +1,28 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import AuthProvider from 'api/authentication/auth-provider';
+import Layout from 'layouts/Layout';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.min.css';
-import Layout from './layouts/Layout';
-import AuthProvider from '././api/authentication/auth-provider';
+
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
-      <Layout />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router basename={process.env.PUBLIC_URL}>
+        <Layout />
+      </Router>
+      {process.env.NODE_ENV === 'development' ? (
+        <>
+          <ReactQueryDevtools initialIsOpen={false} position={'bottom-left'} />
+        </>
+      ) : (
+        <></>
+      )}
+    </QueryClientProvider>
   );
 };
 

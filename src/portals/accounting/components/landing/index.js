@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import LoanStatus from './WorkQueues';
+import WorkQueues from './WorkQueues';
 import AccountingStats from './AccountingStats';
 
 const AccountingHomeDashboard = () => {
@@ -13,7 +13,7 @@ const AccountingHomeDashboard = () => {
       </Row>
       <Row className="g-3 mb-3">
         <Col md={12}>
-          <LoanStatus />
+          <WorkQueues />
         </Col>
       </Row>
     </>

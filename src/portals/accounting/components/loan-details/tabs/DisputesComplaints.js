@@ -4,7 +4,7 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import { formatDateCol } from 'helpers/utils';
 
-export default function DisputesComplaints() {
+const DisputesComplaints = () => {
   const columns = [
     {
       accessor: 'disputeDate',
@@ -43,25 +43,21 @@ export default function DisputesComplaints() {
       Header: 'Comment'
     }
   ];
+
   return (
     <AdvanceTableWrapper
       columns={columns}
       data={[]}
-      //   selection
       sortable
       pagination
       perPage={7}
-      //   rowCount={this.state.data.length}
     >
       <Card>
-        {/* <Card.Header>
-          <Header name={'Transaction'} />
-        </Card.Header> */}
-        <Card.Body className="p-3">
+        <Card.Body className="px-0">
           <AdvanceTable
             table
             headerClassName="bg-200 text-900 text-nowrap align-middle"
-            rowClassName="btn-reveal-trigger text-nowrap align-middle"
+            rowClassName="text-nowrap align-middle"
             tableProps={{
               size: 'sm',
               className: 'fs--1 mb-0 overflow-hidden'
@@ -71,4 +67,6 @@ export default function DisputesComplaints() {
       </Card>
     </AdvanceTableWrapper>
   );
-}
+};
+
+export default DisputesComplaints;

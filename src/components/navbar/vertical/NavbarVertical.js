@@ -1,29 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames';
 import { Nav, Navbar, Row, Col } from 'react-bootstrap';
-
 import Flex from 'components/common/Flex';
 import Logo from 'components/common/Logo';
-import { LoadingDots } from '../../loading-spinner/LoadingDots';
+import { LoadingDots } from 'components/loading-spinner/LoadingDots';
 import NavbarVerticalMenu from './NavbarVerticalMenu';
 import ToggleButton from './ToggleButton';
-
 import { navbarBreakPoint } from 'config';
 import { capitalize } from 'helpers/utils';
 import routes from 'routes/routes';
-
 import AppContext, { AuthContext } from 'context/Context';
-import { roleBased_Permission } from '_services/userService';
+import {
+  fetchExtensionRole,
+  useRolePermissionsData
+} from 'hooks/useUserServiceData';
 
 const NavbarVertical = () => {
-  const [permissions, setPermissions] = useState([]);
-
-  useEffect(() => {
-    roleBased_Permission
-      .GetPermissionsForRole('Merchant')
-      .then(res => setPermissions(res));
-  }, []);
-
   const {
     config: { navbarStyle, isNavbarVerticalCollapsed, showBurgerMenu }
   } = useContext(AppContext);
@@ -93,20 +85,21 @@ const NavbarVertical = () => {
   function showRoleOptions(route) {
     // Separate function to show options in terms of roles
     const auth = useContext(AuthContext);
+    const extensionRole = fetchExtensionRole(auth);
 
     // Check if user has authenticated
     if (auth && auth.isAuthenticated) {
-      let CurrentRole = auth.account.idTokenClaims.extension_Role;
+      const { isLoading } = useRolePermissionsData(extensionRole);
 
       switch (
         route.label // Render each section based on a condition
       ) {
-        case 'Merchant Portal': // Condition
-          if (CurrentRole === 'Merchant')
+        case 'Merchant Portal': // route.label must equal case
+          if (extensionRole === 'Merchant')
             return (
               <div key={route.label}>
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                {permissions.length !== 0 ? (
+                {isLoading !== true ? (
                   <NavbarVerticalMenu routes={route.children} />
                 ) : (
                   <LoadingDots color={'#748194'} width={40} height={20} />
@@ -116,11 +109,11 @@ const NavbarVertical = () => {
           break;
 
         case 'Accounting Portal':
-          if (CurrentRole === 'Accountant')
+          if (extensionRole === 'Accountant')
             return (
               <div key={route.label}>
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                {permissions.length !== 0 ? (
+                {isLoading !== true ? (
                   <NavbarVerticalMenu routes={route.children} />
                 ) : (
                   <LoadingDots color={'#748194'} width={40} height={20} />
@@ -130,11 +123,11 @@ const NavbarVertical = () => {
           break;
 
         case 'Admin Portal':
-          if (CurrentRole === 'Admin')
+          if (extensionRole === 'Admin')
             return (
               <div key={route.label}>
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                {permissions.length !== 0 ? (
+                {isLoading !== true ? (
                   <NavbarVerticalMenu routes={route.children} />
                 ) : (
                   <LoadingDots color={'#748194'} width={40} height={20} />
@@ -144,11 +137,11 @@ const NavbarVertical = () => {
           break;
 
         case 'Customer Care Portal':
-          if (CurrentRole === 'Customer-Care')
+          if (extensionRole === 'Customer-Care')
             return (
               <div key={route.label}>
                 {!route.labelDisable && navbarLabel(capitalize(route.label))}
-                {permissions.length !== 0 ? (
+                {isLoading !== true ? (
                   <NavbarVerticalMenu routes={route.children} />
                 ) : (
                   <LoadingDots color={'#748194'} width={40} height={20} />

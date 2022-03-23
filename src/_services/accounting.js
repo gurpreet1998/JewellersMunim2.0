@@ -2,39 +2,7 @@ import axiosinstance from '_services/AxiosInstance';
 
 let API_URI = process.env.REACT_APP_API_URI;
 
-export const accountingService = {
-  getTodaysStatement: function (id) {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/Accounting/GetTodaysStatement?merchantId=${id}`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  }
-};
-
 export const depositService = {
-  getLendersNames: function (id) {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/Accounting/GetLendersNames?lenderId=${id}`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  },
-
-  getBankNames: function (id) {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/Accounting/GetBankNames?lenderId=${id}`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  },
-
   getGetReconciledCMLData: function (id) {
     return new Promise(resolve => {
       axiosinstance
@@ -95,16 +63,6 @@ export const depositService = {
 };
 
 export const transactionHistoryService = {
-  getTransactionHistory: function (id) {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/Accounting/GetLoanTransactionData?loanId=${id}`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  },
-
   getBorrowerVerification: function (id) {
     return new Promise(resolve => {
       axiosinstance

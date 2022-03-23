@@ -104,5 +104,5 @@ export default function Checks(props) {
   );
 }
 Checks.propTypes = {
-  loanId: PropTypes.array
+  loanId: PropTypes.string
 };

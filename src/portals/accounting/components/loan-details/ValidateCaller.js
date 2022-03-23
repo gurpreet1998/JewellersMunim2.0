@@ -416,7 +416,7 @@ ValidateCaller.propTypes = {
   watch: PropTypes.func,
   show: PropTypes.bool,
   closeModal: PropTypes.func,
-  loanId: PropTypes.array
+  loanId: PropTypes.string
 };
 
 export default ValidateCaller;

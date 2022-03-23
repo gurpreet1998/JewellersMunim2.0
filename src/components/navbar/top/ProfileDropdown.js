@@ -15,8 +15,6 @@ const ProfileDropdown = () => {
   let lastName = '';
 
   if (auth && auth.isAuthenticated) {
-    console.log('Login data =>', auth.account.idTokenClaims);
-
     userName = auth.account.idTokenClaims.name;
     jobTitle = auth.account.idTokenClaims.jobTitle;
     firstName = auth.account.idTokenClaims.given_name;

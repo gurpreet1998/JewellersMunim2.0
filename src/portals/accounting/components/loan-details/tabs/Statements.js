@@ -4,13 +4,13 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import { formatDateCol } from 'helpers/utils';
 
-export default function Documentations() {
+const Statements = () => {
   const columns = [
     {
-      accessor: 'date',
+      accessor: 'statementDate',
       Header: 'Date',
       Cell: rowData => {
-        return formatDateCol(rowData, 'date');
+        return formatDateCol(rowData, 'statementDate');
       }
     },
     {
@@ -18,33 +18,33 @@ export default function Documentations() {
       Header: 'Description'
     },
     {
-      accessor: 'fileName',
-      Header: 'File Name'
+      accessor: 'emailedMailedTransaction',
+      Header: 'Emailed/ Mailed Transactions'
     },
     {
-      accessor: 'type',
-      Header: 'type'
+      accessor: 'download',
+      Header: 'Download'
+    },
+    {
+      accessor: 'print',
+      Header: 'Print',
+      headerProps: { className: 'pe-4' }
     }
   ];
   return (
     <AdvanceTableWrapper
       columns={columns}
       data={[]}
-      //   selection
       sortable
       pagination
       perPage={7}
-      //   rowCount={this.state.data.length}
     >
       <Card>
-        {/* <Card.Header>
-          <Header name={'Transaction'} />
-        </Card.Header> */}
         <Card.Body className="p-3">
           <AdvanceTable
             table
             headerClassName="bg-200 text-900 text-nowrap align-middle"
-            rowClassName="btn-reveal-trigger text-nowrap align-middle"
+            rowClassName="text-nowrap align-middle"
             tableProps={{
               size: 'sm',
               className: 'fs--1 mb-0 overflow-hidden'
@@ -54,4 +54,6 @@ export default function Documentations() {
       </Card>
     </AdvanceTableWrapper>
   );
-}
+};
+
+export default Statements;

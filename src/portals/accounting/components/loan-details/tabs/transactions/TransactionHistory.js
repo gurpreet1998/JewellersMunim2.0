@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
+import IconButton from 'components/common/IconButton';
 import AddTransaction from './AddTransaction';
-import { transactionHistoryService } from '_services/accounting';
-import { useForm } from 'react-hook-form';
 import { formatDateCol } from 'helpers/utils';
+import { useLoanTransactionsData } from 'hooks/useAccountingData';
 
-export default function TransactionHistory(props) {
+const TransactionHistory = props => {
   const columns = [
     {
       accessor: 'transactionDate',
@@ -55,65 +56,73 @@ export default function TransactionHistory(props) {
       }
     }
   ];
-  const [transactionHistoryData, setTransactionHistoryData] = useState([]);
+
   const [modal, setModal] = useState(false);
+  const closeModal = () => {
+    setModal(false);
+  };
 
   const {
     register,
-    // handleSubmit,
     formState: { errors },
     watch,
     setValue
-    // clearErrors
   } = useForm();
 
-  const closeModal = () => {
-    setModal(false);
-    console.log('Heyyy');
-  };
-  useEffect(() => {
-    transactionHistoryService
-      .getTransactionHistory(props.loanId)
-      .then(res => setTransactionHistoryData(res));
-  }, []);
+  const { isLoading, data: transactions } = useLoanTransactionsData(
+    props.loanId
+  );
+
   return (
     <>
       <Card>
         <Card.Header className="mb-0 mt-0 flex-1">
-          <Button
-            className="mt-0 mb-0"
-            style={{ marginLeft: 'auto', display: 'flex' }}
-            onClick={() => setModal(true)}
-          >
-            Add Transaction
-          </Button>
-          {modal && (
-            <AddTransaction
-              register={register}
-              setValue={setValue}
-              errors={errors}
-              watch={watch}
-              show={true}
-              closeModal={closeModal}
-            />
-          )}
+          <Row className="flex-between-center">
+            <Col xs={4} sm="auto" className="d-flex align-items-center pe-0">
+              <h5 className="fs-0 mb-0 text-nowrap py-2 py-xl-0">
+                Recent Transactions
+              </h5>
+            </Col>
+            <Col xs={8} sm="auto" className="ms-auto text-end ps-0">
+              <IconButton
+                variant="falcon-default"
+                size="sm"
+                icon="plus"
+                transform="shrink-3"
+                onClick={() => setModal(true)}
+              >
+                <span className="d-none d-sm-inline-block ms-1">
+                  New Transaction
+                </span>
+              </IconButton>
+              {modal && (
+                <AddTransaction
+                  register={register}
+                  setValue={setValue}
+                  errors={errors}
+                  watch={watch}
+                  show={true}
+                  closeModal={closeModal}
+                />
+              )}
+            </Col>
+          </Row>
         </Card.Header>
-        <Card.Body className="mt-0 pt-0 mb-0">
+        <Card.Body className="p-0">
           <AdvanceTableWrapper
             columns={columns}
-            data={transactionHistoryData}
-            //   selection
+            data={isLoading ? [] : transactions?.data}
             sortable
             pagination
             perPage={7}
-            rowCount={transactionHistoryData.length}
+            rowCount={isLoading ? 0 : transactions?.data.length}
           >
             <Card>
-              <Card.Body className="p-3">
+              <Card.Body className="p-0">
                 <AdvanceTable
                   table
                   headerClassName="bg-200 text-900 text-nowrap align-middle"
-                  rowClassName="btn-reveal-trigger text-nowrap align-middle"
+                  rowClassName="text-nowrap align-middle"
                   tableProps={{
                     size: 'sm',
                     className: 'fs--1 mb-0 overflow-hidden'
@@ -126,7 +135,10 @@ export default function TransactionHistory(props) {
       </Card>
     </>
   );
-}
-TransactionHistory.propTypes = {
-  loanId: PropTypes.array
 };
+
+TransactionHistory.propTypes = {
+  loanId: PropTypes.string
+};
+
+export default TransactionHistory;

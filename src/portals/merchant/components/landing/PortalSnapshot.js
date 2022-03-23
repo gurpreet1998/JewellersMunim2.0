@@ -1,35 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import NumberFormat from 'react-number-format';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import AlertError from 'components/errors/AlertError';
+import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
+import { useMerchantMonthWiseData } from 'hooks/useLoanData';
 import {
   getCurrentMonth,
   isIterableArray,
-  numberFormatter
+  numberFormatter,
+  monthNames
 } from 'helpers/utils';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import NumberFormat from 'react-number-format';
-import LoadingSpinner from 'components/loading-spinner/LoadingSpinner';
-
-let API_URI = process.env.REACT_APP_API_URI;
 
 let cMonth = getCurrentMonth();
-
-let monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
 
 const SnapshotItem = ({
   month,
@@ -100,7 +86,7 @@ const SnapshotItem = ({
             </Card.Body>
             <Card.Footer className="pb-2 pt-0">
               <h4 className="fs--1 fw-normal text-primary text-truncate mb-0 mt-0">
-                Than Last Month
+                Less Than Last Month
               </h4>
             </Card.Footer>
           </Card>
@@ -120,50 +106,46 @@ const settings = {
   dots: true
 };
 
-class PortalSnapshot extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      portalSnapshotNewApps: []
-    };
-  }
-  componentDidMount() {
-    fetch(`${API_URI}/Loan/GetMerchantDataMonthWise?merchantId=1`)
-      .then(res => res.json())
-      .then(data => {
-        // let temp1 = { ...this.state.portalSnapshotNewApps };
-        this.setState({ portalSnapshotNewApps: data });
-      });
-  }
-  render() {
-    const { portalSnapshotNewApps } = this.state;
+const PortalSnapshot = () => {
+  const merchantId = 1; // todo: update merchantId. Set to 1 until login implemented
+  const { isLoading, data, isError, error } =
+    useMerchantMonthWiseData(merchantId);
+  const portalSnapshotNewApps = data?.data;
+
+  if (isError) {
     return (
-      <Card className={'h-lg-100'}>
-        <Card.Header className="pb-0">
-          <h5 className="fw-normal text-800 mb-0 mt-2">Portal Snapshot</h5>
-        </Card.Header>
-        <Card.Body>
-          <div className="text-center px-4 pb-4 pt-2">
-            <Row className="justify-content-center">
-              <Col xs={12}>
-                <Slider {...settings}>
-                  {portalSnapshotNewApps.length > 0 ? (
-                    isIterableArray(portalSnapshotNewApps) &&
-                    portalSnapshotNewApps.map((item, index) => (
-                      <SnapshotItem {...item} key={index} />
-                    ))
-                  ) : (
-                    <LoadingSpinner messageText={'Loading...'} />
-                  )}
-                </Slider>
-              </Col>
-            </Row>
-          </div>
-        </Card.Body>
-      </Card>
+      <>
+        <AlertError variant={'info'} messageText={error.message} />
+      </>
     );
   }
-}
+
+  return (
+    <Card className={'h-lg-100'}>
+      <Card.Header className="pb-0">
+        <h5 className="fw-normal text-800 mb-0 mt-2">Portal Snapshot</h5>
+      </Card.Header>
+      <Card.Body>
+        <div className="text-center px-4 pb-4 pt-2">
+          <Row className="justify-content-center">
+            <Col xs={12}>
+              <Slider {...settings}>
+                {isLoading === false ? (
+                  isIterableArray(portalSnapshotNewApps) &&
+                  portalSnapshotNewApps.map((item, index) => (
+                    <SnapshotItem {...item} key={index} />
+                  ))
+                ) : (
+                  <LoadingSpinner messageText={'Loading...'} />
+                )}
+              </Slider>
+            </Col>
+          </Row>
+        </div>
+      </Card.Body>
+    </Card>
+  );
+};
 
 SnapshotItem.propTypes = {
   month: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

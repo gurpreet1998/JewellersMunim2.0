@@ -1,38 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Row, Col, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Flex from 'components/common/Flex';
 import SoftBadge from 'components/common/SoftBadge';
 import TitleCard from 'components/common/TitleCard';
 import Checks from './Checks';
 import LoanDetailsTab from './LoanDetailsTab';
-import { loanDetailsByLoanId } from '_services/accounting';
+import { useLoanDetails } from 'hooks/useAccountingData';
+import { formatDateStr } from 'helpers/utils';
 
 const loanDetails = () => {
-  const [loanDetails, setLoanDetails] = useState([]);
-  const location = useLocation();
-  // eslint-disable-next-line no-unused-vars
-  const [tabData, setTabData] = useState(false);
-  let loanId =
-    location.pathname.split('/')[location.pathname.split('/').length - 1];
-  console.log(location);
+  const [tabData] = useState(false);
 
-  useEffect(() => {
-    loanDetailsByLoanId
-      .getLoanDetailsByLoanId(loanId)
-      .then(res => setLoanDetails(res));
-  }, []);
+  const loanParams = useParams();
+  const loanId = loanParams.loanId;
+  const { isLoading, data: loan } = useLoanDetails(loanId);
+
   return (
     <>
       <Row className="g-3 mb-3">
         <Col md={12}>
           <TitleCard
             title={
-              loanDetails.borrowerName === undefined
+              isLoading
                 ? 'Loan Details'
-                : `Loan Details > ${loanDetails.borrowerName}`
+                : `Loan Details > ${loan?.data?.borrowerName}`
             }
             endEl={
               <Flex>
@@ -52,13 +46,12 @@ const loanDetails = () => {
           />
         </Col>
       </Row>
-
       <Card className={'h-lg-100 mb-4'}>
         <Card.Header>
           <Row className="align-items-center">
             <Col>
               <h6 className="mb-0 fs-1">
-                Loan Number: {loanDetails.loanNumber}
+                Loan Number: {loan?.data?.loanNumber}
               </h6>
             </Col>
           </Row>
@@ -70,7 +63,7 @@ const loanDetails = () => {
                 <strong className="me-2">Loan Status: </strong>
                 <SoftBadge pill bg="warning" className="fs--2">
                   {' '}
-                  Open
+                  {isLoading ? 'Loading...' : loan?.data?.loanStatus}
                   <FontAwesomeIcon
                     icon="exclamation-circle"
                     className="ms-1"
@@ -83,27 +76,27 @@ const loanDetails = () => {
                   <p className="fw-semi-bold mb-2">Merchant</p>
                   <p className="fw-semi-bold mb-2">Borrower Name</p>
                   <p className="fw-semi-bold mb-2">
-                    {loanDetails.preferredName !== null ? 'Preferred Name' : ''}
+                    {loan?.data?.preferredName !== null ? 'Preferred Name' : ''}
                   </p>
                   <p className="fw-semi-bold mb-2">
-                    {loanDetails.authorizedParty !== null
+                    {loan?.data?.authorizedParty !== null
                       ? 'Authorized Party'
                       : ''}
                   </p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loanDetails.merchant || 'Not Found'}</p>
+                  <p className="mb-2">{loan?.data?.merchant || 'Not Found'}</p>
                   <p className="mb-2">
-                    {loanDetails.borrowerName || 'Not Found'}
+                    {loan?.data?.borrowerName || 'Not Found'}
                   </p>
                   <p className="mb-2">
-                    {loanDetails.preferredName !== null
-                      ? loanDetails.preferredName
+                    {loan?.data?.preferredName !== null
+                      ? loan?.data?.preferredName
                       : ''}
                   </p>
                   <p className="mb-2">
-                    {loanDetails.authorizedParty !== null
-                      ? loanDetails.authorizedParty
+                    {loan?.data?.authorizedParty !== null
+                      ? loan?.data?.authorizedParty
                       : ''}
                   </p>
                 </Col>
@@ -119,11 +112,11 @@ const loanDetails = () => {
                   <p className="fw-semi-bold mb-2">Next Contact Date</p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loanDetails.location || 'Not Found'}</p>
+                  <p className="mb-2">{loan?.data?.location || 'Not Found'}</p>
                   <p className="mb-2">
-                    {loanDetails.currentAmountDue !== null ? (
+                    {loan?.data?.currentAmountDue !== null ? (
                       <NumberFormat
-                        value={loanDetails.currentAmountDue}
+                        value={loan?.data?.currentAmountDue}
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={'$'}
@@ -142,9 +135,9 @@ const loanDetails = () => {
                     )}
                   </p>
                   <p className="mb-2">
-                    {loanDetails.currentPrincipal !== null ? (
+                    {loan?.data?.currentPrincipal !== null ? (
                       <NumberFormat
-                        value={loanDetails.currentPrincipal}
+                        value={loan?.data?.currentPrincipal}
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={'$'}
@@ -163,24 +156,23 @@ const loanDetails = () => {
                     )}
                   </p>
                   <p className="mb-2">
-                    {loanDetails.nextDueDate !== null
-                      ? loanDetails.nextDueDate
+                    {loan?.data?.nextDueDate !== null
+                      ? formatDateStr(loan?.data?.nextDueDate)
                       : 'Not Found'}
                   </p>
                   <p className="mb-2">
-                    {loanDetails.nextContactDate || 'Not Found'}
+                    {loan?.data?.nextContactDate || 'Not Found'}
                   </p>
                 </Col>
               </Row>
             </Col>
           </Row>
         </Card.Body>
-
         <Card.Footer>
           <Checks loanId={loanId} />
         </Card.Footer>
       </Card>
-      {/* <TabList></TabList> */}
+
       <Col md={12}>{!tabData && <LoanDetailsTab loanId={loanId} />}</Col>
     </>
   );

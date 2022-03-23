@@ -505,3 +505,22 @@ export const formatDateCol = (rowData, accessor, dateStr = 'MM/DD/YYYY') => {
   let cell = rowData.data[rowData.row.index].accessor;
   return moment(cell).format(dateStr);
 };
+
+export const formatDateStr = (str, fmtStr = 'MM/DD/YYYY') => {
+  return moment(str).format(fmtStr);
+};
+
+export const monthNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];

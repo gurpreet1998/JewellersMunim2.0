@@ -1,12 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Nav, Collapse } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-
 import NavbarVerticalMenuItem from './NavbarVerticalMenuItem';
 import AppContext, { AuthContext } from 'context/Context';
-import { roleBased_Permission } from '_services/userService';
+import {
+  fetchExtensionRole,
+  useRolePermissionsData
+} from 'hooks/useUserServiceData';
 
 const CollapseItems = ({ route }) => {
   const { pathname } = useLocation();
@@ -63,33 +65,22 @@ const NavbarVerticalMenu = ({ routes }) => {
     setConfig
   } = useContext(AppContext);
 
-  // Use States Here
   const auth = useContext(AuthContext);
-  const [ExtensionRole, setExtensionRole] = useState('');
-  const [RolePermissionsObj, setRolePermissionsObj] = useState({});
+  const extensionRole = fetchExtensionRole(auth);
+  const { data: menuItems } = useRolePermissionsData(extensionRole);
 
-  const GetAccessRolesByAPI = extnRole => {
-    roleBased_Permission.GetPermissionsForRole(extnRole).then(res =>
-      setRolePermissionsObj({
-        ...RolePermissionsObj,
-        [extnRole]: { Access: [...res] }
-      })
-    );
-  };
-
-  const CheckChildComponent = ROUTE => {
-    if (!ROUTE.children) {
+  const CheckChildComponent = route => {
+    if (!route.children) {
       return false;
     }
-    const arr = [...ROUTE.children];
-    const AccessArr = RolePermissionsObj?.[ExtensionRole]?.Access;
+    const arr = [...route.children];
 
     // navigation menu items
     for (let i = 0; i < arr.length; i++) {
       const element = arr[i];
       if (
-        AccessArr?.includes(element.keyword) ||
-        AccessArr?.includes(element.name)
+        menuItems?.data?.includes(element.name) ||
+        menuItems?.data?.includes(element.keyword)
       ) {
         return true;
       }
@@ -97,30 +88,17 @@ const NavbarVerticalMenu = ({ routes }) => {
     return false;
   };
 
-  const RoleBasedPermission = () => {
-    if (auth.isAuthenticated) {
-      const extension_Role = auth.account?.idToken?.extension_Role || '';
-      setExtensionRole(extension_Role);
-      GetAccessRolesByAPI(extension_Role);
-    } else {
-      console.log('Login Failed');
-    }
-  };
-
-  useEffect(() => {
-    RoleBasedPermission();
-  }, [auth]);
-
   const handleNavItemClick = () => {
     if (showBurgerMenu) {
       setConfig('showBurgerMenu', !showBurgerMenu);
     }
   };
+
   return routes.map(route => {
     if (
       CheckChildComponent(route) ||
-      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.keyword) ||
-      RolePermissionsObj?.[ExtensionRole]?.Access.includes(route?.name)
+      menuItems?.data?.includes(route?.name) ||
+      menuItems?.data?.includes(route?.keyword)
     ) {
       if (!route.children) {
         return (
@@ -147,7 +125,7 @@ const NavbarVerticalMenu = ({ routes }) => {
       } else {
         return (
           <CollapseItems
-            AccessArr={RolePermissionsObj?.[ExtensionRole]?.Access}
+            AccessArr={menuItems?.data}
             route={route}
             key={route.keyword}
           />

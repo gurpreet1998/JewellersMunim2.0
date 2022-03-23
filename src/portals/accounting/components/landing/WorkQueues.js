@@ -1,27 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import { useQuery } from 'react-query';
 import Flex from 'components/common/Flex';
 import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody';
 import BasicCardHeader from 'components/common/BasicCardHeader';
-
+import { fetchTodaysStatements } from 'hooks/useAccountingData';
 import {
-  todaysStatements,
+  todaysStatementsTableColumns,
   tomorrowsCardPayments,
   dailyACHPaymentExceptions,
   tomorrowsACHs,
   dailyCCPaymentExceptions
 } from './TableMaps';
 
-import { accountingService } from '_services/accounting';
+const WorkQueues = () => {
+  // todo: update merchantId. Set to 1 until login implemented
+  const merchantId = 1;
 
-const AppStatus = () => {
-  const [todaysData, setTodaysData] = useState(todaysStatements);
+  const todaysStatementsData = useQuery(
+    ['todays-statements', merchantId],
+    fetchTodaysStatements,
+    {
+      staleTime: 300000, // 5 min
+      cacheTime: 600000, // 10 min
+      refetchIntervalInBackground: true
+    }
+  );
 
-  useEffect(() => {
-    accountingService
-      .getTodaysStatement(1)
-      .then(res => setTodaysData({ ...todaysData, data: res }));
-  }, []);
+  const todaysData = {
+    data: todaysStatementsData.isLoading
+      ? []
+      : todaysStatementsData?.data?.data,
+    columns: todaysStatementsTableColumns
+  };
 
   return (
     <>
@@ -37,7 +48,7 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {todaysData.data.length}
+                        {todaysData?.data?.length}
                       </span>
                     </div>
                   </div>
@@ -136,4 +147,4 @@ const AppStatus = () => {
   );
 };
 
-export default AppStatus;
+export default WorkQueues;
