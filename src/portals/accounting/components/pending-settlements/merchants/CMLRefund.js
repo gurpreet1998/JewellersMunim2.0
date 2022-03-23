@@ -34,7 +34,7 @@ const CMLRefund = ({ merchantId }) => {
   let mdrTotal = 0;
   let totalSumAmount = 0;
   for (let i = 0; i < tableData.length; i++) {
-    totalLoanAmount += tableData[i].loanAmount;
+    // totalLoanAmount += tableData[i].loanAmount;
     mdrTotal += tableData[i].mdr;
     totalSumAmount += tableData[i].totalAmount;
   }

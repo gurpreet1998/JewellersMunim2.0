@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Row, Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
+import { Col, Row, Button, Card } from 'react-bootstrap';
 const ScriptMessage = props => {
   const [modal, setModal] = useState(props.show);
   const handleCancel = () => {
@@ -11,15 +10,15 @@ const ScriptMessage = props => {
 
   return (
     <>
-      <Modal
+      <Card
         show={modal}
         size="lg"
         centered
         aria-labelledby="contained-modal-title-vcenter"
       >
-        <Modal.Body className="ml-3">
+        <Card.Body className="ml-3">
           <Row>
-            <h5>
+            <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -27,7 +26,7 @@ const ScriptMessage = props => {
               reprehenderit in voluptate velit esse cillum dolore eu fugiat
               nulla pariatur. Excepteur sint occaecat cupidatat non proident,
               sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </h5>
+            </p>
             <h5
               className={
                 'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
@@ -36,8 +35,8 @@ const ScriptMessage = props => {
               {props.message}
             </h5>
           </Row>
-        </Modal.Body>
-        <Modal.Footer>
+        </Card.Body>
+        <Card.Footer>
           <Row>
             <Col
               xxl={2}
@@ -73,8 +72,8 @@ const ScriptMessage = props => {
               </Button>
             </Col>
           </Row>
-        </Modal.Footer>
-      </Modal>
+        </Card.Footer>
+      </Card>
     </>
   );
 };

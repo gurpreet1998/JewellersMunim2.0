@@ -7,22 +7,13 @@ export default function LoanInformation() {
   // eslint-disable-next-line no-unused-vars
   const [loanInformation, setLoanInformation] = useState(LoanInformationTable);
   return (
-    <Card className={'h-lg-100'}>
-      <Card.Header>
-        {/* <Row>
-          <Col xs={6} lg={12}>
-            <Button>Action Items</Button>
-          </Col>
-        </Row> */}
-      </Card.Header>
+    <Card className="h-lg-100 fs--1">
       <Card.Body>
         <Row>
           <Col
             xxl={4}
             sm={4}
-            className={
-              'border-bottom border-sm-0 border-sm-end border-xxl-0 border-xxl-end ps-4'
-            }
+            className="border-bottom border-sm-0 border-sm-end border-xxl-0 border-xxl-end ps-4"
           >
             <Row>
               <h6 className="mb-1 flex-1">Orignation Date</h6>
@@ -125,7 +116,7 @@ export default function LoanInformation() {
             }
           >
             <Row>
-              <p className="fw-bold mb-3">Bucket</p>
+              <p className="fw-bold mb-2">Bucket</p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Payment (Days)</h6>

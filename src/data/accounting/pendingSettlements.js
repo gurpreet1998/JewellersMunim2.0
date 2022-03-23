@@ -269,7 +269,7 @@ export const merchants = ['Brain Balance', 'Peak Performance', 'Hair Club'];
 export const bankAccounts = ['Bank of America'];
 
 export const paymentCategory = [
-  'CML PayMent',
+  'CML Payments',
   'CML Refunds',
   'CP+ Payments',
   'CP+ Refunds'

@@ -1,143 +1,73 @@
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
-import ValidateCaller from './ValidateCaller';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'react-bootstrap';
-import { selectScriptData } from 'data/accounting/loandetails';
-import ScriptMessage from './ScriptMessage';
+// eslint-disable-next-line no-unused-vars
 export default function Checks(props) {
-  const [modal, setModal] = useState(false);
-
-  const [scriptModal, setScriptModal] = useState(false);
-  const {
-    register,
-    // handleSubmit,
-    formState: { errors },
-    watch,
-    setValue
-    // clearErrors
-  } = useForm();
-  const [selectedScript, setSelectedScript] = useState('');
-  const closeModal = () => {
-    setModal(false);
-  };
-  const closeScript = () => {
-    setScriptModal(false);
-  };
   return (
-    <div>
-      <label className="p-0">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          name="ReconcileRadio"
-          id="flexRadioDefault1"
-          disabled={true}
-          checked={true}
-          style={{ marginRight: '5px' }}
-          // onClick={() => reconcileData()}
-        />
-        AutoPay
-      </label>
-      <label className="p-2 mr-5">
-        <input
-          className="form-check-input p-1"
-          type="checkbox"
-          disabled={true}
-          checked={true}
-          name="ReconcileRadio"
-          id="flexRadioDefault1"
-          style={{ marginRight: '5px' }}
-          // onClick={() => reconcileData()}
-        />
-        Open Complaints/Disputes
-      </label>
-      <label className="p-2 mr-5">
-        <input
-          className="form-check-input p-1"
-          type="checkbox"
-          disabled={true}
-          checked={true}
-          name="ReconcileRadio"
-          id="flexRadioDefault1"
-          style={{ marginRight: '5px' }}
-          // onClick={() => reconcileData()}
-        />
-        Alerts
-      </label>
-      <label className="p-2 mr-5">
-        <input
-          className="form-check-input p-1"
-          type="checkbox"
-          checked={true}
-          disabled={true}
-          name="ReconcileRadio"
-          id="flexRadioDefault1"
-          style={{ marginRight: '5px' }}
-          // onClick={() => reconcileData()}
-        />
-        Cease/Desist
-      </label>
-      <label className="p-2 mr-5">
-        <input
-          className="form-check-input p-1"
-          type="checkbox"
-          disabled={true}
-          checked={true}
-          name="ReconcileRadio"
-          id="flexRadioDefault1"
-          style={{ marginRight: '5px' }}
-          // onClick={() => reconcileData()}
-        />
-        Do Not Call
-      </label>
-
-      <label className="p-2" />
-      <Button className="btn-sm">Add Notes</Button>
-      <label className="p-2">
-        <Dropdown className="e-caret-hide">
-          <Dropdown.Toggle className="btn-sm">Select Script</Dropdown.Toggle>
-          <Dropdown.Menu>
-            {selectScriptData.map(item => (
-              <Dropdown.Item
-                key={item.key}
-                onClick={e => {
-                  setScriptModal(true);
-                  setSelectedScript(e.target.text);
-                  console.log('Event at dropdown', e.target.text, item.key);
-                }}
-              >
-                {item.value}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
-      </label>
-      <label className="p-0">
-        <Button onClick={() => setModal(true)} className={'btn-sm'}>
-          Validate/Update
-        </Button>
-        {modal && (
-          <ValidateCaller
-            register={register}
-            setValue={setValue}
-            errors={errors}
-            watch={watch}
-            show={true}
-            closeModal={closeModal}
-            loanId={props.loanId}
+    <Row className="justify-content-md-center">
+      <Col md="auto">
+        <label className="p-0">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="ReconcileRadio"
+            id="flexRadioDefault1"
+            disabled={true}
+            checked={true}
+            style={{ marginRight: '5px' }}
           />
-        )}
-        {scriptModal && (
-          <ScriptMessage
-            show={true}
-            closeModal={closeScript}
-            message={selectedScript}
+          AutoPay
+        </label>
+        <label className="p-2 mr-5">
+          <input
+            className="form-check-input p-1"
+            type="checkbox"
+            disabled={true}
+            checked={true}
+            name="ReconcileRadio"
+            id="flexRadioDefault1"
+            style={{ marginRight: '5px' }}
           />
-        )}
-      </label>
-    </div>
+          Open Complaints/Disputes
+        </label>
+        <label className="p-2 mr-5">
+          <input
+            className="form-check-input p-1"
+            type="checkbox"
+            disabled={true}
+            checked={true}
+            name="ReconcileRadio"
+            id="flexRadioDefault1"
+            style={{ marginRight: '5px' }}
+          />
+          Alerts
+        </label>
+        <label className="p-2 mr-5">
+          <input
+            className="form-check-input p-1"
+            type="checkbox"
+            checked={true}
+            disabled={true}
+            name="ReconcileRadio"
+            id="flexRadioDefault1"
+            style={{ marginRight: '5px' }}
+          />
+          Cease/Desist
+        </label>
+        <label className="p-2 mr-5">
+          <input
+            className="form-check-input p-1"
+            type="checkbox"
+            disabled={true}
+            checked={true}
+            name="ReconcileRadio"
+            id="flexRadioDefault1"
+            style={{ marginRight: '5px' }}
+          />
+          Do Not Call
+        </label>
+      </Col>
+    </Row>
   );
 }
 Checks.propTypes = {

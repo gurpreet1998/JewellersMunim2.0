@@ -12,7 +12,7 @@ import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 
 const CMLTransaction = ({ merchantId }) => {
-  // console.log(merchantId);
+  console.log('merchantId', merchantId);
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
     // console.log(tableData);
@@ -28,15 +28,18 @@ const CMLTransaction = ({ merchantId }) => {
   const fetchData = merchantId => {
     const res =
       pendingSettlementService.getMerchantSettlementForCMLPayment(merchantId);
-    res.then(res => setTableData(res.merchants));
+    res.then(res => setTableData(res));
+    console.log(tableData);
   };
   let totalLoanAmount = 0;
   let mdrTotal = 0;
   let totalSumAmount = 0;
-  for (let i = 0; i < tableData.length; i++) {
-    totalLoanAmount += tableData[i].loanAmount;
-    mdrTotal += tableData[i].mdr;
-    totalSumAmount += tableData[i].totalAmount;
+  if (tableData.lenght != undefined) {
+    for (let i = 0; i < tableData.length; i++) {
+      totalLoanAmount += tableData[i].loanAmount;
+      mdrTotal += tableData[i].mdr;
+      // totalSumAmount += tableData[i].totalAmount;
+    }
   }
 
   return (

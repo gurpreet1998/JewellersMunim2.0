@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import PropTypes from 'prop-types';
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row, Button, Card } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { transactionHistoryService } from '_services/accounting';
 
@@ -59,16 +59,16 @@ const ValidateCaller = props => {
   };
   return (
     <>
-      <Modal
+      <Card
         show={modal}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">
+        <Card.Header>
+          <Card.Title id="contained-modal-title-vcenter">
             Validate Caller
-          </Modal.Title>
+          </Card.Title>
           <Row>
             <Col>
               {!edit && (
@@ -90,8 +90,8 @@ const ValidateCaller = props => {
               />
             </Col>
           </Row>
-        </Modal.Header>
-        <Modal.Body className="ml-3">
+        </Card.Header>
+        <Card.Body className="ml-3">
           <>
             <Row>
               <Col
@@ -258,8 +258,8 @@ const ValidateCaller = props => {
               </Col>
             </Row>
           </>
-        </Modal.Body>
-        <Modal.Footer>
+        </Card.Body>
+        <Card.Footer>
           <Row>
             <Col
               xxl={2}
@@ -403,8 +403,8 @@ const ValidateCaller = props => {
               </Row>
             </Col>
           </Row>
-        </Modal.Footer>
-      </Modal>
+        </Card.Footer>
+      </Card>
     </>
   );
 };

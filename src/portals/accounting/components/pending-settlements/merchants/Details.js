@@ -59,7 +59,7 @@ const MerchantSettlementDetails = () => {
       </Row>
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          {paymentCat === 'CML PayMent' ? (
+          {paymentCat === 'CML Payments' ? (
             <CMLTransaction merchantId={merchantId} />
           ) : paymentCat === 'CML Refunds' ? (
             <CMLRefund merchantId={merchantId} />

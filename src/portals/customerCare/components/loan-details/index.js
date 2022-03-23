@@ -1,10 +1,12 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Form } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Card, Row, Col, Dropdown, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
 import { useLocation } from 'react-router-dom';
-import Flex from 'components/common/Flex';
+import { useForm } from 'react-hook-form';
+import ValidateCaller from './ValidateCaller';
+import ScriptMessage from './ScriptMessage';
+import { selectScriptData } from 'data/accounting/loandetails';
 import SoftBadge from 'components/common/SoftBadge';
 import TitleCard from 'components/common/TitleCard';
 import Checks from './Checks';
@@ -12,14 +14,35 @@ import LoanDetailsTab from './LoanDetailsTab';
 // import { loanDetailsByLoanId } from '_services/accounting';
 
 const customerLoanDetails = () => {
+  const [scriptModal, setScriptModal] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [loanDetails, setLoanDetails] = useState([]);
   const location = useLocation();
+  const closeScript = () => {
+    setScriptModal(false);
+    setModal(false);
+    setTabData(true);
+  };
+  const [selectedScript, setSelectedScript] = useState('');
   // eslint-disable-next-line no-unused-vars
   const [tabData, setTabData] = useState(false);
   let loanId =
     location.pathname.split('/')[location.pathname.split('/').length - 1];
   console.log(location);
-
+  const [modal, setModal] = useState(false);
+  const {
+    register,
+    // handleSubmit,
+    formState: { errors },
+    watch,
+    setValue
+    // clearErrors
+  } = useForm();
+  const closeModal = () => {
+    setModal(false);
+    setScriptModal(false);
+    setTabData(true);
+  };
   // useEffect(() => {
   //   loanDetailsByLoanId
   //     .getLoanDetailsByLoanId(loanId)
@@ -27,7 +50,7 @@ const customerLoanDetails = () => {
   // }, []);
   return (
     <>
-      <Row className="g-3 mb-3">
+      <Row>
         <Col md={12}>
           <TitleCard
             title={
@@ -54,7 +77,7 @@ const customerLoanDetails = () => {
         </Col>
       </Row>
 
-      <Card className={'h-lg-100 mb-4'}>
+      <Card className={'h-lg-100 mb-3 fs--1'}>
         <Card.Header>
           <Row className="align-items-center">
             <Col>
@@ -80,51 +103,47 @@ const customerLoanDetails = () => {
                 </SoftBadge>
               </h6>
               <Row>
-                <Col xs={5} sm={4}>
-                  <p className="fw-semi-bold mb-2">Merchant</p>
-                  <p className="fw-semi-bold mb-2">Borrower Name</p>
-                  <p className="fw-semi-bold mb-2">
-                    {loanDetails.preferredName !== null ? 'Preferred Name' : ''}
+                <Col xs={5} sm={4} md="auto">
+                  <p className="fw-semi-bold mb-1">Merchant</p>
+                  <p className="fw-semi-bold mb-1">Borrower Name</p>
+                  <p className="fw-semi-bold mb-1">
+                    {loanDetails.preferredName != null ? 'Preferred Name' : ''}
                   </p>
-                  <p className="fw-semi-bold mb-2">
-                    {loanDetails.authorizedParty !== null
+                  <p className="fw-semi-bold mb-1">
+                    {loanDetails.authorizedParty != null
                       ? 'Authorized Party'
                       : ''}
                   </p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loanDetails.merchant || 'Not Found'}</p>
-                  <p className="mb-2">
+                  <p className="mb-1">{loanDetails.merchant || 'Not Found'}</p>
+                  <p className="mb-1">
                     {loanDetails.borrowerName || 'Not Found'}
                   </p>
-                  <p className="mb-2">
-                    {loanDetails.preferredName !== null
+                  <p className="mb-1">
+                    {loanDetails.preferredName != null
                       ? loanDetails.preferredName
                       : ''}
                   </p>
-                  <p className="mb-2">
-                    {loanDetails.authorizedParty !== null
+                  <p className="mb-1">
+                    {loanDetails.authorizedParty != null
                       ? loanDetails.authorizedParty
                       : ''}
                   </p>
                 </Col>
               </Row>
             </Col>
-            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-4 mt-lg-0">
+            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
               <Row className="mt-4">
-                <Col xs={5} sm={4}>
-                  <p className="fw-semi-bold mb-2">Location</p>
-                  <p className="fw-semi-bold mb-2">Current Due</p>
-                  <p className="fw-semi-bold mb-2">Current Principal</p>
-                  <p className="fw-semi-bold mb-2 text-warning">
-                    Next Due Date
-                  </p>
-                  <p className="fw-semi-bold mb-2">Next Contact Date</p>
+                <Col xs={5} sm={4} md="auto">
+                  <p className="fw-semi-bold mb-1">Location</p>
+                  <p className="fw-semi-bold mb-1">Current Due</p>
+                  <p className="fw-semi-bold mb-1">Current Principal</p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loanDetails.location || 'Not Found'}</p>
-                  <p className="mb-2">
-                    {loanDetails.currentAmountDue !== null ? (
+                  <p className="mb-1">{loanDetails.location || 'Not Found'}</p>
+                  <p className="mb-1">
+                    {loanDetails.currentAmountDue != null ? (
                       <NumberFormat
                         value={loanDetails.currentAmountDue}
                         displayType={'text'}
@@ -144,8 +163,8 @@ const customerLoanDetails = () => {
                       />
                     )}
                   </p>
-                  <p className="mb-2">
-                    {loanDetails.currentPrincipal !== null ? (
+                  <p className="mb-1">
+                    {loanDetails.currentPrincipal != null ? (
                       <NumberFormat
                         value={loanDetails.currentPrincipal}
                         displayType={'text'}
@@ -165,12 +184,24 @@ const customerLoanDetails = () => {
                       />
                     )}
                   </p>
-                  <p className="mb-2">
-                    {loanDetails.nextDueDate !== null
+                </Col>
+              </Row>
+            </Col>
+            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
+              <Row className="mt-4">
+                <Col md="auto">
+                  <p className="fw-semi-bold mb-1 text-warning">
+                    Next Due Date
+                  </p>
+                  <p className="fw-semi-bold mb-1">Next Contact Date</p>
+                </Col>
+                <Col>
+                  <p className="mb-1">
+                    {loanDetails.nextDueDate != null
                       ? loanDetails.nextDueDate
                       : 'Not Found'}
                   </p>
-                  <p className="mb-2">
+                  <p className="mb-1">
                     {loanDetails.nextContactDate || 'Not Found'}
                   </p>
                 </Col>
@@ -180,11 +211,68 @@ const customerLoanDetails = () => {
         </Card.Body>
 
         <Card.Footer>
-          <Checks loanId={loanId} />
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <Checks loanId={loanId} />
+            </Col>
+            <Col md="auto">
+              <Button className="btn-sm">Add Notes</Button>
+            </Col>
+            <Col md="auto">
+              <Dropdown className="e-caret-hide">
+                <Dropdown.Toggle className="btn-sm">
+                  Select Script
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {selectScriptData.map(item => (
+                    <Dropdown.Item
+                      key={item.key}
+                      onClick={e => {
+                        setScriptModal(true);
+                        setSelectedScript(e.target.text);
+                        console.log(
+                          'Event at dropdown',
+                          e.target.text,
+                          item.key
+                        );
+                      }}
+                    >
+                      {item.value}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col md="auto">
+              <Button onClick={() => setModal(true)} className={'btn-sm'}>
+                Validate/Update
+              </Button>
+            </Col>
+          </Row>
         </Card.Footer>
       </Card>
       {/* <TabList></TabList> */}
-      <Col md={12}>{!tabData && <LoanDetailsTab loanId={loanId} />}</Col>
+      <Col>
+        {scriptModal ? (
+          <ScriptMessage
+            show={true}
+            closeModal={closeScript}
+            message={selectedScript}
+          />
+        ) : modal ? (
+          <ValidateCaller
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            watch={watch}
+            show={true}
+            closeModal={closeModal}
+            loanId={loanId}
+          />
+        ) : (
+          <LoanDetailsTab loanId={loanId} />
+        )}
+      </Col>
     </>
   );
 };
