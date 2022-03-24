@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
-import { LoanInformationTable } from 'data/accounting/landing';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+//import { LoanInformationTable } from 'data/accounting/landing';
 // import PropTypes from 'prop-types';
 // eslint-disable-next-line no-unused-vars
 import { Card, Row, Col, Button } from 'react-bootstrap';
+import { loanService } from '_services/loanService';
 export default function LoanInformation() {
   // eslint-disable-next-line no-unused-vars
-  const [loanInformation, setLoanInformation] = useState(LoanInformationTable);
+  //const loanParams = useParams();
+  const { loanId } = useParams();
+  const [loanInformation, setLoanInformation] = useState(loanId);
+  useEffect(() => {
+    loanService.getLoanInformation(loanId).then(res => setLoanInformation(res));
+  }, []);
+
   return (
     <Card className="h-lg-100 fs--1">
       <Card.Body>
@@ -18,37 +26,37 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Orignation Date</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.orignationDate}
+                {loanInformation?.originalDate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Original Loan Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.originalLoanAmount}
+                {loanInformation?.originalLoanAmount}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Original Term Month</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.originalTermMonth}
+                {loanInformation?.originalTerms}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">APR</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.APR}
+                {loanInformation?.apr}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Interest Rate</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.interestRate}
+                {loanInformation?.interestRate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Daily Interest Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.dailyInterestAmount}
+                {loanInformation?.dailyInterestAmount}
               </p>
             </Row>
           </Col>
@@ -62,49 +70,49 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Interest Paid To Date</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.interestPaidToDate}
+                {loanInformation?.interestPaidToDate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Interest Days</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.interestDays}
+                {loanInformation?.interestDays}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Current Interest Owed</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.currentInterestOwed}
+                {loanInformation?.currentInterestOwed}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Monthly Payment Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.monthlyPaymentAmount}
+                {loanInformation?.monthlyPaymentAmount}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Past Due Date</h6>
               <p className="mb-1 flex-1 text-warning" text-align="right">
-                {loanInformation.pastDueDate}
+                {loanInformation?.daysPastDue}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Count of Open Late Fees</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.openLateFeesCount}
+                {loanInformation?.openLateFees}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Count of Other Fees</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.countOfOtherFees}
+                {loanInformation?.otherFees}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Count of Late Fee's Reversed</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation.lateFeesReversed}
+                {loanInformation?.lateFeesReversed}
               </p>
             </Row>
           </Col>

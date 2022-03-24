@@ -49,5 +49,17 @@ export const loanService = {
     } else {
       return Promise.resolve([]);
     }
+  },
+
+  getLoanInformation: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+
+        .get(`${API_URI}/Loan/GetLoanInformation?id=${id}`)
+
+        .then(r => {
+          resolve(r.data);
+        });
+    });
   }
 };
