@@ -45,103 +45,92 @@ const customerLoanDetails = () => {
   };
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <TitleCard
-            title={
-              isLoading
-                ? 'Loan Details'
-                : `Loan Details > ${loan?.data?.borrowerName}`
-            }
-            endEl={
-              <Flex>
-                <Form.Select size="sm" className="me-4">
-                  <option value="">Notes</option>
-                  {/* {banks.map((bank, index) => (
-                    <option value={index} key={bank}>
-                      {bank}
-                    </option>
-                  ))} */}
-                </Form.Select>
-                <Form.Select size="sm" className="me-4">
-                  <option value="">Select Script</option>
-                </Form.Select>
-              </Flex>
-            }
-          />
-        </Col>
-      </Row>
-      <Card className={'h-lg-100 mb-4'}>
-        <Card.Header>
+      <h5 className="fw-semi-bold mb-1">Loan Details</h5>
+      <Card className={'h-lg-100 mb-3 fs--1'}>
+        {/* <Card.Header>
           <Row className="align-items-center">
             <Col>
               <h6 className="mb-0 fs-1">
-                Loan Number: {loan?.data?.loanNumber}
+                Loan Number: {loanDetails.loanNumber}
               </h6>
             </Col>
           </Row>
-        </Card.Header>
+        </Card.Header> */}
         <Card.Body className="bg-light border-top">
           <Row>
-            <Col lg xxl={5}>
-              <h6 className="fw-semi-bold ls mb-3 text-uppercase">
-                <strong className="me-2">Loan Status: </strong>
-                <SoftBadge pill bg="warning" className="fs--2">
-                  {' '}
-                  {isLoading ? 'Loading...' : loan?.data?.loanStatus}
-                  <FontAwesomeIcon
-                    icon="exclamation-circle"
-                    className="ms-1"
-                    transform="shrink-2"
-                  />
-                </SoftBadge>
-              </h6>
+            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
               <Row>
-                <Col xs={5} sm={4}>
-                  <p className="fw-semi-bold mb-2">Merchant</p>
-                  <p className="fw-semi-bold mb-2">Borrower Name</p>
-                  <p className="fw-semi-bold mb-2">
-                    {loan?.data?.preferredName !== null ? 'Preferred Name' : ''}
+                <Col xs={5} sm={4} md="auto">
+                  <h6 className="fw-semi-bold ls mb-3 text-uppercase">
+                    Loan Number: {loan?.loanNumber}
+                  </h6>
+                  <h6 className="fw-semi-bold ls mb-3 text-uppercase">
+                    <strong className="me-2">Loan Status: </strong>
+                    <SoftBadge pill bg="warning" className="fs--2">
+                      {' '}
+                      Open
+                      <FontAwesomeIcon
+                        icon="exclamation-circle"
+                        className="ms-1"
+                        transform="shrink-2"
+                      />
+                    </SoftBadge>
+                  </h6>
+                </Col>
+              </Row>
+            </Col>
+            <Col lg xxl={5}>
+              <Row>
+                <Col xs={5} sm={4} md="auto">
+                  <p className="fw-semi-bold mb-1">Borrower Name</p>
+                  <p className="fw-semi-bold mb-1">
+                    {loan?.preferredName != null ? 'Preferred Name' : ''}
                   </p>
-                  <p className="fw-semi-bold mb-2">
-                    {loan?.data?.authorizedParty !== null
-                      ? 'Authorized Party'
-                      : ''}
+                  <p className="fw-semi-bold mb-1">
+                    {loan?.authorizedParty != null ? 'Authorized Party' : ''}
                   </p>
+                  <p className="fw-semi-bold mb-1">SSN</p>
+                  <p className="fw-semi-bold mb-1">DOB</p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loan?.data?.merchant || 'Not Found'}</p>
-                  <p className="mb-2">
-                    {loan?.data?.borrowerName || 'Not Found'}
+                  <p className="mb-1">{loan?.borrowerName || 'Not Found'}</p>
+                  <p className="mb-1">
+                    {loan?.preferredName != null ? loan?.preferredName : ''}
                   </p>
-                  <p className="mb-2">
-                    {loan?.data?.preferredName !== null
-                      ? loan?.data?.preferredName
-                      : ''}
+                  <p className="mb-1">
+                    {loan?.authorizedParty != null ? loan?.authorizedParty : ''}
                   </p>
-                  <p className="mb-2">
-                    {loan?.data?.authorizedParty !== null
-                      ? loan?.data?.authorizedParty
-                      : ''}
-                  </p>
+                  <p className="mb-1">{loan?.SSN || 'Not Found'}</p>
+                  <p className="mb-1">{loan?.DOB || 'Not Found'}</p>
                 </Col>
               </Row>
             </Col>
             <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
-              <Row className="mt-4">
-                <Col xs={5} sm={4}>
-                  <p className="fw-semi-bold mb-2">Location</p>
-                  <p className="fw-semi-bold mb-2">Current Due</p>
-                  <p className="fw-semi-bold mb-2">Current Principal</p>
-                  <p className="fw-semi-bold mb-2">Next Due Date</p>
-                  <p className="fw-semi-bold mb-2">Next Contact Date</p>
+              <Row>
+                <Col xs={5} sm={4} md="auto">
+                  <p className="fw-semi-bold mb-1">Merchant</p>
+                  <p className="fw-semi-bold mb-1">Location</p>
                 </Col>
                 <Col>
-                  <p className="mb-2">{loan?.data?.location || 'Not Found'}</p>
-                  <p className="mb-2">
-                    {loan?.data?.currentAmountDue !== null ? (
+                  <p className="mb-1">{loan?.merchant || 'Not Found'}</p>
+                  <p className="mb-1">{loan?.location || 'Not Found'}</p>
+                </Col>
+              </Row>
+            </Col>
+            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
+              <Row>
+                <Col md="auto">
+                  <p className="fw-semi-bold mb-1">Current Amount Due</p>
+                  <p className="fw-semi-bold mb-1">Current Principal</p>
+                  <p className="fw-semi-bold mb-1 text-warning">
+                    Next Due Date
+                  </p>
+                </Col>
+                <Col>
+                  <p className="mb-1">
+                    {loan?.currentAmountDue != null ? (
                       <NumberFormat
-                        value={loan?.data?.currentAmountDue}
+                        value={loan?.currentAmountDue}
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={'$'}
@@ -159,10 +148,10 @@ const customerLoanDetails = () => {
                       />
                     )}
                   </p>
-                  <p className="mb-2">
-                    {loan?.data?.currentPrincipal !== null ? (
+                  <p className="mb-1">
+                    {loan?.currentPrincipal != null ? (
                       <NumberFormat
-                        value={loan?.data?.currentPrincipal}
+                        value={loan?.currentPrincipal}
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={'$'}
@@ -185,16 +174,14 @@ const customerLoanDetails = () => {
                       ? formatDateStr(loan?.data?.nextDueDate)
                       : 'Not Found'}
                   </p>
-                  <p className="mb-2">
-                    {loan?.data?.nextContactDate || 'Not Found'}
-                  </p>
                 </Col>
               </Row>
             </Col>
           </Row>
         </Card.Body>
+
         <Card.Footer>
-          <Row md={12}>
+          <Row className="justify-content-md-center">
             <Col md="auto">
               <Checks loanId={loanId} />
             </Col>
