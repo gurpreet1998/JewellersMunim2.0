@@ -31,15 +31,13 @@ const CMLTransaction = ({ merchantId }) => {
     res.then(res => setTableData(res));
     console.log(tableData);
   };
-  let totalLoanAmount = 0;
+  let totalSettlementAmount = 0;
   let mdrTotal = 0;
-  let totalSumAmount = 0;
-  if (tableData.lenght != undefined) {
-    for (let i = 0; i < tableData.length; i++) {
-      totalLoanAmount += tableData[i].loanAmount;
-      mdrTotal += tableData[i].mdr;
-      // totalSumAmount += tableData[i].totalAmount;
-    }
+  let totalLoanAmount = 0;
+  for (let i = 0; i < tableData.length; i++) {
+    totalSettlementAmount += tableData[i].settlementAmount;
+    mdrTotal += tableData[i].mdr;
+    totalLoanAmount += tableData[i].loanAmount;
   }
 
   return (
@@ -70,7 +68,7 @@ const CMLTransaction = ({ merchantId }) => {
                 />
               </Card.Body>
               <Row className="flex-end-center">
-                <Col xs="auto" className="d-flex align-items-end pe-6">
+                <Col xs="auto" className="d-flex align-items-end pe-4">
                   <h6 className="mb-0 text-nowrap">Total: </h6>
                 </Col>
 
@@ -104,7 +102,7 @@ const CMLTransaction = ({ merchantId }) => {
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
-                      value={totalSumAmount}
+                      value={totalSettlementAmount}
                       displayType={'text'}
                       thousandSeparator={true}
                       prefix={'$'}
@@ -113,14 +111,9 @@ const CMLTransaction = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
+                <Col xs="auto" className="d-flex align-items-end pe-6" />
+                <Col xs="auto" className="d-flex align-items-end pe-6" />
+                <Col xs="auto" className="d-flex align-items-end pe-6" />
               </Row>
               <Card.Footer>
                 <AdvanceTableFooter

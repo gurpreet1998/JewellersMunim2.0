@@ -1,23 +1,48 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Card, Row, Col, Form } from 'react-bootstrap';
+import { Card, Row, Col, Form, Button, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
 import { useParams } from 'react-router-dom';
+import { useLoanDetails } from 'hooks/useAccountingData';
+import { formatDateStr } from 'helpers/utils';
+import { useForm } from 'react-hook-form';
+import { selectScriptData } from 'data/accounting/loandetails';
 import Flex from 'components/common/Flex';
 import SoftBadge from 'components/common/SoftBadge';
 import TitleCard from 'components/common/TitleCard';
-import Checks from './Checks';
-import LoanDetailsTab from './LoanDetailsTab';
-import { useLoanDetails } from 'hooks/useAccountingData';
-import { formatDateStr } from 'helpers/utils';
+import ValidateCaller from 'components/common/loan-details/ValidateCaller';
+import ScriptMessage from 'components/common/loan-details/ScriptMessage';
+import Checks from 'components/common/loan-details/Checks';
+import LoanDetailsTab from 'components/common/loan-details/LoanDetailsTab';
+const accountingloanDetails = () => {
+  const {
+    register,
+    // handleSubmit,
+    formState: { errors },
+    watch,
+    setValue
+    // clearErrors
+  } = useForm();
+  const [modal, setModal] = useState(false);
 
-const loanDetails = () => {
-  const [tabData] = useState(false);
+  const [tabData, setTabData] = useState(false);
+  const [scriptModal, setScriptModal] = useState(false);
 
+  const [selectedScript, setSelectedScript] = useState('');
   const loanParams = useParams();
   const loanId = loanParams.loanId;
   const { isLoading, data: loan } = useLoanDetails(loanId);
-
+  const closeModal = () => {
+    setModal(false);
+    setScriptModal(false);
+    setTabData(true);
+  };
+  const closeScript = () => {
+    setScriptModal(false);
+    setModal(false);
+    setTabData(true);
+  };
   return (
     <>
       <Row className="g-3 mb-3">
@@ -169,13 +194,71 @@ const loanDetails = () => {
           </Row>
         </Card.Body>
         <Card.Footer>
-          <Checks loanId={loanId} />
+          <Row md={12}>
+            <Col md="auto">
+              <Checks loanId={loanId} />
+            </Col>
+            <Col md="auto">
+              <Button className="btn-sm">Add Notes</Button>
+            </Col>
+            <Col md="auto">
+              <Dropdown className="e-caret-hide">
+                <Dropdown.Toggle className="btn-sm">
+                  Select Script
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {selectScriptData.map(item => (
+                    <Dropdown.Item
+                      key={item.key}
+                      onClick={e => {
+                        setScriptModal(true);
+                        setSelectedScript(e.target.text);
+                        console.log(
+                          'Event at dropdown',
+                          e.target.text,
+                          item.key
+                        );
+                      }}
+                    >
+                      {item.value}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col md="auto">
+              <Button onClick={() => setModal(true)} className={'btn-sm'}>
+                Validate/Update
+              </Button>
+            </Col>
+          </Row>
         </Card.Footer>
       </Card>
 
-      <Col md={12}>{!tabData && <LoanDetailsTab loanId={loanId} />}</Col>
+      <Col>
+        {scriptModal ? (
+          <ScriptMessage
+            show={true}
+            closeModal={closeScript}
+            message={selectedScript}
+          />
+        ) : modal ? (
+          <ValidateCaller
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            watch={watch}
+            show={true}
+            closeModal={closeModal}
+            loanId={loanId}
+            data={[]}
+          />
+        ) : (
+          <LoanDetailsTab loanId={loanId} />
+        )}
+      </Col>
     </>
   );
 };
 
-export default loanDetails;
+export default accountingloanDetails;

@@ -30,13 +30,13 @@ const CMLRefund = ({ merchantId }) => {
       pendingSettlementService.GetMerchantSettlementForCMLRefund(merchantId);
     res.then(res => setTableData(res));
   };
-  let totalLoanAmount = 0;
+  let totalSettlementAmount = 0;
   let mdrTotal = 0;
-  let totalSumAmount = 0;
+  let totalLoanAmount = 0;
   for (let i = 0; i < tableData.length; i++) {
-    // totalLoanAmount += tableData[i].loanAmount;
+    totalSettlementAmount += tableData[i].settlementAmount;
     mdrTotal += tableData[i].mdr;
-    totalSumAmount += tableData[i].totalAmount;
+    totalLoanAmount += tableData[i].loanAmount;
   }
 
   return (
@@ -101,7 +101,7 @@ const CMLRefund = ({ merchantId }) => {
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
-                      value={totalSumAmount}
+                      value={totalSettlementAmount}
                       displayType={'text'}
                       thousandSeparator={true}
                       prefix={'$'}

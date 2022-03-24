@@ -1,35 +1,27 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import PropTypes from 'prop-types';
 import { Col, Row, Button, Card } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
-import { transactionHistoryService } from '_services/accounting';
 
 const ValidateCaller = props => {
-  const [validateCaller, setValidateCaller] = useState({
-    // street: '',
-    // city: '',
-    // state: '',
-    // postalCode: '',
-    // idNumber: '',
-    // idType: '',
-    // idIssueDate: '',
-    // idIssueExperiationDate: '',
-    // authorizedPartyName: '',
-    // authorizedPartyEmail: '',
-    // addressId: null,
-    // addressTypeName: '',
-    // mobileNumber: '',
-    // homeNumber: null,
-    // authorizedPartyRelationship: ''
-  });
-
-  useEffect(() => {
-    // transactionHistoryService
-    //   .getBorrowerVerification(props.loanId)
-    //   .then(res => setValidateCaller(res[0]));
-  }, []);
+  const [validateCaller, setValidateCaller] = useState(props.data);
+  //   {
+  //   street: '',
+  //   city: '',
+  //   state: '',
+  //   postalCode: '',
+  //   idNumber: '',
+  //   idType: '',
+  //   idIssueDate: '',
+  //   idIssueExperiationDate: '',
+  //   authorizedPartyName: '',
+  //   authorizedPartyEmail: '',
+  //   addressId: null,
+  //   addressTypeName: '',
+  //   mobileNumber: '',
+  //   homeNumber: null,
+  //   authorizedPartyRelationship: ''
+  // }
 
   const [edit, setEdit] = useState(false);
 
@@ -38,18 +30,14 @@ const ValidateCaller = props => {
     setValidateCaller({ ...validateCaller, [name]: value });
   };
 
-  const handleSubmit = e => {
-    // setValidateCaller(validateCaller);
+  const handleSubmit = () => {
+    setValidateCaller(validateCaller);
     setEdit(false);
-    // transactionHistoryService.updateBorrowerVerification(
-    //   props.loanId,
-    //   validateCaller
-    // );
-    console.log(validateCaller);
   };
+  // eslint-disable-next-line no-unused-vars
   const [modal, setModal] = useState(props.show);
 
-  const editOnClick = e => {
+  const editOnClick = () => {
     setEdit(true);
   };
 
@@ -112,7 +100,7 @@ const ValidateCaller = props => {
                       name="addressType"
                       onChange={inputsHandler}
                       placeholder="Address Type"
-                      defaultValue={validateCaller.addressTypeName}
+                      defaultValue={validateCaller?.addressTypeName}
                     />
                   </Col>
                   {/* {console.log(validateCaller.street)}
@@ -129,7 +117,7 @@ const ValidateCaller = props => {
                       name="street"
                       onChange={inputsHandler}
                       placeholder="Street"
-                      defaultValue={validateCaller.street}
+                      defaultValue={validateCaller?.street}
                     />
                   </Col>
                 </Row>
@@ -144,7 +132,7 @@ const ValidateCaller = props => {
                       name="city"
                       onChange={inputsHandler}
                       placeholder="City"
-                      defaultValue={validateCaller.city}
+                      defaultValue={validateCaller?.city}
                     />
                   </Col>
                 </Row>
@@ -159,7 +147,7 @@ const ValidateCaller = props => {
                       name="state"
                       onChange={inputsHandler}
                       placeholder="State"
-                      defaultValue={validateCaller.state}
+                      defaultValue={validateCaller?.state}
                     />
                   </Col>
                 </Row>
@@ -174,7 +162,7 @@ const ValidateCaller = props => {
                       name="postalCode"
                       onChange={inputsHandler}
                       placeholder="ZipCode"
-                      defaultValue={validateCaller.postalCode}
+                      defaultValue={validateCaller?.postalCode}
                     />
                   </Col>
                 </Row>
@@ -197,7 +185,7 @@ const ValidateCaller = props => {
                       name="authorizedPartyEmail"
                       onChange={inputsHandler}
                       placeholder="Authorized Party Email"
-                      defaultValue={validateCaller.authorizedPartyEmail}
+                      defaultValue={validateCaller?.authorizedPartyEmail}
                     />
                   </Col>
                 </Row>
@@ -213,7 +201,7 @@ const ValidateCaller = props => {
                       //
                       onChange={inputsHandler}
                       placeholder="Authorized Party Relationship"
-                      defaultValue={validateCaller.authorizedPartyRelationship}
+                      defaultValue={validateCaller?.authorizedPartyRelationship}
                     />
                   </Col>
                 </Row>
@@ -234,7 +222,7 @@ const ValidateCaller = props => {
                       //   marginLeft: '25px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller.mobileNumber}
+                      defaultValue={validateCaller?.mobileNumber}
                     />
                   </Col>
                 </Row>
@@ -251,7 +239,7 @@ const ValidateCaller = props => {
                       onChange={inputsHandler}
                       placeholder="Home Phone"
                       // style={{ marginRight: '5px', marginLeft: '25px' }}
-                      defaultValue={validateCaller.homeNumber}
+                      defaultValue={validateCaller?.homeNumber}
                     />
                   </Col>
                 </Row>
@@ -279,7 +267,7 @@ const ValidateCaller = props => {
                     name="ssn"
                     onChange={inputsHandler}
                     placeholder="SSN"
-                    defaultValue={validateCaller.ssn}
+                    defaultValue={validateCaller?.ssn}
                   />
                 </Col>
               </Row>
@@ -300,7 +288,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.dob}
+                    defaultValue={validateCaller?.dob}
                   />
                 </Col>
               </Row>
@@ -328,7 +316,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idNumber}
+                    defaultValue={validateCaller?.idNumber}
                   />
                 </Col>
               </Row>
@@ -348,7 +336,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idType}
+                    defaultValue={validateCaller?.idType}
                   />
                 </Col>
               </Row>
@@ -376,7 +364,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idIssueDate}
+                    defaultValue={validateCaller?.idIssueDate}
                   />
                 </Col>
               </Row>
@@ -397,7 +385,7 @@ const ValidateCaller = props => {
                     //   marginLeft: '5px',
                     //   marginBottom: '5px'
                     // }}
-                    defaultValue={validateCaller.idIssueExperiationDate}
+                    defaultValue={validateCaller?.idIssueExperiationDate}
                   />
                 </Col>
               </Row>
@@ -416,7 +404,8 @@ ValidateCaller.propTypes = {
   watch: PropTypes.func,
   show: PropTypes.bool,
   closeModal: PropTypes.func,
-  loanId: PropTypes.array
+  loanId: PropTypes.array,
+  data: PropTypes.array
 };
 
 export default ValidateCaller;

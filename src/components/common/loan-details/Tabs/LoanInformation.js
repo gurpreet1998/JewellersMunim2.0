@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// import { LoanInformationTable } from 'data/accounting/landing';
 import { useParams } from 'react-router-dom';
-//import { LoanInformationTable } from 'data/accounting/landing';
-// import PropTypes from 'prop-types';
-// eslint-disable-next-line no-unused-vars
-import { Card, Row, Col, Button } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import { loanService } from '_services/loanService';
 export default function LoanInformation() {
   // eslint-disable-next-line no-unused-vars

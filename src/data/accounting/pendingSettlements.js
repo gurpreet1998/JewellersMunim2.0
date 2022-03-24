@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 export const PendingSettelmentsSummaryColumns = {
   columns: [
     {
-      Header: 'Merchant Name',
-      accessor: 'merchantName',
+      Header: 'Merchant',
+      accessor: 'merchantName'
+    },
+    {
+      Header: 'Merchant Location',
+      accessor: 'merchantLocation',
       Cell: rowData => {
         const tableData = rowData.data[rowData.row.index];
         return (
@@ -15,14 +19,10 @@ export const PendingSettelmentsSummaryColumns = {
             }}
             className="text-primary fw-semi-bold"
           >
-            {tableData?.merchantName || 'Merchant Name'}
+            {tableData?.merchantLocation || 'Merchant Location'}
           </Link>
         );
       }
-    },
-    {
-      Header: 'Merchant Location',
-      accessor: 'merchantLocation'
     },
     {
       Header: 'CML Payment Amount',
@@ -107,8 +107,8 @@ export const CMLPaymentsTableData = {
       accessor: 'mdr'
     },
     {
-      Header: 'Total Amount',
-      accessor: 'totalAmount'
+      Header: 'Settlement Amount',
+      accessor: 'settlementAmount'
     },
     {
       Header: 'First Name',
@@ -190,12 +190,20 @@ export const CPPPaymentsTableData = {
       accessor: 'pendingSettlementDate'
     },
     {
+      Header: 'Loan Program Type',
+      accessor: 'loanProgramType'
+    },
+    {
       Header: 'Principal Amount',
       accessor: 'principalAmount'
     },
     {
       Header: 'Merchant Interest',
       accessor: 'merchantInterest'
+    },
+    {
+      Header: 'Merchant Interest Promo',
+      accessor: 'merchantInterestPromo'
     },
     {
       Header: 'Choice Interest',

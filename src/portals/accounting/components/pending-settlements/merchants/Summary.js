@@ -33,11 +33,13 @@ const Summary = () => {
   let cmlRefundAmount = 0;
   let cpPaymentAmount = 0;
   let cpRefundAmount = 0;
+  let cpPromoAmount = 0;
   for (let i = 0; i < tableData.length; i++) {
     cmlAmount += tableData[i].cmlPaymentAmount;
     cmlRefundAmount += tableData[i].cmlRefundAmount;
     cpPaymentAmount += tableData[i].cpPaymentAmount;
     cpRefundAmount += tableData[i].cpRefundAmount;
+    cpPromoAmount += tableData[i].cpPromoAmount;
   }
   return (
     <>
@@ -84,7 +86,7 @@ const Summary = () => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-6">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -110,7 +112,7 @@ const Summary = () => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-6">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -123,13 +125,19 @@ const Summary = () => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
+                <Col xs="auto" className="d-flex align-items-end pe-4">
+                  <h6 className="mb-0 text-nowrap">
+                    {' '}
+                    <NumberFormat
+                      value={cpPromoAmount}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  </h6>
+                </Col>
               </Row>
               <Card.Footer>
                 <AdvanceTableFooter

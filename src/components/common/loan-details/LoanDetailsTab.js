@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Nav, Row, Tab } from 'react-bootstrap';
-import Flex from 'components/common/Flex';
-import AmortizationSchedule from './tabs/AmortizationSchedule';
-import DisputesComplaints from './tabs/DisputesComplaints';
-import Documentations from './tabs/Documentations';
-import LoanInformation from './tabs/LoanInformation';
-import Statements from './tabs/Statements';
-import TransactionHistory from './tabs/transactions/TransactionHistory';
 
+import Flex from 'components/common/Flex';
+import AmortizationSchedule from './Tabs/AmortizationSchedule';
+import DisputesComplaints from './Tabs/Disputes-Complaints';
+import Documentations from './Tabs/Documentations';
+import LoanInformation from './Tabs/LoanInformation';
+import Statements from './Tabs/Statements';
+import 'react-tabs/style/react-tabs.css';
+import TransactionHistory from './Tabs/transactions/TransactionHistory';
+
+import { Card, Nav, Row, Tab } from 'react-bootstrap';
 const NavItem = ({ item }) => {
   return (
     <Nav.Item as="li">

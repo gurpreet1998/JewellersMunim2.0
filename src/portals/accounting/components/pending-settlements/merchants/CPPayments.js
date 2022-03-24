@@ -124,7 +124,7 @@ const CPPTransaction = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-2">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -137,8 +137,7 @@ const CPPTransaction = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-10" />
-                <Col xs="auto" className="d-flex align-items-end pe-8" />
+                <Col xs="auto" className="d-flex align-items-end pe-6" />
               </Row>
               <Card.Footer>
                 <AdvanceTableFooter
