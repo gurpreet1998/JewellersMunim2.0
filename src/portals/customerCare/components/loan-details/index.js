@@ -45,17 +45,16 @@ const customerLoanDetails = () => {
   };
   return (
     <>
-      <h5 className="fw-semi-bold mb-1">Loan Details</h5>
-      <Card className={'h-lg-100 mb-3 fs--1'}>
-        {/* <Card.Header>
+      <Card className={'h-lg-100 mb-4'}>
+        <Card.Header>
           <Row className="align-items-center">
             <Col>
               <h6 className="mb-0 fs-1">
-                Loan Number: {loanDetails.loanNumber}
+                Loan Number: {loan?.data?.loanNumber}
               </h6>
             </Col>
           </Row>
-        </Card.Header> */}
+        </Card.Header>
         <Card.Body className="bg-light border-top">
           <Row>
             <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
@@ -68,7 +67,7 @@ const customerLoanDetails = () => {
                     <strong className="me-2">Loan Status: </strong>
                     <SoftBadge pill bg="warning" className="fs--2">
                       {' '}
-                      Open
+                      {loan?.data?.loanStatus || 'Not Fund'}
                       <FontAwesomeIcon
                         icon="exclamation-circle"
                         className="ms-1"
@@ -169,9 +168,9 @@ const customerLoanDetails = () => {
                       />
                     )}
                   </p>
-                  <p className="mb-2">
-                    {loan?.data?.nextDueDate !== null
-                      ? formatDateStr(loan?.data?.nextDueDate)
+                  <p className="mb-1">
+                    {loan?.nextDueDate != null
+                      ? loan?.nextDueDate
                       : 'Not Found'}
                   </p>
                 </Col>
@@ -179,9 +178,8 @@ const customerLoanDetails = () => {
             </Col>
           </Row>
         </Card.Body>
-
         <Card.Footer>
-          <Row className="justify-content-md-center">
+          <Row md={12}>
             <Col md="auto">
               <Checks loanId={loanId} />
             </Col>

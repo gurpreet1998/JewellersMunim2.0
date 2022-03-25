@@ -3,7 +3,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import BasicCardHeader from 'components/common/BasicCardHeader';
-// import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
 import { CPPPaymentsTableData } from 'data/accounting/pendingSettlements';
@@ -11,8 +11,9 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 
-const CMLRefund = ({ merchantId }) => {
-  // console.log(merchantId);
+const CMLRefund = () => {
+  const merchantId = useParams().merchantId;
+  console.log('merchantId', merchantId);
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
     // console.log(tableData);

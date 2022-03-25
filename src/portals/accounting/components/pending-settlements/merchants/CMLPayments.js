@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import BasicCardHeader from 'components/common/BasicCardHeader';
-// import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
 import { CMLPaymentsTableData } from 'data/accounting/pendingSettlements';
@@ -11,7 +10,8 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 
-const CMLTransaction = ({ merchantId }) => {
+const CMLTransaction = () => {
+  const merchantId = useParams().merchantId;
   console.log('merchantId', merchantId);
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
@@ -29,7 +29,7 @@ const CMLTransaction = ({ merchantId }) => {
     const res =
       pendingSettlementService.getMerchantSettlementForCMLPayment(merchantId);
     res.then(res => setTableData(res));
-    console.log(tableData);
+    console.log('tableData', tableData);
   };
   let totalSettlementAmount = 0;
   let mdrTotal = 0;
@@ -72,7 +72,7 @@ const CMLTransaction = ({ merchantId }) => {
                   <h6 className="mb-0 text-nowrap">Total: </h6>
                 </Col>
 
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-2">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -98,7 +98,7 @@ const CMLTransaction = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-2">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -132,5 +132,4 @@ const CMLTransaction = ({ merchantId }) => {
   );
 };
 
-CMLTransaction.propTypes = { merchantId: PropTypes.int };
 export default CMLTransaction;

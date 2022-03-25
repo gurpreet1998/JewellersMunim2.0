@@ -60,15 +60,15 @@ const MerchantSettlementDetails = () => {
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
           {paymentCat === 'CML Payments' ? (
-            <CMLTransaction merchantId={merchantId} />
+            <CMLTransaction />
           ) : paymentCat === 'CML Refunds' ? (
-            <CMLRefund merchantId={merchantId} />
+            <CMLRefund />
           ) : paymentCat === 'CP+ Payments' ? (
-            <CPPTransaction merchantId={merchantId} />
+            <CPPTransaction />
           ) : paymentCat === 'CP+ Refunds' ? (
-            <CPRefund merchantId={merchantId} />
+            <CPRefund />
           ) : paymentCat === 'CP+ Promos' ? (
-            <CPPTransaction merchantId={merchantId} />
+            <CPPTransaction />
           ) : (
             <>
               <Card.Body className="overflow-hidden p-lg-6">

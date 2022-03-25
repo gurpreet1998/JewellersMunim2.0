@@ -3,7 +3,7 @@ import { Card, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import BasicCardHeader from 'components/common/BasicCardHeader';
-// import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
 import { CMLPaymentsTableData } from 'data/accounting/pendingSettlements';
@@ -11,7 +11,9 @@ import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWra
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 
-const CMLRefund = ({ merchantId }) => {
+const CMLRefund = () => {
+  const merchantId = useParams().merchantId;
+  console.log('merchantId', merchantId);
   // console.log(merchantId);
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
@@ -67,11 +69,11 @@ const CMLRefund = ({ merchantId }) => {
                 />
               </Card.Body>
               <Row className="flex-end-center">
-                <Col xs="auto" className="d-flex align-items-end pe-6">
+                <Col xs="auto" className="d-flex align-items-end pe-4">
                   <h6 className="mb-0 text-nowrap">Total: </h6>
                 </Col>
 
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-2">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -97,7 +99,7 @@ const CMLRefund = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4">
+                <Col xs="auto" className="d-flex align-items-end pe-2">
                   <h6 className="mb-0 text-nowrap">
                     {' '}
                     <NumberFormat
@@ -110,12 +112,7 @@ const CMLRefund = ({ merchantId }) => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
+                <Col xs="auto" className="d-flex align-items-end pe-10" />
                 <Col xs="auto" className="d-flex align-items-end pe-4" />
                 <Col xs="auto" className="d-flex align-items-end pe-4" />
               </Row>

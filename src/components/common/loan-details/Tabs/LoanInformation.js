@@ -1,16 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 // import { LoanInformationTable } from 'data/accounting/landing';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col, Table } from 'react-bootstrap';
 import { loanService } from '_services/loanService';
+import { AuthContext } from 'context/Context';
 export default function LoanInformation() {
   // eslint-disable-next-line no-unused-vars
   //const loanParams = useParams();
   const { loanId } = useParams();
+  const context = useContext(AuthContext);
+  const currentRole = context.account.idToken.extension_Role;
+  console.log(currentRole);
   const [loanInformation, setLoanInformation] = useState(loanId);
   useEffect(() => {
     loanService.getLoanInformation(loanId).then(res => setLoanInformation(res));
   }, []);
+  console.log('Loaninfo', loanInformation);
   const data = [
     { payment: 'Current', amount: 129.52 },
     { payment: '1-5', amount: 0 },
@@ -63,13 +68,13 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Interest Rate</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.interestRate}
+                {loanInformation?.intrestRate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Daily Interest Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.dailyInterestAmount}
+                {loanInformation?.dailyIntrestAmount}
               </p>
             </Row>
           </Col>
@@ -77,7 +82,9 @@ export default function LoanInformation() {
             xxl={4}
             sm={4}
             className={
-              'border-bottom border-sm-0 border-sm-end border-xxl-0 border-xxl-end ps-4'
+              currentRole === 'Customer-Care'
+                ? 'border-bottom border-sm-0 border-sm-end border-xxl-0 border-xxl-end ps-4'
+                : 'ps-4'
             }
           >
             <Row>
@@ -89,13 +96,13 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Interest Days</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.interestDays}
+                {loanInformation?.interstDays}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Current Interest Owed</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.currentInterestOwed}
+                {loanInformation?.currentIntrestOwed}
               </p>
             </Row>
             <Row>

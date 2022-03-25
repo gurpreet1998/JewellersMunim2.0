@@ -5,6 +5,7 @@ import { Col, Row, Button, Card } from 'react-bootstrap';
 
 const ValidateCaller = props => {
   const [validateCaller, setValidateCaller] = useState(props.data);
+  console.log('Props', props);
   //   {
   //   street: '',
   //   city: '',

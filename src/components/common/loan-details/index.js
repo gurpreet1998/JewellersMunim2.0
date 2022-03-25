@@ -56,7 +56,7 @@ const LoanDetails = () => {
                     <strong className="me-2">Loan Status: </strong>
                     <SoftBadge pill bg="warning" className="fs--2">
                       {' '}
-                      Open
+                      {loan?.data?.loanStatus || 'Not Fund'}
                       <FontAwesomeIcon
                         icon="exclamation-circle"
                         className="ms-1"
@@ -235,4 +235,4 @@ const LoanDetails = () => {
   );
 };
 
-export default customerLoanDetails;
+export default LoanDetails;

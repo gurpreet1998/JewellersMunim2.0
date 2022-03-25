@@ -73,10 +73,10 @@ export const transactionHistoryService = {
     });
   },
 
-  updateBorrowerVerification: function (id) {
+  updateBorrowerVerification: function (id, data) {
     return new Promise(resolve => {
       axiosinstance
-        .get(`${API_URI}/Loan/UpdateBorrowerDetails?loanId=${id}`)
+        .put(`${API_URI}/Loan/UpdateBorrowerDetails?loanId=${id}`, data)
         .then(r => {
           resolve(r.data);
         });
