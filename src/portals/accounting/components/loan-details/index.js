@@ -71,7 +71,7 @@ const accountingloanDetails = () => {
           />
         </Col>
       </Row>
-      <Card className={'h-lg-100 mb-4'}>
+      <Card className={'h-lg-100 mb-3 fs--1'}>
         <Card.Header>
           <Row className="align-items-center">
             <Col>

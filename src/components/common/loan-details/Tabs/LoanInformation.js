@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // import { LoanInformationTable } from 'data/accounting/landing';
 import { useParams } from 'react-router-dom';
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card, Row, Col, Table } from 'react-bootstrap';
 import { loanService } from '_services/loanService';
 export default function LoanInformation() {
   // eslint-disable-next-line no-unused-vars
@@ -11,6 +11,21 @@ export default function LoanInformation() {
   useEffect(() => {
     loanService.getLoanInformation(loanId).then(res => setLoanInformation(res));
   }, []);
+  const data = [
+    { payment: 'Current', amount: 129.52 },
+    { payment: '1-5', amount: 0 },
+    { payment: '6-29', amount: 0 },
+    { payment: '30-59', amount: 0 },
+    { payment: '60-89', amount: 0 },
+    { payment: '90-119', amount: 0 },
+    { payment: '120-159', amount: 0 },
+    { payment: '160+', amount: 0 },
+    { payment: 'Total Amount Due', amount: 129.52 },
+    { payment: 'Past Due Amount', amount: 0 },
+    { payment: 'Total Fees Due', amount: 0 },
+    { payment: 'Total Late Fees Due', amount: 0 },
+    { payment: 'Total Other Fees Due', amount: 0 }
+  ];
 
   return (
     <Card className="h-lg-100 fs--1">
@@ -122,73 +137,27 @@ export default function LoanInformation() {
             }
           >
             <Row>
-              <p className="fw-bold mb-2">Bucket</p>
+              <p className="fw-bold mb-1">Bucket</p>
             </Row>
             <Row>
-              <h6 className="mb-1 flex-1">Payment (Days)</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                Amount
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">Current</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 129.52
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">3</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">30</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">60</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">90</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">120</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">150</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">Total Amount Due</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 129.52
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">Past Due Amount</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
-            </Row>
-            <Row>
-              <h6 className="mb-1 flex-1">Total Fees Due</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                $ 0.00
-              </p>
+              <Table striped bordered hover size="sm" responsive="sm">
+                <thead>
+                  <tr>
+                    <th className="fw-bold">Payment (Days)</th>
+                    <th className="fw-bold">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((val, key) => {
+                    return (
+                      <tr key={key}>
+                        <th>{val.payment}</th>
+                        <td>$ {val.amount}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
             </Row>
           </Col>
         </Row>
