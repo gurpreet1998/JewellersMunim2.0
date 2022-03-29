@@ -27,7 +27,6 @@ export default function LoanInformation() {
     { payment: '160+', amount: 0 },
     { payment: 'Total Amount Due', amount: 129.52 },
     { payment: 'Past Due Amount', amount: 0 },
-    { payment: 'Total Fees Due', amount: 0 },
     { payment: 'Total Late Fees Due', amount: 0 },
     { payment: 'Total Other Fees Due', amount: 0 }
   ];

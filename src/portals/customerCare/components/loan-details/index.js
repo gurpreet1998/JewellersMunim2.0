@@ -3,14 +3,11 @@ import React, { useState } from 'react';
 import { Card, Row, Col, Form, Button, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useLoanDetails } from 'hooks/useAccountingData';
-import { formatDateStr } from 'helpers/utils';
 import { useForm } from 'react-hook-form';
 import { selectScriptData } from 'data/accounting/loandetails';
-import Flex from 'components/common/Flex';
 import SoftBadge from 'components/common/SoftBadge';
-import TitleCard from 'components/common/TitleCard';
 import ValidateCaller from 'components/common/loan-details/ValidateCaller';
 import ScriptMessage from 'components/common/loan-details/ScriptMessage';
 import Checks from 'components/common/loan-details/Checks';
@@ -24,6 +21,10 @@ const customerLoanDetails = () => {
     setValue
     // clearErrors
   } = useForm();
+  let history = useHistory();
+  const handleBack = () => {
+    history.goBack();
+  };
   const [modal, setModal] = useState(false);
 
   const [tabData, setTabData] = useState(false);
@@ -52,6 +53,9 @@ const customerLoanDetails = () => {
               <h6 className="mb-0 fs-1">
                 Loan Number: {loan?.data?.loanNumber}
               </h6>
+            </Col>
+            <Col md="auto">
+              <Button onClick={handleBack}>Go Back</Button>
             </Col>
           </Row>
         </Card.Header>

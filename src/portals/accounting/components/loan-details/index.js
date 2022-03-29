@@ -4,7 +4,7 @@ import { Card, Row, Col, Button, Dropdown } from 'react-bootstrap';
 import SoftBadge from 'components/common/SoftBadge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useLoanDetails } from 'hooks/useAccountingData';
 import { useForm } from 'react-hook-form';
 import Checks from 'components/common/loan-details/Checks';
@@ -23,6 +23,11 @@ const accountingloanDetails = () => {
     setValue
     // clearErrors
   } = useForm();
+  const history = useHistory();
+  console.log('History', history);
+  const backHandle = () => {
+    history.goBack();
+  };
   const [modal, setModal] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
@@ -59,6 +64,9 @@ const accountingloanDetails = () => {
               <h6 className="mb-0 fs-1">
                 Loan Number: {loan?.data?.loanNumber}
               </h6>
+            </Col>
+            <Col md="auto">
+              <Button onClick={backHandle}>Go Back</Button>
             </Col>
           </Row>
         </Card.Header>

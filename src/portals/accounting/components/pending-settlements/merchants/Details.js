@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Card, Form, Row, Col } from 'react-bootstrap';
+import { useParams, useHistory } from 'react-router-dom';
+import { Card, Form, Row, Col, Button } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import TitleCard from 'components/common/TitleCard';
 import CMLTransaction from './CMLPayments';
@@ -14,10 +14,11 @@ const MerchantSettlementDetails = () => {
   const [paymentCat, setpaymentCat] = useState('CML Payments');
   // eslint-disable-next-line no-unused-vars
   const [paymentCategories, setpaymentCategories] = useState(paymentCategory);
-  const location = useLocation();
+  const params = useParams();
   const [merchantName, setMerchantName] = useState('');
-  let merchantId =
-    location.pathname.split('/')[location.pathname.split('/').length - 1];
+  let merchantId = params.merchantId;
+  let history = useHistory();
+
   // console.log('merchantId', merchantId);
   useEffect(() => {
     pendingSettlementService
@@ -28,6 +29,9 @@ const MerchantSettlementDetails = () => {
       .then(res => setpaymentCat(res));
   }, []);
   useEffect(() => {}, [paymentCat]);
+  const handleBack = () => {
+    history.goBack();
+  };
 
   return (
     <>
@@ -58,6 +62,20 @@ const MerchantSettlementDetails = () => {
         </Col>
       </Row>
       <Card className="bg-100 shadow-none border p-card">
+        <Card.Header className="mb-0 mt-0 flex-1">
+          <Row xs={6} lg={12}>
+            <Col>
+              <Button
+                size="sm"
+                // variant={'falcon-warning'}
+                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
+                onClick={handleBack}
+              >
+                Go Back
+              </Button>
+            </Col>
+          </Row>
+        </Card.Header>
         <Row className="g-3">
           {paymentCat === 'CML Payments' ? (
             <CMLTransaction />
