@@ -12,24 +12,26 @@ export default function LoanInformation() {
   const currentRole = context.account.idToken.extension_Role;
   console.log(currentRole);
   const [loanInformation, setLoanInformation] = useState(loanId);
+  const [loanbucket, setLoanBucket] = useState(loanId);
   useEffect(() => {
     loanService.getLoanInformation(loanId).then(res => setLoanInformation(res));
+    loanService.getLoanBucketDetails(loanId).then(res => setLoanBucket(res));
   }, []);
   console.log('Loaninfo', loanInformation);
-  const data = [
-    { payment: 'Current', amount: 129.52 },
-    { payment: '1-5', amount: 0 },
-    { payment: '6-29', amount: 0 },
-    { payment: '30-59', amount: 0 },
-    { payment: '60-89', amount: 0 },
-    { payment: '90-119', amount: 0 },
-    { payment: '120-159', amount: 0 },
-    { payment: '160+', amount: 0 },
-    { payment: 'Total Amount Due', amount: 129.52 },
-    { payment: 'Past Due Amount', amount: 0 },
-    { payment: 'Total Late Fees Due', amount: 0 },
-    { payment: 'Total Other Fees Due', amount: 0 }
-  ];
+  // const data = [
+  //   { payment: 'Current', amount: 129.52 },
+  //   { payment: '1-5', amount: 0 },
+  //   { payment: '6-29', amount: 0 },
+  //   { payment: '30-59', amount: 0 },
+  //   { payment: '60-89', amount: 0 },
+  //   { payment: '90-119', amount: 0 },
+  //   { payment: '120-159', amount: 0 },
+  //   { payment: '160+', amount: 0 },
+  //   { payment: 'Total Amount Due', amount: 129.52 },
+  //   { payment: 'Past Due Amount', amount: 0 },
+  //   { payment: 'Total Late Fees Due', amount: 0 },
+  //   { payment: 'Total Other Fees Due', amount: 0 }
+  // ];
 
   return (
     <Card className="h-lg-100 fs--1">
@@ -43,37 +45,43 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Orignation Date</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.originalDate}
+                {loanInformation?.originationDate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Original Loan Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.originalLoanAmount}
+                $ {loanInformation?.originalLoanAmount}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Original Term Month</h6>
-              <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.originalTerms}
-              </p>
+              {loanInformation?.originalTerms > 1 ? (
+                <p className="mb-1 flex-1" text-align="right">
+                  {loanInformation?.originalTerms} Months
+                </p>
+              ) : (
+                <p className="mb-1 flex-1" text-align="right">
+                  {loanInformation?.originalTerms} Month
+                </p>
+              )}
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">APR</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.apr}
+                {loanInformation?.apr} %
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Interest Rate</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.intrestRate}
+                {loanInformation?.interestRate} %
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Daily Interest Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.dailyIntrestAmount}
+                $ {loanInformation?.dailyInterestAmount}
               </p>
             </Row>
           </Col>
@@ -89,29 +97,29 @@ export default function LoanInformation() {
             <Row>
               <h6 className="mb-1 flex-1">Interest Paid To Date</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.interestPaidToDate}
+                $ {loanInformation?.interestPaidToDate}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Interest Days</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.interstDays}
+                {loanInformation?.interestDays}
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Current Interest Owed</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.currentIntrestOwed}
+                {loanInformation?.currentInterestOwed} %
               </p>
             </Row>
             <Row>
               <h6 className="mb-1 flex-1">Monthly Payment Amount</h6>
               <p className="mb-1 flex-1" text-align="right">
-                {loanInformation?.monthlyPaymentAmount}
+                $ {loanInformation?.monthlyPaymentAmount}
               </p>
             </Row>
             <Row>
-              <h6 className="mb-1 flex-1">Past Due Date</h6>
+              <h6 className="mb-1 flex-1">Days Past Due</h6>
               <p className="mb-1 flex-1 text-warning" text-align="right">
                 {loanInformation?.daysPastDue}
               </p>
@@ -154,14 +162,30 @@ export default function LoanInformation() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((val, key) => {
+                  {loanbucket?.bucketDetails?.map((val, key) => {
                     return (
                       <tr key={key}>
-                        <th>{val.payment}</th>
+                        <th>{val.bucket}</th>
                         <td>$ {val.amount}</td>
                       </tr>
                     );
                   })}
+                  <tr>
+                    <th>Total Amount Due</th>
+                    <td>$ {loanbucket?.totalAmountDue}</td>
+                  </tr>
+                  <tr>
+                    <th>Past Due Amount</th>
+                    <td>$ {loanbucket?.pastDueAmount}</td>
+                  </tr>
+                  <tr>
+                    <th>Total Late Fees Due</th>
+                    <td>$ {loanbucket?.totalLateFeesDue}</td>
+                  </tr>
+                  <tr>
+                    <th>Total Other Fees Due</th>
+                    <td>$ {loanbucket?.totalOtherFeesDue}</td>
+                  </tr>
                 </tbody>
               </Table>
             </Row>

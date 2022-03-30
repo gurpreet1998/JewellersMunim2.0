@@ -61,5 +61,17 @@ export const loanService = {
           resolve(r.data);
         });
     });
+  },
+
+  getLoanBucketDetails: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+
+        .get(`${API_URI}/Loan/GetLoanBucketDetails?id=${id}`)
+
+        .then(r => {
+          resolve(r.data);
+        });
+    });
   }
 };
