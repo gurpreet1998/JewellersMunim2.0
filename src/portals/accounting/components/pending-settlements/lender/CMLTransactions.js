@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Accordion, Card, Form, Row, Col } from 'react-bootstrap';
+import { Accordion, Card, Form } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 //import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody';
 import classNames from 'classnames';
@@ -7,10 +7,10 @@ import classNames from 'classnames';
 // Data Placeholder
 import { PendingSettelmentsSponsorBank } from 'data/accounting/pendingSettlements';
 
-import { PendingSettelmentsSummaryColumns } from 'data/accounting/pendingSettlements';
+//import { PendingSettelmentsSummaryColumns } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import { pendingSettlementService } from '_services/accounting';
+//import { pendingSettlementService } from '_services/accounting';
 //import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 //import AdvanceTableSearchBox from 'components/common/advance-table/AdvanceTableSearchBox';
 
