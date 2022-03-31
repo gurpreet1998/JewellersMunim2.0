@@ -70,6 +70,114 @@ export const PendingSettelmentsSummaryColumns = {
   //   }]
 };
 
+export const PendingSettelmentsSponsorBank = {
+  columns: [
+    // {
+    //   Header: 'Merchant',
+    //   accessor: 'merchantName'
+    // },
+    {
+      Header: 'Loan Number',
+      accessor: 'loanNumber',
+      Cell: rowData => {
+        const tableData = rowData.data[rowData.row.index]; // Change pathname when redirection available
+        return (
+          <div
+            // to={{
+            //   pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+            // }}
+            className="text-primary fw-semi-bold"
+          >
+            {tableData?.loanNumber || 'Loan number'}
+          </div>
+        );
+      }
+    },
+    {
+      Header: 'Pending Settlement Date',
+      accessor: 'pendingSettlementDate'
+    },
+    {
+      Header: 'Origination Fee',
+      accessor: 'originationFee'
+    },
+    {
+      Header: 'Interest Fee',
+      accessor: 'interestFee'
+    },
+    {
+      Header: 'Borrower Name',
+      accessor: 'borrowerName'
+    },
+    {
+      Header: 'Bank Account Number',
+      accessor: 'bankAccountNumber'
+    }
+  ],
+  data: [
+    {
+      id: 1,
+      borrowerName: 'Jane Doe',
+      // merchantLocation: 'Brain Balance- Henderson',
+      originationFee: 9500.55,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322189,
+      pendingSettlementDate: '02/06/2021'
+    },
+    {
+      id: 2,
+      borrowerName: 'Mary Doe',
+      // merchantLocation: 'Brain Balance- Las Vegas',
+      originationFee: 5466,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322191,
+      pendingSettlementDate: '02/06/2021'
+    },
+    {
+      id: 3,
+      borrowerName: 'Harry Doe',
+      // merchantLocation: 'Brain Balance- Las Vegas',
+      originationFee: 5466,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322191,
+      pendingSettlementDate: '02/06/2021'
+    },
+    {
+      id: 4,
+      borrowerName: 'Carry Doe',
+      // merchantLocation: 'Brain Balance- Las Vegas',
+      originationFee: 5466,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322191,
+      pendingSettlementDate: '02/06/2021'
+    },
+    {
+      id: 5,
+      borrowerName: 'Perry Doe',
+      // merchantLocation: 'Brain Balance- Las Vegas',
+      originationFee: 5466,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322191,
+      pendingSettlementDate: '02/06/2021'
+    },
+    {
+      id: 6,
+      borrowerName: 'Larry Doe',
+      // merchantLocation: 'Brain Balance- Las Vegas',
+      originationFee: 5466,
+      interestFee: 9500.1,
+      bankAccountNumber: 95001,
+      loanNumber: 5673322191,
+      pendingSettlementDate: '02/06/2021'
+    }
+  ]
+};
+
 export const CMLPaymentsTableData = {
   columns: [
     {

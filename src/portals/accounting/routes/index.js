@@ -154,7 +154,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
           </Route>
 
           <Route path={`${url}/pending-settlements/lender`} exact>
-            {checkForAccess('Lender (Medallion)', extensionRole) ? (
+            {checkForAccess('Lender(Medallion)', extensionRole) ? (
               <PendingLenderSettlements />
             ) : (
               <Redirect to="/errors/401" />

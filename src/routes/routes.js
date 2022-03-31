@@ -199,8 +199,14 @@ export const accountingPortalRoutes = {
           to: '/portal/accounting/pending-settlements/merchants',
           active: true
         },
+        // {
+        //   name: 'Lender (Medallion)',
+        //   keyword: 'Lender(Medallion)',
+        //   to: '/portal/accounting/pending-settlements/lender',
+        //   active: true
+        // },
         {
-          name: 'Lender (Medallion)',
+          name: 'Sponsor Bank Settlement',
           keyword: 'Lender(Medallion)',
           to: '/portal/accounting/pending-settlements/lender',
           active: true
