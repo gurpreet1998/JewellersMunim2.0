@@ -6,7 +6,7 @@ import BasicCardHeader from 'components/common/BasicCardHeader';
 import { useParams } from 'react-router-dom';
 // Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
-import { CMLPaymentsTableData } from 'data/accounting/pendingSettlements';
+import { CMLRefundsTableData } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
@@ -46,7 +46,7 @@ const CMLRefund = () => {
       <Card className={'h-lg-100'}>
         <Card.Body>
           <AdvanceTableWrapper
-            columns={CMLPaymentsTableData.columns}
+            columns={CMLRefundsTableData.columns}
             data={tableData}
             selection
             sortable

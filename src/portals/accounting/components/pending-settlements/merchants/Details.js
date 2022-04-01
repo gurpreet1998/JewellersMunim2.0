@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { Card, Form, Row, Col, Button } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { Card, Form, Row, Col } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
 import TitleCard from 'components/common/TitleCard';
 import CMLTransaction from './CMLPayments';
@@ -9,6 +9,7 @@ import CPPTransaction from './CPPayments';
 import CPRefund from './CPRefund';
 import { pendingSettlementService } from '_services/accounting';
 import { paymentCategory } from 'data/accounting/pendingSettlements';
+import GoBackButton from 'components/common/GoBackButton';
 
 const MerchantSettlementDetails = () => {
   const [paymentCat, setpaymentCat] = useState('CML Payments');
@@ -17,7 +18,6 @@ const MerchantSettlementDetails = () => {
   const params = useParams();
   const [merchantName, setMerchantName] = useState('');
   let merchantId = params.merchantId;
-  let history = useHistory();
 
   // console.log('merchantId', merchantId);
   useEffect(() => {
@@ -29,9 +29,6 @@ const MerchantSettlementDetails = () => {
       .then(res => setpaymentCat(res));
   }, []);
   useEffect(() => {}, [paymentCat]);
-  const handleBack = () => {
-    history.goBack();
-  };
 
   return (
     <>
@@ -64,16 +61,7 @@ const MerchantSettlementDetails = () => {
       <Card className="bg-100 shadow-none border p-card">
         <Card.Header className="mb-0 mt-0 flex-1">
           <Row xs={6} lg={12}>
-            <Col>
-              <Button
-                size="sm"
-                // variant={'falcon-warning'}
-                className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                onClick={handleBack}
-              >
-                Go Back
-              </Button>
-            </Col>
+            <GoBackButton />
           </Row>
         </Card.Header>
         <Row className="g-3">

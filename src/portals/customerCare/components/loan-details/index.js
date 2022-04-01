@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Card, Row, Col, Form, Button, Dropdown } from 'react-bootstrap';
+import { Card, Row, Col, Button, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
 import { useParams, useHistory } from 'react-router-dom';
@@ -12,6 +12,7 @@ import ValidateCaller from 'components/common/loan-details/ValidateCaller';
 import ScriptMessage from 'components/common/loan-details/ScriptMessage';
 import Checks from 'components/common/loan-details/Checks';
 import LoanDetailsTab from 'components/common/loan-details/LoanDetailsTab';
+import GoBackButton from 'components/common/GoBackButton';
 const customerLoanDetails = () => {
   const {
     register,
@@ -21,10 +22,6 @@ const customerLoanDetails = () => {
     setValue
     // clearErrors
   } = useForm();
-  let history = useHistory();
-  const handleBack = () => {
-    history.goBack();
-  };
   const [modal, setModal] = useState(false);
 
   const [tabData, setTabData] = useState(false);
@@ -54,9 +51,7 @@ const customerLoanDetails = () => {
                 Loan Number: {loan?.data?.loanNumber}
               </h6>
             </Col>
-            <Col md="auto">
-              <Button onClick={handleBack}>Go Back</Button>
-            </Col>
+            <GoBackButton />
           </Row>
         </Card.Header>
         <Card.Body className="bg-light border-top">

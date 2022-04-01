@@ -6,7 +6,7 @@ import BasicCardHeader from 'components/common/BasicCardHeader';
 import { useParams } from 'react-router-dom';
 // Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
-import { CPPPaymentsTableData } from 'data/accounting/pendingSettlements';
+import { CPRefundsTableData } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
 import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
@@ -30,6 +30,7 @@ const CMLRefund = () => {
     const res =
       pendingSettlementService.GetMerchantSettlementForCPRefund(merchantId);
     res.then(res => setTableData(res));
+    console.log('res', res);
   };
   let totalPrincipalAmount = 0;
   let totalMerchantInterest = 0;
@@ -48,7 +49,7 @@ const CMLRefund = () => {
       <Card className={'h-lg-100'}>
         <Card.Body>
           <AdvanceTableWrapper
-            columns={CPPPaymentsTableData.columns}
+            columns={CPRefundsTableData.columns}
             data={tableData}
             selection
             sortable

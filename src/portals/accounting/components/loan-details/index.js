@@ -13,6 +13,7 @@ import ScriptMessage from 'components/common/loan-details/ScriptMessage';
 import ValidateCaller from 'components/common/loan-details/ValidateCaller';
 import LoanDetailsTab from 'components/common/loan-details/LoanDetailsTab';
 import { transactionHistoryService } from '_services/accounting';
+import GoBackButton from 'components/common/GoBackButton';
 const accountingloanDetails = () => {
   const [data, setData] = useState([]);
   const {

@@ -12,6 +12,7 @@ import { selectScriptData } from 'data/accounting/loandetails';
 import SoftBadge from 'components/common/SoftBadge';
 import Checks from './Checks';
 import LoanDetailsTab from './LoanDetailsTab';
+import GoBackButton from '../GoBackButton';
 
 const LoanDetails = () => {
   const [scriptModal, setScriptModal] = useState(false);
@@ -46,11 +47,13 @@ const LoanDetails = () => {
       <Card className={'h-lg-100 mb-3 fs--1'}>
         <Card.Body className="bg-light border-top">
           <Row>
+            <GoBackButton />
             <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
               <Row>
                 <Col xs={5} sm={4} md="auto">
                   <h6 className="fw-semi-bold ls mb-3 text-uppercase">
                     Loan Number: {loan?.loanNumber}
+                    <h3>You are here</h3>
                   </h6>
                   <h6 className="fw-semi-bold ls mb-3 text-uppercase">
                     <strong className="me-2">Loan Status: </strong>

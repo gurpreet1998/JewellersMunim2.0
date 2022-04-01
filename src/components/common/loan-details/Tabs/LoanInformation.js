@@ -18,20 +18,6 @@ export default function LoanInformation() {
     loanService.getLoanBucketDetails(loanId).then(res => setLoanBucket(res));
   }, []);
   console.log('Loaninfo', loanInformation);
-  // const data = [
-  //   { payment: 'Current', amount: 129.52 },
-  //   { payment: '1-5', amount: 0 },
-  //   { payment: '6-29', amount: 0 },
-  //   { payment: '30-59', amount: 0 },
-  //   { payment: '60-89', amount: 0 },
-  //   { payment: '90-119', amount: 0 },
-  //   { payment: '120-159', amount: 0 },
-  //   { payment: '160+', amount: 0 },
-  //   { payment: 'Total Amount Due', amount: 129.52 },
-  //   { payment: 'Past Due Amount', amount: 0 },
-  //   { payment: 'Total Late Fees Due', amount: 0 },
-  //   { payment: 'Total Other Fees Due', amount: 0 }
-  // ];
 
   return (
     <Card className="h-lg-100 fs--1">
