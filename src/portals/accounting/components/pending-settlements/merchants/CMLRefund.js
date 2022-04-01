@@ -106,7 +106,8 @@ const CMLRefund = () => {
                       value={totalSettlementAmount}
                       displayType={'text'}
                       thousandSeparator={true}
-                      prefix={'$'}
+                      prefix={'-($'}
+                      suffix={')'}
                       decimalScale={2}
                       fixedDecimalScale={true}
                     />
