@@ -139,7 +139,7 @@ const CPPTransaction = () => {
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-6" />
+                <Col xs="auto" className="d-flex align-items-end pe-4" />
               </Row>
               <Card.Footer>
                 <AdvanceTableFooter

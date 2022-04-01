@@ -122,7 +122,8 @@ const CMLRefund = () => {
                       value={sumTotalInterest}
                       displayType={'text'}
                       thousandSeparator={true}
-                      prefix={'$'}
+                      prefix={'-($'}
+                      suffix={')'}
                       decimalScale={2}
                       fixedDecimalScale={true}
                     />
@@ -135,15 +136,13 @@ const CMLRefund = () => {
                       value={totalSumAmount}
                       displayType={'text'}
                       thousandSeparator={true}
-                      prefix={'$'}
+                      prefix={'-($'}
+                      suffix={')'}
                       decimalScale={2}
                       fixedDecimalScale={true}
                     />
                   </h6>
                 </Col>
-                <Col xs="auto" className="d-flex align-items-end pe-8" />
-                <Col xs="auto" className="d-flex align-items-end pe-8" />
-                <Col xs="auto" className="d-flex align-items-end pe-4" />
               </Row>
               <Card.Footer>
                 <AdvanceTableFooter

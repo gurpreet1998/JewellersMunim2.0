@@ -364,8 +364,15 @@ export const CPPPaymentsTableData = {
     },
     {
       Header: 'Loan Program Type',
-      accessor: 'loanProgramType'
+
+      accessor: 'isPromo',
+
+      Cell: rowData => {
+        const data = rowData.data[rowData.row.values.isPromo];
+        return data ? 'Promo' : 'Regular';
+      }
     },
+
     {
       Header: 'Principal Amount',
       accessor: 'principalAmount'
@@ -374,10 +381,7 @@ export const CPPPaymentsTableData = {
       Header: 'Merchant Interest',
       accessor: 'merchantInterest'
     },
-    {
-      Header: 'Merchant Interest Promo',
-      accessor: 'merchantInterestPromo'
-    },
+
     {
       Header: 'Choice Interest',
       accessor: 'choiceInterest'
@@ -390,6 +394,104 @@ export const CPPPaymentsTableData = {
       Header: 'Total Amount',
       accessor: 'totalAmount'
     },
+    {
+      Header: 'Merchant Interest Promo',
+      accessor: 'merchantInterestPromo'
+    },
+
+    {
+      Header: 'First Name',
+      accessor: 'borrowerFirstName'
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'borrowerLastName'
+    },
+    {
+      Header: 'Bank Account Number',
+      accessor: 'bankAccountNumber'
+    }
+  ]
+};
+export const CPRefundsTableData = {
+  columns: [
+    {
+      accessor: 'loanNumber',
+      Header: 'Loan Number',
+      Cell: rowData => {
+        const batchdetail = rowData.data[rowData.row.index];
+        console.log(batchdetail.loanId);
+        return (
+          <Link
+            to={{
+              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+            }}
+            className="text-primary fw-semi-bold"
+          >
+            {batchdetail.loanNumber}
+          </Link>
+        );
+      }
+    },
+    {
+      Header: 'Pending Settlement Date',
+      accessor: 'pendingSettlementDate'
+    },
+    {
+      Header: 'Loan Program Type',
+      accessor: 'isPromo',
+      Cell: rowData => {
+        const data = rowData.data[rowData.row.values.isPromo];
+        return data ? 'Promo' : 'Regular';
+      }
+    },
+    {
+      Header: 'Principal Amount',
+      accessor: 'principalAmount'
+    },
+    {
+      Header: 'Merchant Interest',
+      accessor: 'merchantInterest'
+    },
+    {
+      Header: 'Choice Interest',
+      accessor: 'choiceInterest'
+    },
+    {
+      Header: 'Total Interest',
+      accessor: 'totalInterest',
+      Cell: rowData => (
+        <NumberFormat
+          value={rowData.data[rowData.row.index].totalInterest}
+          displayType={'text'}
+          thousandSeparator={true}
+          prefix={'-($'}
+          suffix={')'}
+          decimalScale={2}
+          fixedDecimalScale={true}
+        />
+      )
+    },
+    {
+      Header: 'Total Amount',
+      accessor: 'totalAmount',
+      Cell: rowData => (
+        <NumberFormat
+          value={rowData.data[rowData.row.index].totalAmount}
+          displayType={'text'}
+          thousandSeparator={true}
+          prefix={'-($'}
+          suffix={')'}
+          decimalScale={2}
+          fixedDecimalScale={true}
+        />
+      )
+    },
+    {
+      Header: 'Merchant Interest Promo',
+      accessor: 'merchantInterestPromo'
+    },
+
     {
       Header: 'First Name',
       accessor: 'borrowerFirstName'
