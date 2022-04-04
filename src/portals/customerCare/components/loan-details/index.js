@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Button, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NumberFormat from 'react-number-format';
@@ -12,6 +12,7 @@ import ValidateCaller from 'components/common/loan-details/ValidateCaller';
 import ScriptMessage from 'components/common/loan-details/ScriptMessage';
 import Checks from 'components/common/loan-details/Checks';
 import LoanDetailsTab from 'components/common/loan-details/LoanDetailsTab';
+import { loanService } from '_services/loanService';
 import GoBackButton from 'components/common/GoBackButton';
 const customerLoanDetails = () => {
   const {
@@ -41,6 +42,11 @@ const customerLoanDetails = () => {
     setModal(false);
     setTabData(true);
   };
+  const [bucket, setBucket] = useState(loanId);
+  useEffect(() => {
+    loanService.getLoanBucketDetails(loanId).then(res => setBucket(res));
+  }, []);
+  console.log(loan);
   return (
     <>
       <Card className={'h-lg-100 mb-4'}>
@@ -48,7 +54,27 @@ const customerLoanDetails = () => {
           <Row className="align-items-center">
             <Col>
               <h6 className="mb-0 fs-1">
-                Loan Number: {loan?.data?.loanNumber}
+                <font color="grey">Loan Number</font> &nbsp;
+                {loan?.data?.loanNumber}
+              </h6>
+            </Col>
+            <Col>
+              <h6 className="mb-0 fs-1">
+                <font color="grey">Borrower Name</font> &nbsp;
+                {loan?.data?.borrowerName || 'Not Found'}
+              </h6>
+            </Col>
+            <Col>
+              <h6 className="mb-0 fs-1">
+                <font color="grey">Primary Status</font> &nbsp;
+                <SoftBadge pill bg="warning" className="fs--2">
+                  {loan?.data?.loanStatus || 'Not Fund'}
+                  <FontAwesomeIcon
+                    icon="exclamation-circle"
+                    className="ms-1"
+                    transform="shrink-2"
+                  />
+                </SoftBadge>
               </h6>
             </Col>
             <GoBackButton />
@@ -56,7 +82,107 @@ const customerLoanDetails = () => {
         </Card.Header>
         <Card.Body className="bg-light border-top">
           <Row>
-            <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
+            <Col style={{ borderRight: '1px solid gray' }}>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Total Amount Due</p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {bucket?.totalAmountDue != null ? (
+                    <NumberFormat
+                      value={bucket?.totalAmountDue}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  ) : (
+                    <NumberFormat
+                      value={0}
+                      displayType={'text'}
+                      thousandSeparator={true}
+                      prefix={'$'}
+                      decimalScale={2}
+                      fixedDecimalScale={true}
+                    />
+                  )}
+                </p>
+              </Row>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Next Due Date</p>
+                <p text-align="right" className="mb-1 flex-1 text-warning">
+                  {loan?.data?.nextDueDate != null
+                    ? loan?.data?.nextDueDate
+                    : 'Not Found'}
+                </p>
+              </Row>
+            </Col>
+            <Col style={{ borderRight: '1px solid gray' }}>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Preferred Name</p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {loan?.data?.preferredName != null
+                    ? loan?.data?.preferredName
+                    : 'Not Found'}
+                </p>
+              </Row>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">
+                  Authorized Party Name
+                </p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {loan?.data?.authorizedParty != (null || ' ')
+                    ? loan?.data?.authorizedParty
+                    : 'Not Found'}
+                </p>
+              </Row>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">
+                  Authorized Relationship
+                </p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {' '}
+                  Not Found
+                  {/* {loan?.data?.borrowerName != null
+                  ? loan?.data?.borrowerName
+                  : 'Not Found'} */}
+                </p>
+              </Row>
+            </Col>
+            <Col style={{ borderRight: '1px solid gray' }}>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Merchant</p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {loan?.data?.merchant != null
+                    ? loan?.data?.merchant
+                    : 'Not Found'}
+                </p>
+              </Row>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Location</p>
+                <p text-align="right" className="mb-1 flex-1">
+                  {loan?.data?.location != null
+                    ? loan?.data?.location
+                    : 'Not Found'}
+                </p>
+              </Row>
+            </Col>
+            <Col>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Secondary Status</p>
+                <p text-align="right" className="mb-1 flex-1">
+                  -----------
+                </p>
+              </Row>
+              <Row>
+                <p className="mb-1 flex-1 fw-semi-bold">Next Contact Date</p>
+                <p text-align="right" className="mb-1 flex-1 text-warning">
+                  {loan?.data?.nextContactDate != null
+                    ? loan?.data?.nextContactDate
+                    : 'Not Found'}
+                </p>
+              </Row>
+            </Col>
+            {/* <Col lg xxl={{ span: 5, offset: 1 }} className="mt-0 mt-lg-0">
               <Row>
                 <Col xs={5} sm={4} md="auto">
                   <h6 className="fw-semi-bold ls mb-3 text-uppercase">
@@ -174,7 +300,7 @@ const customerLoanDetails = () => {
                   </p>
                 </Col>
               </Row>
-            </Col>
+            </Col> */}
           </Row>
         </Card.Body>
         <Card.Footer>
@@ -182,9 +308,9 @@ const customerLoanDetails = () => {
             <Col md="auto">
               <Checks loanId={loanId} />
             </Col>
-            <Col md="auto">
+            {/* <Col md="auto">
               <Button className="btn-sm">Add Notes</Button>
-            </Col>
+            </Col> */}
             <Col md="auto">
               <Dropdown className="e-caret-hide">
                 <Dropdown.Toggle className="btn-sm">
@@ -212,8 +338,11 @@ const customerLoanDetails = () => {
             </Col>
             <Col md="auto">
               <Button onClick={() => setModal(true)} className={'btn-sm'}>
-                Validate/Update
+                Validate
               </Button>
+            </Col>
+            <Col md="auto">
+              <Button className={'btn-sm'}>Update</Button>
             </Col>
           </Row>
         </Card.Footer>
