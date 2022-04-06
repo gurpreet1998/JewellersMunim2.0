@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
-import { v4 as uuid } from 'uuid';
 import Flex from 'components/common/Flex';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,12 +8,6 @@ const CreateNoteForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-
-    const initData = {
-      id: uuid(),
-      content: { status }
-    };
-
     setStatus('');
   };
 
