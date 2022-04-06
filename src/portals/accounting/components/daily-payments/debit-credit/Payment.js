@@ -80,7 +80,7 @@ export default class Payment extends React.Component {
         perPage={100}
         rowCount={this.state.data.length}
       >
-        <Card>
+        <Card className={'h-100'}>
           <BasicCardHeader name={'Payments'} />
           <Card.Body
             className="p-0"

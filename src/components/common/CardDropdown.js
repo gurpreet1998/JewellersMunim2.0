@@ -8,7 +8,9 @@ const CardDropdown = ({
   btnRevealClass,
   drop,
   children,
-  icon = 'ellipsis-h'
+  variant = 'link',
+  icon = 'ellipsis-h',
+  btnText = ''
 }) => {
   return (
     <Dropdown
@@ -17,7 +19,7 @@ const CardDropdown = ({
       drop={drop}
     >
       <Dropdown.Toggle
-        variant="link"
+        variant={variant}
         size="sm"
         data-boundary="viewport"
         className={classNames('text-600', {
@@ -25,7 +27,7 @@ const CardDropdown = ({
           'btn-reveal': !btnRevealClass
         })}
       >
-        <FontAwesomeIcon icon={icon} className="fs--2" />
+        <FontAwesomeIcon icon={icon} className="fs--2" /> {btnText}
       </Dropdown.Toggle>
       <Dropdown.Menu className="border py-0">
         {children}
@@ -46,7 +48,9 @@ CardDropdown.propTypes = {
   btnRevealClass: PropTypes.string,
   drop: PropTypes.string,
   children: PropTypes.node,
-  icon: PropTypes.string
+  variant: PropTypes.string,
+  icon: PropTypes.string,
+  btnText: PropTypes.string
 };
 
 export default CardDropdown;

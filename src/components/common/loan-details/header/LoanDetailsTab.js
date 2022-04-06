@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import Flex from 'components/common/Flex';
-import AmortizationSchedule from './Tabs/AmortizationSchedule';
-import DisputesComplaints from './Tabs/Disputes-Complaints';
-import Documentations from './Tabs/Documentations';
-import LoanInformation from './Tabs/LoanInformation';
-import Statements from './Tabs/Statements';
-import 'react-tabs/style/react-tabs.css';
-import TransactionHistory from './Tabs/transactions/TransactionHistory';
-
 import { Card, Nav, Row, Tab } from 'react-bootstrap';
+import SimpleBarReact from 'simplebar-react';
+import Flex from 'components/common/Flex';
+import AmortizationSchedule from '../Tabs/AmortizationSchedule';
+import CreateNote from '../Tabs/notes/CreateNote';
+import DisputesComplaints from '../Tabs/Disputes-Complaints';
+import Documentations from '../Tabs/Documentations';
+import LoanInformation from '../Tabs/loan-information/LoanInformation';
+import Statements from '../Tabs/Statements';
+import TransactionHistory from '../Tabs/transactions/TransactionHistory';
+
 const NavItem = ({ item }) => {
   return (
     <Nav.Item as="li">
@@ -27,6 +27,7 @@ const NavItem = ({ item }) => {
 const LoanDetailsTab = props => {
   const [navItems] = useState([
     'Loan Information',
+    'Notes',
     'Transaction History',
     'Disputes/ Complaints',
     'Amortization Schedule',
@@ -35,28 +36,30 @@ const LoanDetailsTab = props => {
   ]);
 
   return (
-    <Card className="mt-3">
+    <Card className="mt-3 overflow-hidden">
       <Tab.Container id="loan-tabs" defaultActiveKey="loan information">
-        <Card.Header
-          as={Flex}
-          justifyContent="between"
-          alignItems="center"
-          className="ps-0 py-0 border-bottom"
-        >
-          <Nav
-            as="ul"
-            className="nav-tabs border-0 flex-nowrap chart-tab tab-active-caret z-index-1"
+        <SimpleBarReact>
+          <Card.Header
+            as={Flex}
+            justifyContent="between"
+            alignItems="center"
+            className="p-0 bg-light"
           >
-            {navItems.map(item => (
-              <NavItem item={item} key={item} />
-            ))}
-          </Nav>
-        </Card.Header>
+            <Nav className="nav-tabs border-0 flex-nowrap chart-tab">
+              {navItems.map(item => (
+                <NavItem item={item} key={item} />
+              ))}
+            </Nav>
+          </Card.Header>
+        </SimpleBarReact>
         <Card.Body className={'p-0'}>
           <Row className="g-1">
             <Tab.Content>
               <Tab.Pane unmountOnExit eventKey="loan information">
                 <LoanInformation />
+              </Tab.Pane>
+              <Tab.Pane unmountOnExit eventKey="notes">
+                <CreateNote />
               </Tab.Pane>
               <Tab.Pane unmountOnExit eventKey="transaction history">
                 <TransactionHistory loanId={props.loanId} />

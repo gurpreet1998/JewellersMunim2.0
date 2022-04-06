@@ -155,15 +155,18 @@ const AccountDetails = () => {
             <>
               <Col lg={{ span: 2, order: 2 }}>
                 <ReconciliationHandler
-                  reconciledAction={reconcileOnClick}
-                  unReconciledAction={unreconciledOnClick}
+                  reconciledAction={() => {
+                    reconcileOnClick(paymentBatch);
+                  }}
+                  unReconciledAction={() => {
+                    unreconciledOnClick(paymentBatch);
+                  }}
                   matchAction={matchOnClick}
                   unMatchAction={unMatchOnClick}
                   resetAction={resetOnClick}
                   postAction={postOnClick}
                   disabled={disabled}
                   reconciledChecked={reconciledChecked}
-                  selectedFilter={paymentBatch}
                 />
               </Col>
               <Col lg={{ span: 5, order: 1 }}>

@@ -75,8 +75,12 @@ const AccountDetails = () => {
         <Row className="g-3">
           <Col lg={{ span: 2, order: 2 }}>
             <ReconciliationHandler
-              reconciledAction={reconcileOnClick}
-              unReconciledAction={unreconciledOnClick}
+              reconciledAction={() => {
+                reconcileOnClick();
+              }}
+              unReconciledAction={() => {
+                unreconciledOnClick();
+              }}
               matchAction={matchOnClick}
               unMatchAction={unMatchOnClick}
               resetAction={resetOnClick}

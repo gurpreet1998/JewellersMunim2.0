@@ -9,7 +9,6 @@ const ReconciliationHandler = ({
   unMatchAction,
   resetAction,
   postAction,
-  selectedFilter,
   reconciledChecked,
   disabled
 }) => {
@@ -24,9 +23,7 @@ const ReconciliationHandler = ({
             label="Reconciled"
             name="ReconcileRadio"
             className="form-label-nogutter"
-            onChange={() => {
-              reconciledAction(selectedFilter);
-            }}
+            onChange={reconciledAction}
             defaultChecked={true}
           />
           <Form.Check
@@ -36,9 +33,7 @@ const ReconciliationHandler = ({
             label="Un-Reconciled"
             name="ReconcileRadio"
             className="form-label-nogutter"
-            onChange={() => {
-              unReconciledAction(selectedFilter);
-            }}
+            onChange={unReconciledAction}
           />
         </div>
         <div className="border-dashed-bottom my-3" />
@@ -101,8 +96,7 @@ ReconciliationHandler.propTypes = {
   resetAction: PropTypes.func.isRequired,
   postAction: PropTypes.func.isRequired,
   reconciledChecked: PropTypes.bool.isRequired,
-  disabled: PropTypes.bool.isRequired,
-  selectedFilter: PropTypes.string
+  disabled: PropTypes.bool.isRequired
 };
 
 export default ReconciliationHandler;

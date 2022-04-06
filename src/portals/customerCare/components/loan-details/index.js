@@ -8,10 +8,10 @@ import { useLoanDetails } from 'hooks/useAccountingData';
 import { useForm } from 'react-hook-form';
 import { selectScriptData } from 'data/accounting/loandetails';
 import SoftBadge from 'components/common/SoftBadge';
-import ValidateCaller from 'components/common/loan-details/ValidateCaller';
-import ScriptMessage from 'components/common/loan-details/ScriptMessage';
-import Checks from 'components/common/loan-details/Checks';
-import LoanDetailsTab from 'components/common/loan-details/LoanDetailsTab';
+import ValidateCaller from 'components/common/loan-details/header/ValidateCaller';
+import ScriptMessage from 'components/common/loan-details/header/ScriptMessage';
+import Checks from 'components/common/loan-details/header/LoanChecks';
+import LoanDetailsTab from 'components/common/loan-details/header/LoanDetailsTab';
 import { loanService } from '_services/loanService';
 import GoBackButton from 'components/common/GoBackButton';
 const customerLoanDetails = () => {

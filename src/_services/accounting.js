@@ -437,24 +437,3 @@ export const DebitCreditCardService = {
     }).catch(err => console.log('ERROR (PostTransaction):', err));
   }
 };
-
-export const DebitCreditCardPaymentBatchService = {
-  getGetPaymentBatchTypeSelection: function () {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/PaymentBatch/GetPaymentBatchTypeSelection`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  }
-  // getPaymentBatch: function (id) {
-  //   return new Promise(resolve => {
-  //     axiosinstance
-  //       .get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`)
-  //       .then(r => {
-  //         resolve(r.data);
-  //       });
-  //   });
-  // }
-};

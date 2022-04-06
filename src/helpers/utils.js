@@ -524,3 +524,16 @@ export const monthNames = [
   'November',
   'December'
 ];
+
+// todo: add correct status' to map
+export const loanStatusMap = loanStatus => {
+  if (loanStatus === 'NEW') {
+    return 'primary';
+  } else if (loanStatus === 'PENDING') {
+    return 'info';
+  } else if (loanStatus === 'DUE') {
+    return 'warning';
+  } else {
+    return 'dark';
+  }
+};

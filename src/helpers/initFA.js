@@ -201,7 +201,9 @@ import {
   faMoneyBill,
   faMoneyBillAlt,
   faHourglass,
-  faUniversity
+  faUniversity,
+  faMicrophone,
+  faMicrophoneAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -362,6 +364,8 @@ library.add(
   faMoneyBillAlt,
   faHourglass,
   faUniversity,
+  faMicrophone,
+  faMicrophoneAlt,
 
   // Brand
   faFacebook,

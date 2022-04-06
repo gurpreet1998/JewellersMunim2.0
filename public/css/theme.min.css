@@ -20044,6 +20044,21 @@ samp {
 }
 
 /*-----------------------------------------------
+|   Sticky Header
+-----------------------------------------------*/
+.sticky-header {
+  position: sticky;
+  z-index: 1015;
+  top: 5rem;
+}
+
+.sticky-subheader {
+  position: sticky;
+  z-index: 1015;
+  top: 16rem;
+}
+
+/*-----------------------------------------------
 |   Custom circle
 -----------------------------------------------*/
 .circle-dashed {

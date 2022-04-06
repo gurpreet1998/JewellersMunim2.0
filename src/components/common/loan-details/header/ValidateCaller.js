@@ -6,23 +6,6 @@ import { Col, Row, Button, Card } from 'react-bootstrap';
 const ValidateCaller = props => {
   const [validateCaller, setValidateCaller] = useState(props.data);
   console.log('Props', props);
-  //   {
-  //   street: '',
-  //   city: '',
-  //   state: '',
-  //   postalCode: '',
-  //   idNumber: '',
-  //   idType: '',
-  //   idIssueDate: '',
-  //   idIssueExperiationDate: '',
-  //   authorizedPartyName: '',
-  //   authorizedPartyEmail: '',
-  //   addressId: null,
-  //   addressTypeName: '',
-  //   mobileNumber: '',
-  //   homeNumber: null,
-  //   authorizedPartyRelationship: ''
-  // }
 
   const [edit, setEdit] = useState(false);
 
@@ -48,16 +31,9 @@ const ValidateCaller = props => {
   };
   return (
     <>
-      <Card
-        show={modal}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
+      <Card show={modal} size="lg" className={'mt-3'}>
         <Card.Header>
-          <Card.Title id="contained-modal-title-vcenter">
-            Validate Caller
-          </Card.Title>
+          <Card.Title>Validate Caller</Card.Title>
           <Row>
             <Col>
               {!edit && (
@@ -104,8 +80,6 @@ const ValidateCaller = props => {
                       defaultValue={validateCaller?.addressTypeName}
                     />
                   </Col>
-                  {/* {console.log(validateCaller.street)}
-                  {console.log(validateCaller)} */}
                 </Row>
                 <Row>
                   <Col>
@@ -360,11 +334,6 @@ const ValidateCaller = props => {
                     name="idIssueDate"
                     onChange={inputsHandler}
                     placeholder="ID Issue Date"
-                    // style={{
-                    //   marginRight: '5px',
-                    //   marginLeft: '5px',
-                    //   marginBottom: '5px'
-                    // }}
                     defaultValue={validateCaller?.idIssueDate}
                   />
                 </Col>

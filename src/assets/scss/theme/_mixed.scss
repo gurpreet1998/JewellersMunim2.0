@@ -24,6 +24,22 @@
 }
 
 /*-----------------------------------------------
+|   Sticky Header
+-----------------------------------------------*/
+
+.sticky-header {
+  position: sticky;
+  z-index: $zindex-sticky;
+  top: 5rem;
+}
+
+.sticky-subheader {
+  position: sticky;
+  z-index: $zindex-sticky;
+  top: 16rem;
+}
+
+/*-----------------------------------------------
 |   Custom circle
 -----------------------------------------------*/
 .circle-dashed {

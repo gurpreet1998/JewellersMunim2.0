@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import LoanDetails from 'components/common/loan-details';
 import AccountingHomeDashboard from '../components/landing';
 import PendingMerchantSettlements from '../components/pending-settlements/merchants';
 import PendingLenderSettlements from '../components/pending-settlements/lender';
@@ -11,7 +12,6 @@ import CMLReconciliation from '../components/bank-reconciliations/cml';
 import LockBox from '../components/bank-reconciliations/lock-box';
 import CPPReconciliation from '../components/bank-reconciliations/cpp';
 import DepositRec from '../components/manual-payments/deposit-rec';
-import LoanDetails from '../components/loan-details';
 import Cash from '../components/daily-payments/CashCheckMoneyOrder';
 import SearchResults from '../components/search-results';
 import MerchantSettlementDetails from '../components/pending-settlements/merchants/Details';
@@ -46,7 +46,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
             )}
           </Route>
 
-          <Route path={`${url}/home/loandetails/:loanId`}>
+          <Route path={`${url}/loan/:loanId`}>
             {checkForAccess('AccountingHome', extensionRole) ? (
               <LoanDetails />
             ) : (

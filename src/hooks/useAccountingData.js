@@ -88,3 +88,78 @@ export const useLoanTransactionsData = loanId => {
     refetchIntervalInBackground: true
   });
 };
+
+const fetchPaymentBatchTypeSelection = () => {
+  return axiosinstance.get(
+    `${API_URI}/PaymentBatch/GetPaymentBatchTypeSelection`
+  );
+};
+
+export const usePaymentBatchTypeSelectionData = () => {
+  return useQuery(
+    ['debit-credit-payment-batch-types'],
+    fetchPaymentBatchTypeSelection,
+    {
+      staleTime: 60000, // 1 min
+      refetchIntervalInBackground: true
+    }
+  );
+};
+
+const fetchPaymentBatches = ({ queryKey }) => {
+  const paymentBatchTypeId = queryKey[1];
+  console.log('paymentBatchTypeId', paymentBatchTypeId);
+  return axiosinstance.get(
+    `${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${paymentBatchTypeId}`
+  );
+};
+
+export const usePaymentBatchesData = paymentBatchTypeId => {
+  return useQuery(
+    ['debit-credit-payment-batch-type', paymentBatchTypeId],
+    fetchPaymentBatches,
+    {
+      staleTime: 60000, // 1 min
+      refetchIntervalInBackground: true
+    }
+  );
+};
+
+const fetchReconciledCardData = ({ queryKey }) => {
+  const paymentBatchId = queryKey[1];
+  return axiosinstance.get(
+    `${API_URI}/Accounting/GetReconciledDataForDebitCreditCard?paymentBatchId=${paymentBatchId}`
+  );
+};
+
+export const useReconciledCardData = paymentBatchId => {
+  return useQuery(
+    ['debit-credit-reconciled-data', paymentBatchId],
+    fetchReconciledCardData
+  );
+};
+
+const fetchUnreconciledCardData = ({ queryKey }) => {
+  const paymentBatchId = queryKey[1];
+  return axiosinstance.get(
+    `${API_URI}/Accounting/GetUnReconciledDataForDebitCreditCard?paymentBatchId=${paymentBatchId}`
+  );
+};
+
+export const useUnreconciledCardData = paymentBatchId => {
+  return useQuery(
+    ['debit-credit-unreconciled-data', paymentBatchId],
+    fetchUnreconciledCardData
+  );
+};
+
+const fetchBorrowerVerification = ({ queryKey }) => {
+  const loanId = queryKey[1];
+  return axiosinstance.get(
+    `${API_URI}/Loan/BorrowerVerification?loanId=${loanId}`
+  );
+};
+
+export const useBorrowerVerificationData = loanId => {
+  return useQuery(['borrower-verification', loanId], fetchBorrowerVerification);
+};

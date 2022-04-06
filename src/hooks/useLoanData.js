@@ -37,3 +37,29 @@ export const fetchLoanStatusWiseData = (merchantId, statusId) => {
     `${API_URI}/Loan/GetLoanDataStatusWise?merchantId=${merchantId}&statusId=${statusId}`
   );
 };
+
+const fetchLoanInformation = ({ queryKey }) => {
+  const loanId = queryKey[1];
+  return axiosinstance.get(`${API_URI}/Loan/GetLoanInformation?id=${loanId}`);
+};
+
+export const useLoanInformationData = loanId => {
+  return useQuery(['loan-information', loanId], fetchLoanInformation, {
+    cacheTime: 60000,
+    staleTime: 60000,
+    refetchIntervalInBackground: true
+  });
+};
+
+const fetchLoanBucketDetails = ({ queryKey }) => {
+  const loanId = queryKey[1];
+  return axiosinstance.get(`${API_URI}/Loan/GetLoanBucketDetails?id=${loanId}`);
+};
+
+export const useLoanBucketData = loanId => {
+  return useQuery(['loan-bucket-details', loanId], fetchLoanBucketDetails, {
+    cacheTime: 60000,
+    staleTime: 60000,
+    refetchIntervalInBackground: true
+  });
+};

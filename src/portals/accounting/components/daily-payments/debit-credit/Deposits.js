@@ -69,7 +69,7 @@ export default class Deposits extends React.Component {
         perPage={100}
         rowCount={this.state.data.length}
       >
-        <Card>
+        <Card className={'h-100'}>
           <BasicCardHeader name={'Deposits'} />
           <Card.Body
             style={{ maxHeight: '17rem', overflow: 'auto' }}
