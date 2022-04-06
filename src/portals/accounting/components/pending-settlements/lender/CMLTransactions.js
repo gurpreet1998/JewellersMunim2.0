@@ -10,6 +10,7 @@ import { PendingSettelmentsSponsorBank } from 'data/accounting/pendingSettlement
 //import { PendingSettelmentsSummaryColumns } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
+import AdvanceTableFooter from 'components/common/advance-table/AdvanceTableFooter';
 //import { pendingSettlementService } from '_services/accounting';
 //import AdvanceTablePagination from 'components/common/advance-table/AdvanceTablePagination';
 //import AdvanceTableSearchBox from 'components/common/advance-table/AdvanceTableSearchBox';
@@ -97,7 +98,7 @@ const CMLTransactions = () => {
         setSelectedRowIDs={val => setCheckboxData(val)}
         pagination
         selectedRowIdsProp={CheckboxData}
-        perPage={100}
+        perPage={6}
         rowCount={PendingSettelmentsSponsorBankData.length}
       >
         <Card className="mt-3">
@@ -122,7 +123,7 @@ const CMLTransactions = () => {
                         </span>
                       </div>
                     </div>
-                    CML Payment/Refunds
+                    Sponsor Bank Payments
                   </Flex>
 
                   {/* <AdvanceTableSearchBox placeholder={"search..."} setGlobalFilter={setSearchKeyword} globalFilter={SearchKeyword}/> */}
@@ -164,6 +165,14 @@ const CMLTransactions = () => {
           {/* <Card.Footer>
             <AdvanceTablePagination showicon={true} align="flex-end" />
           </Card.Footer> */}
+          <Card.Footer>
+            <AdvanceTableFooter
+              rowCount={PendingSettelmentsSponsorBankData.length}
+              table
+              rowInfo
+              navButtons
+            />
+          </Card.Footer>
         </Card>
       </AdvanceTableWrapper>
     </>

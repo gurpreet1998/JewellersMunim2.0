@@ -98,7 +98,7 @@ export const PendingSettelmentsSponsorBank = {
       accessor: 'pendingSettlementDate'
     },
     {
-      Header: 'Origination Fee',
+      Header: 'Bank Fee',
       accessor: 'originationFee'
     },
     {
@@ -110,7 +110,7 @@ export const PendingSettelmentsSponsorBank = {
       accessor: 'borrowerName'
     },
     {
-      Header: 'Bank Account Number',
+      Header: 'Loan Principle Amount',
       accessor: 'bankAccountNumber'
     }
   ],
@@ -121,7 +121,7 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Henderson',
       originationFee: 9500.55,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 9830,
       loanNumber: 5673322189,
       pendingSettlementDate: '02/06/2021'
     },
@@ -131,9 +131,9 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Las Vegas',
       originationFee: 5466,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 9500,
       loanNumber: 5673322191,
-      pendingSettlementDate: '02/06/2021'
+      pendingSettlementDate: '03/06/2021'
     },
     {
       id: 3,
@@ -141,9 +141,9 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Las Vegas',
       originationFee: 5466,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 7650,
       loanNumber: 5673322191,
-      pendingSettlementDate: '02/06/2021'
+      pendingSettlementDate: '04/06/2021'
     },
     {
       id: 4,
@@ -151,9 +151,9 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Las Vegas',
       originationFee: 5466,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 8700,
       loanNumber: 5673322191,
-      pendingSettlementDate: '02/06/2021'
+      pendingSettlementDate: '06/06/2021'
     },
     {
       id: 5,
@@ -161,9 +161,9 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Las Vegas',
       originationFee: 5466,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 2780,
       loanNumber: 5673322191,
-      pendingSettlementDate: '02/06/2021'
+      pendingSettlementDate: '01/06/2021'
     },
     {
       id: 6,
@@ -171,7 +171,7 @@ export const PendingSettelmentsSponsorBank = {
       // merchantLocation: 'Brain Balance- Las Vegas',
       originationFee: 5466,
       interestFee: 9500.1,
-      bankAccountNumber: 95001,
+      bankAccountNumber: 7650,
       loanNumber: 5673322191,
       pendingSettlementDate: '02/06/2021'
     }
@@ -547,9 +547,13 @@ export const CPPExceptionsTableData = {
   ]
 };
 
+export const sponsorBank = ['Medallion'];
+
 export const merchants = ['Brain Balance', 'Peak Performance', 'Hair Club'];
 
 export const bankAccounts = ['Bank of America'];
+
+export const sponsorBankAccount = ['876787654312', '564765879673'];
 
 export const paymentCategory = [
   'CML Payments',

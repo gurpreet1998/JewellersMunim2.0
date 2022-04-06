@@ -5,18 +5,23 @@ import TitleCard from 'components/common/TitleCard';
 import Flex from 'components/common/Flex';
 
 // Placeholder data - todo: Replace with API
-import { bankAccounts, merchants } from 'data/accounting/pendingSettlements';
+import {
+  sponsorBank,
+  sponsorBankAccount
+} from 'data/accounting/pendingSettlements';
 
 const PendingMerchantSettlements = () => {
-  const [merchant, setMerchant] = useState('');
-  const [bankAccount, setBankAccount] = useState('');
+  //const [merchant, setMerchant] = useState('');
+  const [sponsorBankData, setSponsorBankData] = useState('');
+  //const [bankAccount, setBankAccount] = useState('');
+  const [sponsorBankAccountData, setSponsorBankAccountData] = useState('');
 
   useEffect(() => {
     //if(merchant==="")
     //{
-    setBankAccount('');
+    setSponsorBankAccountData('');
     //}
-  }, [merchant]);
+  }, [sponsorBankData]);
 
   return (
     <>
@@ -28,28 +33,28 @@ const PendingMerchantSettlements = () => {
               <Flex>
                 <Form.Select
                   size="sm"
-                  value={merchant}
-                  onChange={e => setMerchant(e.target.value)}
+                  value={sponsorBankData}
+                  onChange={e => setSponsorBankData(e.target.value)}
                   className="me-2"
                 >
                   <option value="">Sponsor Bank</option>
-                  {merchants.map((merchant, index) => (
+                  {sponsorBank.map((sponsorBankData, index) => (
                     <option value={index + 186} key={index}>
-                      {merchant}
+                      {sponsorBankData}
                     </option>
                   ))}
                 </Form.Select>
-                {merchant !== '' ? (
+                {sponsorBankData !== '' ? (
                   <Form.Select
                     size="sm"
-                    value={bankAccount}
-                    onChange={e => setBankAccount(e.target.value)}
+                    value={sponsorBankAccountData}
+                    onChange={e => setSponsorBankAccountData(e.target.value)}
                     className="me-2"
                   >
                     <option value="">Sponsor Bank Account</option>
-                    {bankAccounts.map((bankAccount, index) => (
+                    {sponsorBankAccount.map((sponsorBankAccountData, index) => (
                       <option value={index + 186} key={index}>
-                        {bankAccount}
+                        {sponsorBankAccountData}
                       </option>
                     ))}
                   </Form.Select>
@@ -60,7 +65,7 @@ const PendingMerchantSettlements = () => {
             }
           />
         </Col>
-        {bankAccount !== '' ? (
+        {sponsorBankAccountData !== '' ? (
           <>
             <Col style={{ textAlign: 'right', marginRight: '1rem' }}>
               <Button
@@ -80,7 +85,7 @@ const PendingMerchantSettlements = () => {
               </Button>
             </Col>
             <Col md={12}>
-              <CMLTransactions merchant={merchant} />
+              <CMLTransactions merchant={sponsorBankData} />
             </Col>
           </>
         ) : (

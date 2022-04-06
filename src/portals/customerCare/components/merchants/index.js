@@ -19,6 +19,12 @@ const Merchants = () => {
                 <Col lg={6} className="ps-lg-4 my-5 text-center text-lg-start">
                   <h3 className="text-primary">Placeholder!</h3>
                   <p className="lead">Merchants Page.</p>
+                  {/* <a
+                    target="_blank"
+                    href="https://app.powerbi.com/reportEmbed?reportId=a584f36d-9544-4e8a-be2b-c4e13ca8cf57&autoAuth=true&ctid=ab52d4e5-9cc7-437a-bdda-f4239e145187&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXNvdXRoLWVhc3QtYXNpYS1yZWRpcmVjdC5hbmFseXNpcy53aW5kb3dzLm5ldC8ifQ%3D%3D%22"
+                  >
+                    <Button>LInkk</Button>{' '}
+                  </a> */}
                 </Col>
               </Row>
             </Card.Body>
