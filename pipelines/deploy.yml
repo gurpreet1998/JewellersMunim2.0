@@ -1,81 +1,81 @@
 parameters:
-- name: environment
-  displayName: Environment
-  type: string
-  default: Primer
-  values:
-  - Primer
-  - Dev
-  - Test
-  - Staging
-  - Production
-  
+  - name: environment
+    displayName: Environment
+    type: string
+    default: Primer
+    values:
+      - Primer
+      - Dev
+      - Test
+      - Staging
+      - Production
+
 name: web-deploy
 trigger: none
 
 resources:
   pipelines:
-  - pipeline: buildpipeline
-    source: web-build
-    trigger: none
+    - pipeline: buildpipeline
+      source: web-build
+      trigger: none
 
 variables:
-- name: environmentCode
-  ${{ if eq(parameters.environment, 'Primer') }}:
-    value: prm
-  ${{ if eq(parameters.environment, 'Dev') }}:
-    value: dev
-  ${{ if eq(parameters.environment, 'Test') }}:
-    value: tst
-  ${{ if eq(parameters.environment, 'Staging') }}:
-    value: stg
-  ${{ if eq(parameters.environment, 'Production') }}:
-    value: prd
-- name: serviceConnection
-  ${{ if or(eq(parameters.environment, 'Primer'), eq(parameters.environment, 'Dev'), eq(parameters.environment, 'Test')) }}:
-    value: sc-sp-infradevops
-  ${{ if or(eq(parameters.environment, 'Staging'), eq(parameters.environment, 'Production')) }}:
-    value: sc-sp-choiceprod #placeholder
-- name: webAppName
-  ${{ if eq(parameters.environment, 'Primer') }}:
-    value: ChoicePay
-  ${{ if eq(parameters.environment, 'Dev') }}:
-    value: web-czeu-cpsptl-li-npddev
-  ${{ if eq(parameters.environment, 'Test') }}:
-    value: web-czeu-cpsptl-li-npdtst
-  ${{ if eq(parameters.environment, 'Staging') }}:
-    value: web-czeu-cpsptl-li-prdstg
-  ${{ if eq(parameters.environment, 'Production') }}:
-    value: web-czeu-cpsptl-li-prdprd
+  - name: environmentCode
+    ${{ if eq(parameters.environment, 'Primer') }}:
+      value: prm
+    ${{ if eq(parameters.environment, 'Dev') }}:
+      value: dev
+    ${{ if eq(parameters.environment, 'Test') }}:
+      value: tst
+    ${{ if eq(parameters.environment, 'Staging') }}:
+      value: stg
+    ${{ if eq(parameters.environment, 'Production') }}:
+      value: prd
+  - name: serviceConnection
+    ${{ if or(eq(parameters.environment, 'Primer'), eq(parameters.environment, 'Dev'), eq(parameters.environment, 'Test')) }}:
+      value: sc-sp-infradevops-res
+    ${{ if or(eq(parameters.environment, 'Staging'), eq(parameters.environment, 'Production')) }}:
+      value: sc-sp-choiceprod #placeholder
+  - name: webAppName
+    ${{ if eq(parameters.environment, 'Primer') }}:
+      value: ChoicePay
+    ${{ if eq(parameters.environment, 'Dev') }}:
+      value: web-czeu-cpsptl-li-npddev
+    ${{ if eq(parameters.environment, 'Test') }}:
+      value: web-czeu-cpsptl-li-npdtst
+    ${{ if eq(parameters.environment, 'Staging') }}:
+      value: web-czeu-cpsptl-li-prdstg
+    ${{ if eq(parameters.environment, 'Production') }}:
+      value: web-czeu-cpsptl-li-prdprd
 
 jobs:
-- deployment: web_deploy
-  dependsOn: []
-  displayName: Deploying Choice Pays Web to ${{ parameters.environment }}
-  environment: $(environmentCode)
-  continueOnError: false
-  pool:
-    vmImage: windows-latest
-  strategy:
-    runOnce:
-      deploy:
-        steps:
-        - checkout: none
-        - task: Bash@3
-          displayName: Set Deployment Name
-          name: deploymentName
-          inputs:
-            targetType: inline
-            script: |
-              buildName="deploy_${ENVIRONMENT}_${RESOURCEBUILDNAME}"
-              echo "##vso[build.updatebuildnumber]$buildName"
-          env:
-            RESOURCEBUILDNAME: $(resources.pipeline.buildpipeline.runName)
-            ENVIRONMENT: $(environmentCode)
-        - task: AzureRmWebAppDeployment@4
-          displayName: Azure App Service Deploy
-          inputs:
-            azureSubscription: $(serviceConnection)
-            WebAppName: $(webAppName)
-            WebAppKind: webApp
-            Package: $(Pipeline.Workspace)/**/*.zip
+  - deployment: web_deploy
+    dependsOn: []
+    displayName: Deploying Choice Pays Web to ${{ parameters.environment }}
+    environment: $(environmentCode)
+    continueOnError: false
+    pool:
+      vmImage: windows-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: none
+            - task: Bash@3
+              displayName: Set Deployment Name
+              name: deploymentName
+              inputs:
+                targetType: inline
+                script: |
+                  buildName="deploy_${ENVIRONMENT}_${RESOURCEBUILDNAME}"
+                  echo "##vso[build.updatebuildnumber]$buildName"
+              env:
+                RESOURCEBUILDNAME: $(resources.pipeline.buildpipeline.runName)
+                ENVIRONMENT: $(environmentCode)
+            - task: AzureRmWebAppDeployment@4
+              displayName: Azure App Service Deploy
+              inputs:
+                azureSubscription: $(serviceConnection)
+                WebAppName: $(webAppName)
+                WebAppKind: webApp
+                Package: $(Pipeline.Workspace)/**/*.zip
