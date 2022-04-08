@@ -68,7 +68,7 @@ const customerLoanDetails = () => {
               <h6 className="mb-0 fs-1">
                 <font color="grey">Primary Status</font> &nbsp;
                 <SoftBadge pill bg="warning" className="fs--2">
-                  {loan?.data?.loanStatus || 'Not Fund'}
+                  {loan?.data?.loanStatus || 'Not Found'}
                   <FontAwesomeIcon
                     icon="exclamation-circle"
                     className="ms-1"
