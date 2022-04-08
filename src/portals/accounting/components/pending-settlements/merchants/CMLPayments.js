@@ -3,7 +3,6 @@ import { Card, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import { useParams } from 'react-router-dom';
-// Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
 import { CMLPaymentsTableData } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
@@ -18,12 +17,6 @@ const CMLTransaction = () => {
     // console.log(tableData);
     fetchData(merchantId);
   }, []);
-
-  const [SelectedRowID, setSelectedRowID] = useState([]);
-
-  useEffect(() => {
-    console.log('SelectedRowID', SelectedRowID);
-  }, [SelectedRowID]);
 
   const fetchData = merchantId => {
     const res =
@@ -49,9 +42,9 @@ const CMLTransaction = () => {
             data={tableData}
             selection
             sortable
-            setSelectedRowIDs={val => setSelectedRowID(val)}
             pagination
             perPage={7}
+            preSelectAll={true}
             rowCount={tableData.length}
           >
             <Card className={'h-100'}>

@@ -4,7 +4,6 @@ import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 import BasicCardHeader from 'components/common/BasicCardHeader';
 import { useParams } from 'react-router-dom';
-// Data Placeholder
 import { pendingSettlementService } from '_services/accounting';
 import { CPRefundsTableData } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
@@ -19,12 +18,6 @@ const CMLRefund = () => {
     // console.log(tableData);
     fetchData(merchantId);
   }, []);
-
-  const [SelectedRowID, setSelectedRowID] = useState([]);
-
-  useEffect(() => {
-    console.log('SelectedRowID', SelectedRowID);
-  }, [SelectedRowID]);
 
   const fetchData = merchantId => {
     const res =
@@ -53,9 +46,9 @@ const CMLRefund = () => {
             data={tableData}
             selection
             sortable
-            setSelectedRowIDs={val => setSelectedRowID(val)}
             pagination
             perPage={100}
+            preSelectAll={true}
             rowCount={tableData.length}
           >
             <Card className={'h-100'}>

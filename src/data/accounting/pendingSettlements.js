@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
-export const PendingSettelmentsSummaryColumns = {
+
+export const PendingSettlementsSummaryColumns = {
   columns: [
     {
       Header: 'Merchant',
@@ -49,45 +50,17 @@ export const PendingSettelmentsSummaryColumns = {
       accessor: 'allTransactionsSelected'
     }
   ]
-  // data: [
-  //   {
-  //     id: 1,
-  //     merchantName: 'Jane Doe',
-  //     merchantLocation: 'Brain Balance- Henderson',
-  //     cmlPaymentAmount: 9500.55,
-  //     cmlRefundAmount: 9500.1,
-  //     cpPaymentAmount: 9500.1,
-  //     cpRefundAmount: 9500
-  //   },
-  //   {
-  //     id: 2,
-  //     merchantName: 'Mary Doe',
-  //     merchantLocation: 'Brain Balance- Las Vegas',
-  //     cmlPaymentAmount: 5466,
-  //     cmlRefundAmount: 9500.1,
-  //     cpPaymentAmount: 9500.1,
-  //     cpRefundAmount: 9500
-  //   }]
 };
 
-export const PendingSettelmentsSponsorBank = {
+export const PendingSettlementsSponsorBank = {
   columns: [
-    // {
-    //   Header: 'Merchant',
-    //   accessor: 'merchantName'
-    // },
     {
       Header: 'Loan Number',
       accessor: 'loanNumber',
       Cell: rowData => {
         const tableData = rowData.data[rowData.row.index]; // Change pathname when redirection available
         return (
-          <div
-            // to={{
-            //   pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
-            // }}
-            className="text-primary fw-semi-bold"
-          >
+          <div className="text-primary fw-semi-bold">
             {tableData?.loanNumber || 'Loan number'}
           </div>
         );
@@ -184,16 +157,15 @@ export const CMLPaymentsTableData = {
       accessor: 'loanNumber',
       Header: 'Loan Number',
       Cell: rowData => {
-        const batchdetail = rowData.data[rowData.row.index];
-        console.log(batchdetail.loanId);
+        const batchDetail = rowData.data[rowData.row.index];
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+              pathname: `/portal/accounting/loan/${batchDetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >
-            {batchdetail.loanNumber}
+            {batchDetail.loanNumber}
           </Link>
         );
       }

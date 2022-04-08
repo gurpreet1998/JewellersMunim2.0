@@ -5,7 +5,7 @@ import Flex from 'components/common/Flex';
 import classNames from 'classnames';
 
 // Data Placeholder
-import { PendingSettelmentsSponsorBank } from 'data/accounting/pendingSettlements';
+import { PendingSettlementsSponsorBank } from 'data/accounting/pendingSettlements';
 
 //import { PendingSettelmentsSummaryColumns } from 'data/accounting/pendingSettlements';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
@@ -39,9 +39,9 @@ const CMLTransactions = () => {
   //   };
 
   useEffect(() => {
-    setTableDataState([...PendingSettelmentsSponsorBank.data]);
+    setTableDataState([...PendingSettlementsSponsorBank.data]);
     setPendingSettelmentsSponsorBankData([
-      ...PendingSettelmentsSponsorBank.data
+      ...PendingSettlementsSponsorBank.data
     ]);
   }, []);
 
@@ -91,7 +91,7 @@ const CMLTransactions = () => {
   return (
     <>
       <AdvanceTableWrapper
-        columns={PendingSettelmentsSponsorBank?.columns}
+        columns={PendingSettlementsSponsorBank?.columns}
         data={TableDataState}
         selection
         sortable

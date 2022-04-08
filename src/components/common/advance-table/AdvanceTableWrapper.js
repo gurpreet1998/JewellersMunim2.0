@@ -36,10 +36,10 @@ const AdvanceTableWrapper = ({
   data,
   sortable,
   selection,
-  setSelectedRowIDs,
   selectionColumnWidth,
   pagination,
-  perPage = 10
+  perPage = 10,
+  preSelectAll = false
 }) => {
   const {
     getTableProps,
@@ -54,7 +54,8 @@ const AdvanceTableWrapper = ({
     gotoPage,
     pageCount,
     state: { pageIndex, pageSize, selectedRowIds, globalFilter },
-    setGlobalFilter
+    setGlobalFilter,
+    toggleAllRowsSelected
   } = useTable(
     {
       columns,
@@ -97,16 +98,8 @@ const AdvanceTableWrapper = ({
   );
 
   React.useEffect(() => {
-    try {
-      setSelectedRowIDs({ ...selectedRowIds });
-    } catch (err) {
-      console.log(
-        'SelectedRowIds Not Available',
-        err.message,
-        setSelectedRowIDs
-      );
-    }
-  }, [selectedRowIds]);
+    toggleAllRowsSelected(preSelectAll);
+  }, [data]);
 
   const recursiveMap = children => {
     return React.Children.map(children, child => {
@@ -142,34 +135,7 @@ const AdvanceTableWrapper = ({
     });
   };
 
-  return (
-    // <>
-    //   {React.Children.map(children, child => {
-    //     if (child.props.table) {
-    //       return React.cloneElement(child, {
-    //         ...child.props,
-    //         getTableProps,
-    //         headers,
-    //         page,
-    //         prepareRow,
-    //         canPreviousPage,
-    //         canNextPage,
-    //         nextPage,
-    //         previousPage,
-    //         gotoPage,
-    //         pageCount,
-    //         pageIndex,
-    //         selectedRowIds,
-    //         pageSize,
-    //         setPageSize
-    //       });
-    //     } else {
-    //       return child;
-    //     }
-    //   })}
-    // </>
-    <>{recursiveMap(children)}</>
-  );
+  return <>{recursiveMap(children)}</>;
 };
 
 export default AdvanceTableWrapper;
