@@ -18,7 +18,7 @@ variables:
 - name: buildName
   value: $[ format('Web_{0}_{1}', variables['version'], variables['buildTime']) ]
 - name: buildcmd
-  value: $[ format('npm run build-{0}', variables['env']) ]
+  value: $[ format('run build-{0}', variables['env']) ]
 
 jobs:
 - job: web_build
