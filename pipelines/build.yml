@@ -2,7 +2,6 @@ name: $(buildName)
 trigger:
   branches:
     include:
-      - dev
       - main
 
 variables:
@@ -18,6 +17,8 @@ variables:
   value: $[ format('{0:yyyyMMddHHmm}', pipeline.startTime) ] #:yyyy-MM-dd-HH:mm:ss
 - name: buildName
   value: $[ format('Web_{0}_{1}', variables['version'], variables['buildTime']) ]
+- name: buildcmd
+  value: $[ format('npm run build-{0}', variables['env']) ]
 
 jobs:
 - job: web_build
@@ -34,12 +35,12 @@ jobs:
       verbose: false
 
   - task: Npm@1
-    displayName: npm run build
+    displayName: $(buildcmd)
     inputs:
       command: custom
       workingDir: $(srcDir)
       verbose: false
-      customCommand: run build
+      customCommand: $(buildcmd)
       publishRegistry: useFeed
       publishFeed: e4b51158-0e6a-414c-9be7-f53cb32e60d0
 
