@@ -46,7 +46,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
             )}
           </Route>
 
-          <Route path={`${url}/loan/:loanId`}>
+          <Route path={`${url}/home/loan/:loanId`}>
             {checkForAccess('AccountingHome', extensionRole) ? (
               <LoanDetails />
             ) : (

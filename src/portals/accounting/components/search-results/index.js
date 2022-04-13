@@ -42,7 +42,7 @@ const SearchResults = () => {
   } else if (searchData.data.length == 1) {
     return (
       <Redirect
-        to={`/portal/accounting/home/loandetails/${searchData.data[0].loanID}`}
+        to={`/portal/accounting/home/loan/${searchData.data[0].loanID}`}
       />
     );
   } else {
@@ -62,7 +62,7 @@ const SearchResults = () => {
                   {/* {
                   (searchData.data.length = 1 && (
                     <Redirect
-                      to={`/portal/accounting/home/loandetails/${searchData.data.loadId}`}
+                      to={`/portal/accounting/home/loan/${searchData.data.loadId}`}
                     />
                   ))
                 } */}

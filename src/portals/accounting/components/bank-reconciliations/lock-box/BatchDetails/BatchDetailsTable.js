@@ -15,7 +15,7 @@ const BatchDetailsTable = () => {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+              pathname: `/portal/accounting/home/loan/${batchdetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >

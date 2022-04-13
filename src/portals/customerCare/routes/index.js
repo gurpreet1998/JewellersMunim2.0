@@ -72,7 +72,7 @@ export default function CustomerCarePortalRoutes({ match: { url } }) {
             )}
           </Route>
 
-          <Route path={`${url}/home/loandetails/:loanId`}>
+          <Route path={`${url}/home/loan/:loanId`}>
             {checkForAccess('CustomerCareHome', ExtensionRole) ? (
               <LoanDetails />
             ) : (

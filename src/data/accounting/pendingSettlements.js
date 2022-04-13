@@ -161,7 +161,7 @@ export const CMLPaymentsTableData = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/loan/${batchDetail.loanId}`
+              pathname: `/portal/accounting/home/loan/${batchDetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >
@@ -215,7 +215,7 @@ export const CMLRefundsTableData = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+              pathname: `/portal/accounting/home/loan/${batchdetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >
@@ -321,7 +321,7 @@ export const CPPPaymentsTableData = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+              pathname: `/portal/accounting/home/loan/${batchdetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >
@@ -396,7 +396,7 @@ export const CPRefundsTableData = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loandetails/${batchdetail.loanId}`
+              pathname: `/portal/accounting/home/loan/${batchdetail.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >

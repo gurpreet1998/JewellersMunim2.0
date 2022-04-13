@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col, Table } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-import { AuthContext } from 'context/Context';
+// import { AuthContext } from 'context/Context';
 import LoadingSpinner from '../../../../loading-spinner/LoadingSpinner';
 import { useLoanBucketData, useLoanInformationData } from 'hooks/useLoanData';
 import { formatDateStr } from 'helpers/utils';
 
 export default function LoanInformation() {
   const { loanId } = useParams();
-  const context = useContext(AuthContext);
-  const currentRole = context.account.idToken.extension_Role;
+  // const context = useContext(AuthContext);
+  // const currentRole = context.account.idToken.extension_Role;
 
   const { isLoading: loanInfoIsLoading, data: loanInfo } =
     useLoanInformationData(loanId);
@@ -247,102 +247,98 @@ export default function LoanInformation() {
             </Row>
           </Col>
           <Col md={6} lg={4} className="pt-3 pt-lg-0">
-            {currentRole === 'Customer-Care' ? (
-              <Row className={'px-3'}>
-                {loanBucketIsLoading ? (
-                  <LoadingSpinner messageText={'Loading...'} />
-                ) : (
-                  <>
-                    <Table striped bordered hover size="sm">
-                      <thead>
-                        <tr>
-                          <th colSpan={2} className={'fw-semi-bold fs-0'}>
-                            Bucket
-                          </th>
-                        </tr>
-                        <tr>
-                          <th className="fw-medium">Payment (Days)</th>
-                          <th className="fw-medium">Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {loanBucket?.data?.bucketDetails?.map((val, key) => {
-                          return (
-                            <tr key={key}>
-                              <td>{val.bucket}</td>
-                              <td>
-                                <NumberFormat
-                                  value={val.amount}
-                                  displayType={'text'}
-                                  thousandSeparator={true}
-                                  prefix={'$'}
-                                  decimalScale={2}
-                                  fixedDecimalScale={true}
-                                />
-                              </td>
-                            </tr>
-                          );
-                        })}
-                        <tr>
-                          <th>Total Amount Due</th>
-                          <th>
-                            <NumberFormat
-                              value={loanBucket?.data?.totalAmountDue}
-                              displayType={'text'}
-                              thousandSeparator={true}
-                              prefix={'$'}
-                              decimalScale={2}
-                              fixedDecimalScale={true}
-                            />
-                          </th>
-                        </tr>
-                        <tr>
-                          <th>Past Due Amount</th>
-                          <th>
-                            <NumberFormat
-                              value={loanBucket?.data?.pastDueAmount}
-                              displayType={'text'}
-                              thousandSeparator={true}
-                              prefix={'$'}
-                              decimalScale={2}
-                              fixedDecimalScale={true}
-                            />
-                          </th>
-                        </tr>
-                        <tr>
-                          <th>Total Late Fees Due</th>
-                          <th>
-                            <NumberFormat
-                              value={loanBucket?.data?.totalLateFeesDue}
-                              displayType={'text'}
-                              thousandSeparator={true}
-                              prefix={'$'}
-                              decimalScale={2}
-                              fixedDecimalScale={true}
-                            />
-                          </th>
-                        </tr>
-                        <tr>
-                          <th>Total Other Fees Due</th>
-                          <th>
-                            <NumberFormat
-                              value={loanBucket?.data?.totalOtherFeesDue}
-                              displayType={'text'}
-                              thousandSeparator={true}
-                              prefix={'$'}
-                              decimalScale={2}
-                              fixedDecimalScale={true}
-                            />
-                          </th>
-                        </tr>
-                      </tbody>
-                    </Table>
-                  </>
-                )}
-              </Row>
-            ) : (
-              <></>
-            )}
+            <Row className={'px-3'}>
+              {loanBucketIsLoading ? (
+                <LoadingSpinner messageText={'Loading...'} />
+              ) : (
+                <>
+                  <Table striped bordered hover size="sm">
+                    <thead>
+                      <tr>
+                        <th colSpan={2} className={'fw-semi-bold fs-0'}>
+                          Bucket
+                        </th>
+                      </tr>
+                      <tr>
+                        <th className="fw-medium">Payment (Days)</th>
+                        <th className="fw-medium">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {loanBucket?.data?.bucketDetails?.map((val, key) => {
+                        return (
+                          <tr key={key}>
+                            <td>{val.bucket}</td>
+                            <td>
+                              <NumberFormat
+                                value={val.amount}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                prefix={'$'}
+                                decimalScale={2}
+                                fixedDecimalScale={true}
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                      <tr>
+                        <th>Total Amount Due</th>
+                        <th>
+                          <NumberFormat
+                            value={loanBucket?.data?.totalAmountDue}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                          />
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Past Due Amount</th>
+                        <th>
+                          <NumberFormat
+                            value={loanBucket?.data?.pastDueAmount}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                          />
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Total Late Fees Due</th>
+                        <th>
+                          <NumberFormat
+                            value={loanBucket?.data?.totalLateFeesDue}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                          />
+                        </th>
+                      </tr>
+                      <tr>
+                        <th>Total Other Fees Due</th>
+                        <th>
+                          <NumberFormat
+                            value={loanBucket?.data?.totalOtherFeesDue}
+                            displayType={'text'}
+                            thousandSeparator={true}
+                            prefix={'$'}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                          />
+                        </th>
+                      </tr>
+                    </tbody>
+                  </Table>
+                </>
+              )}
+            </Row>
           </Col>
         </Row>
       </Card.Body>
