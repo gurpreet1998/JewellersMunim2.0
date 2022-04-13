@@ -14,6 +14,7 @@ import Checks from 'components/common/loan-details/header/LoanChecks';
 import LoanDetailsTab from 'components/common/loan-details/header/LoanDetailsTab';
 import { loanService } from '_services/loanService';
 import GoBackButton from 'components/common/GoBackButton';
+import UpdateCaller from 'components/common/loan-details/header/UpdateCaller';
 const customerLoanDetails = () => {
   const {
     register,
@@ -24,6 +25,7 @@ const customerLoanDetails = () => {
     // clearErrors
   } = useForm();
   const [modal, setModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
 
   const [tabData, setTabData] = useState(false);
   const [scriptModal, setScriptModal] = useState(false);
@@ -34,6 +36,7 @@ const customerLoanDetails = () => {
   const { isLoading, data: loan } = useLoanDetails(loanId);
   const closeModal = () => {
     setModal(false);
+    setUpdateModal(false);
     setScriptModal(false);
     setTabData(true);
   };
@@ -342,7 +345,9 @@ const customerLoanDetails = () => {
               </Button>
             </Col>
             <Col md="auto">
-              <Button className={'btn-sm'}>Update</Button>
+              <Button onClick={() => setUpdateModal(true)} className={'btn-sm'}>
+                Update
+              </Button>
             </Col>
           </Row>
         </Card.Footer>
@@ -356,6 +361,17 @@ const customerLoanDetails = () => {
           />
         ) : modal ? (
           <ValidateCaller
+            register={register}
+            setValue={setValue}
+            errors={errors}
+            watch={watch}
+            show={true}
+            closeModal={closeModal}
+            loanId={loanId}
+            data={[]}
+          />
+        ) : updateModal ? (
+          <UpdateCaller
             register={register}
             setValue={setValue}
             errors={errors}

@@ -73,5 +73,25 @@ export const loanService = {
           resolve(r.data);
         });
     });
+  },
+
+  getBorrowerVerification: function (id) {
+    return new Promise(resolve => {
+      axiosinstance
+
+        .get(`${API_URI}/Loan/BorrowerVerification?loanId=${id}`)
+
+        .then(r => {
+          resolve(r.data);
+        });
+    });
+  },
+
+  updateBorrowerDetails: async function (id, data) {
+    const resp = await axiosinstance.put(
+      `${API_URI}/Loan/UpdateBorrowerDetails?loanId=${id}`,
+      data
+    );
+    return resp.data;
   }
 };

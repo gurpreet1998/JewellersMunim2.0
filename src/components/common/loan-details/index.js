@@ -13,6 +13,7 @@ import IconButton from 'components/common/IconButton';
 import Flex from 'components/common/Flex';
 import LoanChecks from 'components/common/loan-details/header/LoanChecks';
 import ValidateCaller from 'components/common/loan-details/header/ValidateCaller';
+import UpdateCaller from 'components/common/loan-details/header/UpdateCaller';
 import LoanDetailsTab from 'components/common/loan-details/header/LoanDetailsTab';
 import {
   useBorrowerVerificationData,
@@ -29,6 +30,7 @@ const LoanDetails = () => {
   } = useForm();
 
   const [modal, setModal] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   const [scriptModal, setScriptModal] = useState(false);
   const [selectedScript, setSelectedScript] = useState('');
   const loanParams = useParams();
@@ -41,8 +43,14 @@ const LoanDetails = () => {
   const history = useHistory();
   const statusColor = loanStatusMap(loan?.data?.loanStatus);
 
+  const openUpdateComp = () => {
+    setModal(false);
+    setUpdateModal(true);
+  };
+
   const closeModal = () => {
     setModal(false);
+    setUpdateModal(false);
     setScriptModal(false);
   };
 
@@ -233,6 +241,7 @@ const LoanDetails = () => {
         setScriptModal={setScriptModal}
         setScript={setSelectedScript}
         setValidateModal={setModal}
+        setUpdateModal={openUpdateComp}
       />
       <Row>
         <Col xs={12}>
@@ -244,6 +253,17 @@ const LoanDetails = () => {
             />
           ) : modal ? (
             <ValidateCaller
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              watch={watch}
+              show={true}
+              closeModal={closeModal}
+              loanId={loanId}
+              data={borrowerVerification?.data}
+            />
+          ) : updateModal ? (
+            <UpdateCaller
               register={register}
               setValue={setValue}
               errors={errors}

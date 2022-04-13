@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import FalconCloseButton from 'components/common/FalconCloseButton';
 import PropTypes from 'prop-types';
-import { Col, Row, Card } from 'react-bootstrap';
-import Checkbox from 'react-three-state-checkbox';
-import { loanService } from '_services/loanService';
+import { Col, Row, Card, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { loanService } from '_services/loanService';
 
-const ValidateCaller = props => {
+const UpdateCaller = props => {
   const { loanId } = useParams();
-  const [validateCaller, setValidateCaller] = useState(loanId);
+  const [updateCaller, setUpdateCaller] = useState(loanId);
+  //const [updateValue, setUpdateValue] = useState({});
   console.log('Props', props);
 
-  const [checked, setChecked] = useState(false);
-  const [indeterminate, setIndeterminate] = useState(false);
+  // useEffect(() => {
+  //   loanService
+  //     .getBorrowerVerification(loanId)
+  //     .then(res => setUpdateCaller(res));
+  // }, []);
+
+  // const [checked, setChecked] = useState(false);
   // const [radioValue, setRadioValue] = useState('1');
-
-  //const { loanId } = useParams();
-  //const [borrowerverify, setBorrowerverify] = useState(loanId);
-  useEffect(() => {
-    loanService
-      .getBorrowerVerification(loanId)
-      .then(res => setValidateCaller(res));
-  }, []);
-
-  console.log(validateCaller);
 
   // const radios = [
   //   { name: 'Fail', value: '2' },
@@ -32,52 +27,37 @@ const ValidateCaller = props => {
 
   //const [edit, setEdit] = useState(false);
 
-  //const [modal, setModal] = useState(props.show);
-
   const inputsHandler = ({ target }) => {
     const { name, value } = target;
-    setValidateCaller({ ...validateCaller, [name]: value });
+    setUpdateCaller({ ...updateCaller, [name]: value });
   };
 
-  const handleChange = name => {
-    // i=F, c=F
-    // i=T, c=F
-    // i=F, c=T
-    // * i=F, c=F
-    console.log(indeterminate, checked);
-    if (!indeterminate?.[name]) {
-      if (checked?.[name]) {
-        setChecked({ ...checked, [name]: false });
-        setIndeterminate({ ...indeterminate, [name]: false });
-      } else {
-        setIndeterminate({ ...indeterminate, [name]: true });
-      }
-    } else {
-      if (checked?.[name]) {
-        setChecked({ ...checked, [name]: false });
-        setIndeterminate({ ...indeterminate, [name]: false });
-      } else {
-        setIndeterminate({ ...indeterminate, [name]: false });
-        setChecked({ ...checked, [name]: true });
-      }
-    }
-  };
+  // eslint-disable-next-line no-unused-vars
+  //const [modal, setModal] = useState(props.show);
 
-  // const handleSubmit = () => {
-  //   setValidateCaller(validateCaller);
-  //   setEdit(false);
+  // const handleChange = e => {
+  //   setUpdateValue({ ...updateValue, [e.target.name]: e.target.value });
   // };
-  // // eslint-disable-next-line no-unused-vars
-  // const [modal, setModal] = useState(props.show);
 
-  // const editOnClick = () => {
-  //   setEdit(true);
-  // };
+  // console.log('values', updateValue);
 
   const handleCancel = () => {
     //setEdit(false);
     props.closeModal();
   };
+
+  const UpdateHandler = async () => {
+    const resp = await loanService.updateBorrowerDetails(loanId, updateCaller);
+    // Refreshing All User Details
+    //seteditUserState({});
+    if (resp === 200) props.closeModal();
+  };
+
+  useEffect(() => {
+    const dta = props.data[0];
+    setUpdateCaller({ ...dta });
+  }, [props.data]);
+
   return (
     <>
       <Card show={props.show} size="lg" className={'mt-3'}>
@@ -128,136 +108,14 @@ const ValidateCaller = props => {
                   </Col>
                 </Row> */}
                 <Row>
-                  {/* <Col sm={2} xxl={2} classname={'mx-3'}>
-                    <Form.Check aria-label="option 1" />
-                  </Col>
-                  <Col sm={2} xxl={2}>
-                    <Form.Check aria-label="option 1" />
-                  </Col> */}
-
                   <Col>
                     <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.loan}
-                        name=""
-                        indeterminate={indeterminate.loan}
-                        onChange={() => handleChange('loan')}
-                      />
-                      &nbsp;
-                      <label>Loan Number</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="loanNumber"
-                      onChange={inputsHandler}
-                      placeholder="Loan Number"
-                      defaultValue={validateCaller[0]?.loanNumber}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.borrower}
-                        name=""
-                        indeterminate={indeterminate.borrower}
-                        onChange={() => handleChange('borrower')}
-                      />
-                      &nbsp;
-                      <label>Borrower Name</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="borrowerName"
-                      onChange={inputsHandler}
-                      placeholder="Borrower Name"
-                      defaultValue={validateCaller[0]?.borrowerName}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.authname}
-                        name=""
-                        indeterminate={indeterminate.authname}
-                        onChange={() => handleChange('authname')}
-                      />
-                      &nbsp;
-                      <label>Authorized Party Name</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyName"
-                      onChange={inputsHandler}
-                      placeholder="Authorized Party Name"
-                      defaultValue={validateCaller[0]?.authorizedPartyName}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.authrel}
-                        name=""
-                        indeterminate={indeterminate.authrel}
-                        onChange={() => handleChange('authrel')}
+                      {/* <Form.Check
+                        type="switch"
+                        id="custom-switch"
+                        // label="Check this switch"
                       /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Authorized Party Relationship</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyRelationship"
-                      onChange={inputsHandler}
-                      placeholder="Authorized Party Relationship"
-                      defaultValue={
-                        validateCaller[0]?.authorizedPartyRelationship
-                      }
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col
-                className={
-                  'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-                }
-              >
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.street}
-                        name=""
-                        indeterminate={indeterminate.street}
-                        onChange={() => handleChange('street')}
-                      />
-                      &nbsp;
-                      <label>Street</label>
+                      <label>Loan Number</label>
                     </div>
                   </Col>
                   <Col>
@@ -267,24 +125,15 @@ const ValidateCaller = props => {
                       style={{ background: 'transparent', border: 'none' }}
                       name="street"
                       onChange={inputsHandler}
-                      placeholder="Street"
-                      defaultValue={validateCaller[0]?.street}
+                      placeholder="Loan Number"
+                      defaultValue={updateCaller?.loanNumber}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.apt}
-                        name=""
-                        indeterminate={indeterminate.apt}
-                        onChange={() => handleChange('apt')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Apt/Unit #</label>
-                    </div>
+                    <label>Borrower Name</label>
                   </Col>
                   <Col>
                     <input
@@ -293,86 +142,42 @@ const ValidateCaller = props => {
                       style={{ background: 'transparent', border: 'none' }}
                       name="addressType"
                       onChange={inputsHandler}
-                      placeholder="Apt/Unit #"
-                      defaultValue={validateCaller[0]?.apt}
+                      placeholder="Borrower Name"
+                      defaultValue={updateCaller?.borrowerName}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.city}
-                        name=""
-                        indeterminate={indeterminate.city}
-                        onChange={() => handleChange('city')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>City</label>
-                    </div>
+                    <label>Authorized Party Name</label>
                   </Col>
                   <Col>
                     <input
                       type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="city"
+                      //disabled={true}
+                      //style={{ background: 'transparent', border: 'none' }}
+                      name="AuthorizedPartyName"
                       onChange={inputsHandler}
-                      placeholder="City"
-                      defaultValue={validateCaller[0]?.city}
+                      placeholder="Authorized Party Name"
+                      defaultValue={updateCaller?.authorizedPartyName}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.state}
-                        name=""
-                        indeterminate={indeterminate.state}
-                        onChange={() => handleChange('state')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>State</label>
-                    </div>
+                    <label>Authorized Party Relationship</label>
                   </Col>
                   <Col>
                     <input
                       type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="state"
+                      //disabled={true}
+                      //style={{ background: 'transparent', border: 'none' }}
+                      name="AuthorizedPartyRelationship"
                       onChange={inputsHandler}
-                      placeholder="State"
-                      defaultValue={validateCaller[0]?.state}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.zip}
-                        name=""
-                        indeterminate={indeterminate.zip}
-                        onChange={() => handleChange('zip')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Zip/Postal Code</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="postalCode"
-                      onChange={inputsHandler}
-                      placeholder="Zip/Postal Code"
-                      defaultValue={validateCaller[0]?.postalCode}
+                      placeholder="Authorized Party Relationship"
+                      defaultValue={updateCaller?.authorizedPartyRelationship}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
@@ -384,17 +189,93 @@ const ValidateCaller = props => {
               >
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.idNumber}
-                        name=""
-                        indeterminate={indeterminate.idNumber}
-                        onChange={() => handleChange('idNumber')}
-                      />
-                      &nbsp;
-                      <label>ID Number</label>
-                    </div>
+                    <label>Street</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      disabled={true}
+                      style={{ background: 'transparent', border: 'none' }}
+                      name="street"
+                      onChange={inputsHandler}
+                      placeholder="Street"
+                      defaultValue={updateCaller?.street}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <label>Apt/Unit #</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      disabled={true}
+                      style={{ background: 'transparent', border: 'none' }}
+                      name="addressType"
+                      onChange={inputsHandler}
+                      placeholder="Apt/Unit #"
+                      defaultValue={updateCaller?.apt}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <label>City</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      disabled={true}
+                      style={{ background: 'transparent', border: 'none' }}
+                      name="city"
+                      onChange={inputsHandler}
+                      placeholder="City"
+                      defaultValue={updateCaller?.city}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <label>State</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      disabled={true}
+                      style={{ background: 'transparent', border: 'none' }}
+                      name="state"
+                      onChange={inputsHandler}
+                      placeholder="State"
+                      defaultValue={updateCaller?.state}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <label>Zip/Postal Code</label>
+                  </Col>
+                  <Col>
+                    <input
+                      type="text"
+                      disabled={true}
+                      style={{ background: 'transparent', border: 'none' }}
+                      name="postalCode"
+                      onChange={inputsHandler}
+                      placeholder="Zip/Postal Code"
+                      defaultValue={updateCaller?.postalCode}
+                    />
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                className={
+                  'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
+                }
+              >
+                <Row>
+                  <Col>
+                    <label>ID Number</label>
                   </Col>
                   <Col>
                     <input
@@ -409,23 +290,13 @@ const ValidateCaller = props => {
                       //   marginLeft: '5px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller[0]?.idNumber}
+                      defaultValue={updateCaller?.idNumber}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.idType}
-                        name=""
-                        indeterminate={indeterminate.idType}
-                        onChange={() => handleChange('idType')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Type</label>
-                    </div>
+                    <label>ID Type</label>
                   </Col>
                   <Col>
                     <input
@@ -440,23 +311,13 @@ const ValidateCaller = props => {
                       //   marginLeft: '5px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller[0]?.idType}
+                      defaultValue={updateCaller?.idType}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.idIssueDate}
-                        name=""
-                        indeterminate={indeterminate.idIssueDate}
-                        onChange={() => handleChange('idIssueDate')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Issue Date</label>
-                    </div>
+                    <label>ID Issue Date</label>
                   </Col>
                   <Col>
                     <input
@@ -466,23 +327,13 @@ const ValidateCaller = props => {
                       name="idIssueDate"
                       onChange={inputsHandler}
                       placeholder="ID Issue Date"
-                      defaultValue={validateCaller[0]?.idIssueDate}
+                      defaultValue={updateCaller?.idIssueDate}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.idexpiry}
-                        name=""
-                        indeterminate={indeterminate.idexpiry}
-                        onChange={() => handleChange('idexpiry')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Expiry Date</label>
-                    </div>
+                    <label>ID Expiry Date</label>
                   </Col>
                   <Col>
                     <input
@@ -498,7 +349,7 @@ const ValidateCaller = props => {
                       //   marginLeft: '5px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller[0]?.idIssueExperiationDate}
+                      defaultValue={updateCaller?.idIssueExperiationDate}
                     />
                   </Col>
                 </Row>
@@ -506,17 +357,7 @@ const ValidateCaller = props => {
               <Col>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.ssn}
-                        name=""
-                        indeterminate={indeterminate.ssn}
-                        onChange={() => handleChange('ssn')}
-                      />
-                      &nbsp;
-                      <label>SSN</label>
-                    </div>
+                    <label>SSN</label>
                   </Col>
                   <Col>
                     <input
@@ -526,23 +367,13 @@ const ValidateCaller = props => {
                       name="ssn"
                       onChange={inputsHandler}
                       placeholder="SSN"
-                      defaultValue={validateCaller[0]?.ssn}
+                      defaultValue={updateCaller?.ssn}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.dob}
-                        name=""
-                        indeterminate={indeterminate.dob}
-                        onChange={() => handleChange('dob')}
-                      />
-                      &nbsp;
-                      <label>DOB</label>
-                    </div>
+                    <label>DOB</label>
                   </Col>
                   <Col>
                     <input
@@ -558,35 +389,26 @@ const ValidateCaller = props => {
                       //   marginLeft: '5px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller[0]?.dateOfBirth}
+                      defaultValue={updateCaller?.dob}
                     />
                   </Col>
                 </Row>
                 <br></br>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.email}
-                        name=""
-                        indeterminate={indeterminate.email}
-                        onChange={() => handleChange('email')}
-                      />
-                      &nbsp;
-                      <label>Email</label>
-                    </div>
+                    <label>Email</label>
                   </Col>
                   <Col>
                     <input
                       type="text"
                       //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyEmail"
+                      //disabled={true}
+                      //style={{ background: 'transparent', border: 'none' }}
+                      name="AuthorizedPartyEmail"
                       onChange={inputsHandler}
                       placeholder="Email"
-                      defaultValue={validateCaller[0]?.authorizedPartyEmail}
+                      defaultValue={updateCaller?.authorizedPartyEmail}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
@@ -608,25 +430,15 @@ const ValidateCaller = props => {
                 </Row> */}
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked?.phonehome}
-                        name="phone"
-                        indeterminate={indeterminate?.phonehome}
-                        onChange={() => handleChange('phonehome')}
-                      />
-                      &nbsp;
-                      <label>Phone Number (Home)</label>
-                    </div>
+                    <label>Phone Number (Home)</label>
                   </Col>
                   <Col>
                     <input
                       type="text"
                       //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="homeNumber"
+                      //disabled={true}
+                      //style={{ background: 'transparent', border: 'none' }}
+                      name="HomeNumber"
                       //
                       onChange={inputsHandler}
                       placeholder="Phone Number (Home)"
@@ -635,36 +447,28 @@ const ValidateCaller = props => {
                       //   marginLeft: '25px',
                       //   marginBottom: '5px'
                       // }}
-                      defaultValue={validateCaller[0]?.homeNumber}
+                      defaultValue={updateCaller?.homeNumber}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <div style={{ display: 'flex' }}>
-                      <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.phonemobile}
-                        name=""
-                        indeterminate={indeterminate.phonemobile}
-                        onChange={() => handleChange('phonemobile')}
-                      />
-                      &nbsp;
-                      <label>Phone Number (Mobile)</label>
-                    </div>
+                    <label>Phone Number (Mobile)</label>
                   </Col>
                   <Col>
                     <input
                       type="text"
                       //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="homeNumber"
+                      //disabled={true}
+                      //style={{ background: 'transparent', border: 'none' }}
+                      name="MobileNumber"
                       //
                       onChange={inputsHandler}
                       placeholder="Phone Number (Mobile)"
                       // style={{ marginRight: '5px', marginLeft: '25px' }}
-                      defaultValue={validateCaller[0]?.mobileNumber}
+                      defaultValue={updateCaller?.mobileNumber}
+                      //onChange={handleChange}
                     />
                   </Col>
                 </Row>
@@ -672,7 +476,26 @@ const ValidateCaller = props => {
             </Row>
           </>
         </Card.Body>
-        <Card.Footer>
+        <Card.Footer
+          style={{ borderTop: '1px solid gray', textAlign: 'right' }}
+        >
+          {console.log('uv', updateCaller)}
+          <Button
+            type="submit"
+            form="add-new-user-form"
+            variant="secondary"
+            onClick={() => handleCancel()}
+          >
+            Close
+          </Button>
+          <Button
+            type="button"
+            style={{ marginLeft: '2rem' }}
+            onClick={() => UpdateHandler()}
+            variant="primary"
+          >
+            Save
+          </Button>
           {/* <Row> */}
           {/* <Col
               xxl={2}
@@ -817,7 +640,7 @@ const ValidateCaller = props => {
   );
 };
 
-ValidateCaller.propTypes = {
+UpdateCaller.propTypes = {
   register: PropTypes.func.isRequired,
   setValue: PropTypes.func.isRequired,
   errors: PropTypes.object,
@@ -828,4 +651,4 @@ ValidateCaller.propTypes = {
   data: PropTypes.array
 };
 
-export default ValidateCaller;
+export default UpdateCaller;

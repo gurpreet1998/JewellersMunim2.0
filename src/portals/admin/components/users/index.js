@@ -12,7 +12,7 @@ const Users = () => {
   const [editUserState, seteditUserState] = useState({});
 
   useEffect(() => {
-    console.log(Object.keys(editUserState || {}).length !== 0);
+    //console.log(Object.keys(editUserState || {}).length !== 0);
     seteditUserState({});
   }, [addNewUserFormShow]);
 

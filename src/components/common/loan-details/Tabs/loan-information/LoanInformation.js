@@ -122,10 +122,10 @@ export default function LoanInformation() {
                       )}
                     </p>
                     <p className={'mb-2'}>
-                      {loanInfo?.data?.current !== 0 ? (
+                      {loanInfo?.data?.currentPrincipal !== 0 ? (
                         <>
                           <NumberFormat
-                            value={loanInfo?.data?.current || 0}
+                            value={loanInfo?.data?.currentPrincipal || 0}
                             displayType={'text'}
                             thousandSeparator={true}
                             prefix={'$'}
@@ -200,10 +200,13 @@ export default function LoanInformation() {
                   </Col>
                   <Col>
                     <p className={'mb-2'}>
-                      {loanInfo?.data?.interestPaidToDate || 'Not Found'}
+                      {formatDateStr(loanInfo?.data?.interestPaidToDate) ||
+                        'Not Found'}
                     </p>
                     <p className={'mb-2'}>{loanInfo?.data?.interestDays}</p>
-                    <p className={'mb-2'}>$40.00 (placeholder)</p>
+                    <p className={'mb-2'}>
+                      {loanInfo?.data?.unappliedInterestAmt}
+                    </p>
                     <p className={'mb-2'}>
                       {loanInfo?.data?.currentInterestOwed !== 0 ? (
                         <>
@@ -229,7 +232,10 @@ export default function LoanInformation() {
                         </>
                       )}
                     </p>
-                    <p className={'mb-2'}>{loanInfo?.data?.daysPastDue}</p>
+                    <p className={'mb-2'}>
+                      {loanInfo?.data?.daysPastDue}{' '}
+                      {loanInfo?.data?.daysPastDue > 1 ? 'Days' : 'Day'}
+                    </p>
                     <p className={'mb-2'}>{loanInfo?.data?.openLateFees}</p>
                     <p className={'mb-2'}>{loanInfo?.data?.otherFees}</p>
                     <p className={'mb-2 mb-md-3 mb-lg-0'}>

@@ -113,6 +113,16 @@ const LoanChecks = props => {
                     Validate
                   </span>
                 </IconButton>
+                <IconButton
+                  variant="falcon-default"
+                  size="sm"
+                  icon="check"
+                  transform="shrink-3"
+                  className="mx-2"
+                  onClick={() => props.setUpdateModal()}
+                >
+                  <span className="d-none d-sm-inline-block ms-1">Update</span>
+                </IconButton>
                 <CardDropdown
                   iconClassName="fs--1"
                   btnRevealClass={'text-800 btn-sm btn-falcon-default'}
@@ -154,6 +164,7 @@ const LoanChecks = props => {
 LoanChecks.propTypes = {
   setValidateModal: PropTypes.any,
   setScriptModal: PropTypes.any,
+  setUpdateModal: PropTypes.any,
   setScript: PropTypes.any
   // loanId: PropTypes.number
 };
