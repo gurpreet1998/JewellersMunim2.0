@@ -529,9 +529,9 @@ export const monthNames = [
 export const loanStatusMap = loanStatus => {
   if (loanStatus === 'NEW') {
     return 'primary';
-  } else if (loanStatus === 'PENDING') {
+  } else if (loanStatus === 'PENDING FUNDING') {
     return 'info';
-  } else if (loanStatus === 'DUE') {
+  } else if (loanStatus === 'Pending Settlement') {
     return 'warning';
   } else {
     return 'dark';

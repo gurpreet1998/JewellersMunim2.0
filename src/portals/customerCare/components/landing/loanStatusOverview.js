@@ -1,33 +1,27 @@
 import React, { useState } from 'react';
 import { Accordion, Card } from 'react-bootstrap';
 import Flex from 'components/common/Flex';
+import FalconCardHeader from 'components/common/FalconCardHeader';
 import StatusAccordionBody from 'components/status-accordion/StatusAccordionBody';
-import BasicCardHeader from 'components/common/BasicCardHeader';
-
 import {
-  todaysStatements,
-  tomorrowsCardPayments,
-  dailyACHPaymentExceptions,
-  tomorrowsACHs,
-  dailyCCPaymentExceptions
+  disputesComplaintsTableColumns,
+  hardStopTableColumns,
+  nfsLoansTableColumns,
+  paymentPastDueTableColumns,
+  redFlagTableColumns
 } from './TableMaps';
 
-// import { accountingService } from '_services/accounting';
-
 const AppStatus = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [todaysData, setTodaysData] = useState(todaysStatements);
-
-  //   useEffect(() => {
-  //     accountingService
-  //       .getTodaysStatement(1)
-  //       .then(res => setTodaysData({ ...todaysData, data: res }));
-  //   }, []);
+  // todo: replace with react-query once API is connected.
+  const [disputesAndComplaints] = useState(disputesComplaintsTableColumns);
 
   return (
     <>
       <Card className="mt-3">
-        <BasicCardHeader name={'Loan Status Overview'} />
+        <FalconCardHeader
+          title={'Loan Status Overview'}
+          titleClass={'fw-normal text-800'}
+        />
         <Card.Body className={'pt-0'}>
           <Accordion defaultActiveKey="0">
             <Accordion.Item eventKey="0">
@@ -38,7 +32,7 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {todaysData.data.length}
+                        {disputesAndComplaints.data.length}
                       </span>
                     </div>
                   </div>
@@ -46,10 +40,9 @@ const AppStatus = () => {
                 </Flex>
               </Accordion.Header>
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={todaysData} />
+                <StatusAccordionBody tableData={disputesAndComplaints} />
               </Accordion.Body>
             </Accordion.Item>
-
             <Accordion.Item eventKey="1">
               <Accordion.Header>
                 <Flex className="align-items-center">
@@ -58,7 +51,7 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {tomorrowsCardPayments.data.length}
+                        {hardStopTableColumns.data.length}
                       </span>
                     </div>
                   </div>
@@ -66,10 +59,9 @@ const AppStatus = () => {
                 </Flex>
               </Accordion.Header>
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={tomorrowsCardPayments} />
+                <StatusAccordionBody tableData={hardStopTableColumns} />
               </Accordion.Body>
             </Accordion.Item>
-
             <Accordion.Item eventKey="2">
               <Accordion.Header>
                 <Flex className="align-items-center">
@@ -78,7 +70,7 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {dailyCCPaymentExceptions.data.length}
+                        {redFlagTableColumns.data.length}
                       </span>
                     </div>
                   </div>
@@ -86,10 +78,9 @@ const AppStatus = () => {
                 </Flex>
               </Accordion.Header>
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={dailyCCPaymentExceptions} />
+                <StatusAccordionBody tableData={redFlagTableColumns} />
               </Accordion.Body>
             </Accordion.Item>
-
             <Accordion.Item eventKey="3">
               <Accordion.Header>
                 <Flex className="align-items-center">
@@ -98,7 +89,7 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {tomorrowsACHs.data.length}
+                        {paymentPastDueTableColumns.data.length}
                       </span>
                     </div>
                   </div>
@@ -106,10 +97,9 @@ const AppStatus = () => {
                 </Flex>
               </Accordion.Header>
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={tomorrowsACHs} />
+                <StatusAccordionBody tableData={paymentPastDueTableColumns} />
               </Accordion.Body>
             </Accordion.Item>
-
             <Accordion.Item eventKey="4">
               <Accordion.Header>
                 <Flex className="align-items-center">
@@ -118,16 +108,15 @@ const AppStatus = () => {
                       className={`avatar-name rounded-circle bg-soft-primary`}
                     >
                       <span className={`fs-0 text-primary`}>
-                        {dailyACHPaymentExceptions.data.length}
+                        {nfsLoansTableColumns.data.length}
                       </span>
                     </div>
                   </div>
                   NFS Loan
                 </Flex>
               </Accordion.Header>
-
               <Accordion.Body className={'p-0'}>
-                <StatusAccordionBody tableData={dailyACHPaymentExceptions} />
+                <StatusAccordionBody tableData={nfsLoansTableColumns} />
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>

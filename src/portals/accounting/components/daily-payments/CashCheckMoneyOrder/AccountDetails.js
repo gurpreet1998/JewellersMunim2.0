@@ -1,88 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Flex from 'components/common/Flex';
-import { Row, Col, Form, Card, Button } from 'react-bootstrap';
+import { Row, Col, Form, Card } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import TitleCard from 'components/common/TitleCard';
-import Payment from './Payment';
+import ReconciliationHandler from '../../ReconciliationHandler';
 import Deposits from './Deposits';
+import Payment from './Payment';
+
+import { CashCheckMoneyOrderService } from '_services/accounting';
 import {
-  CashCheckMoneyOrderPaymentBatchService,
-  CashCheckMoneyOrderService
-} from '_services/accounting';
+  usePaymentBatchData,
+  usePaymentBatchTypeData,
+  useReconciledCashCheckMoneyOrderData,
+  useUnreconciledCashCheckMoneyOrderData
+} from 'hooks/useAccountingData';
 
 const AccountDetails = () => {
-  const [paymentbatch, setPaymentBatch] = useState(0);
-  const [paymentbatchtype, setPaymentBatchType] = useState(0);
-  const [paymentbatches, setPaymentBatches] = useState([]);
-  const [paymentbatchtypes, setPaymentBatchTypes] = useState([]);
-
-  const [reconcileCheck, setreconcileCheck] = useState(true);
-
+  const [paymentBatchId, setPaymentBatchId] = useState(0);
+  const [paymentBatchType, setPaymentBatchType] = useState(0);
+  const [reconciledChecked, setReconciledChecked] = useState(true);
   const [loanData, setLoanData] = useState([]);
-  const [flag] = useState(true);
-  const [Bflag, setBflag] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const [Cflag, setCflag] = useState(true);
   const [depositData, setDepositData] = useState([]);
+  const [disabled] = useState(true);
   const [selectedDeposit, setSelectedDeposit] = useState([]);
   const [selectedLoan, setSelectedLoan] = useState([]);
 
-  useEffect(() => {
-    CashCheckMoneyOrderPaymentBatchService.getPaymentBatchType().then(res =>
-      setPaymentBatchTypes(res)
-    );
-  }, []);
+  const { data: paymentBatchTypes } = usePaymentBatchTypeData();
+  const { data: paymentBatches } = usePaymentBatchData(paymentBatchType);
 
-  useEffect(() => {
-    CashCheckMoneyOrderPaymentBatchService.getPaymentBatch(
-      paymentbatchtype
-    ).then(res => setPaymentBatches(res));
-  }, [paymentbatchtype]);
+  const { isLoading: reconciledDataLoading, data: reconciledData } =
+    useReconciledCashCheckMoneyOrderData(paymentBatchId);
 
-  useEffect(() => {
-    CashCheckMoneyOrderService.getGetReconciledDataForCashCheckAndMoneyOrder(
-      paymentbatch
-    ).then(res => {
-      setLoanData(res.result.paymentDataModel);
-      setDepositData(res.result.bankDepositDataModel);
-      setreconcileCheck(true);
-    });
-  }, [paymentbatch]);
+  const { isLoading: unreconciledDataLoading, data: unreconciledData } =
+    useUnreconciledCashCheckMoneyOrderData(paymentBatchId);
 
-  //   useEffect(() => {}, [loanData, depositData]);
-
-  useEffect(() => {
-    if (reconcileCheck) {
-      reconcileOnClick(paymentbatch);
+  let useReconciledData = () => {
+    if (reconciledDataLoading) {
+      console.log('loading...', reconciledDataLoading);
     } else {
-      unreconciledOnClick(paymentbatch);
+      setReconciledChecked(true);
+      setLoanData(reconciledData?.data?.result?.paymentDataModel);
+      setDepositData(reconciledData?.data?.result?.bankDepositDataModel);
     }
-  }, [reconcileCheck]);
-
-  const reconcileOnClick = event => {
-    CashCheckMoneyOrderService.getGetReconciledDataForCashCheckAndMoneyOrder(
-      event
-    ).then(res => {
-      setDepositData(res.result.bankDepositDataModel);
-      setLoanData(res.result.paymentDataModel);
-      setBflag(true);
-    });
   };
 
-  const unreconciledOnClick = e => {
-    CashCheckMoneyOrderService.getGetUnReconciledDataForCashCheckAndMoneyOrder(
-      e
-    ).then(res => {
-      setDepositData(res.result.bankDepositDataModel);
-      setLoanData(res.result.paymentDataModel);
-      setBflag(false);
-    });
+  let useUnreconciledData = () => {
+    if (unreconciledDataLoading) {
+      console.log('loading...', unreconciledDataLoading);
+    } else {
+      setReconciledChecked(false);
+      setLoanData(unreconciledData?.data?.result?.paymentDataModel);
+      setDepositData(unreconciledData?.data?.result?.bankDepositDataModel);
+    }
   };
 
   const chooseLoan = val => {
+    console.log('loan val', val);
+    console.log('selectedLoan', selectedLoan);
+
     setSelectedLoan(val);
   };
   const chooseDeposit = val => {
+    console.log('deposit val', val);
     setSelectedDeposit(val);
   };
 
@@ -90,17 +69,19 @@ const AccountDetails = () => {
     paymentDataModel: selectedLoan,
     bankDepositDataModel: selectedDeposit
   };
-  console.log(selectedData);
+
   const matchOnClick = () => {
     CashCheckMoneyOrderService.saveMatchRecordsForCashCheckAndMoneyOrder(
-      paymentbatch,
+      paymentBatchId,
       selectedData
     ).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
       let paymentSum = 0;
       let depositSum = 0;
+      console.log('selectedData', selectedData);
       selectedData.paymentDataModel.forEach(item => {
+        console.log('item', item);
         paymentSum += item.amount;
       });
       selectedData.bankDepositDataModel.forEach(item => {
@@ -109,7 +90,7 @@ const AccountDetails = () => {
       });
       console.log('Payment sum', paymentSum);
       console.log('Deposit sum', depositSum);
-      if (depositSum != paymentSum) {
+      if (depositSum !== paymentSum) {
         toast.warning(`Match record failed`);
       }
     });
@@ -117,19 +98,22 @@ const AccountDetails = () => {
 
   const unMatchOnClick = () => {
     CashCheckMoneyOrderService.saveUnMatchRecordsForCashCheckAndMoneyOrder(
-      paymentbatch,
+      paymentBatchId,
       selectedData
     ).then(res => {
       setDepositData(res.result.bankDepositDataModel);
       setLoanData(res.result.paymentDataModel);
-      setCflag(false);
     });
+  };
+
+  const resetOnClick = () => {
+    console.log('Reset Placeholder - Action Still Required');
   };
 
   const postOnClick = () => {
     CashCheckMoneyOrderService.savePostTransactionForCashCheckAndMoneyOrder(
-      paymentbatch,
-      paymentbatchtype
+      paymentBatchId,
+      paymentBatchType
     ).then(res => {
       if (res.result === 'Please try again') {
         toast.warning(res.result);
@@ -139,187 +123,88 @@ const AccountDetails = () => {
     });
   };
 
-  useEffect(() => {
-    setPaymentBatch(0);
-  }, [paymentbatchtype]);
-
   return (
     <>
       <Row className="g-3 mb-3">
         <Col>
-          <TitleCard title="Payment Reconciliation &gt; Cash/Check/Money Orders" />
-        </Col>
-      </Row>
-      <Row className="g-3 mb-3">
-        <Col>
-          <Card>
-            <Card.Body>
-              <Row>
-                <Col>Payment Batch Type</Col>
-                <Col>
-                  <Flex>
-                    <Form.Select
-                      size="sm"
-                      value={paymentbatchtype}
-                      onChange={e =>
-                        setPaymentBatchType(Number(e.target.value))
-                      }
-                      className="me-2"
-                    >
-                      <option value={0}>Select Payment Batch Type</option>
-                      {/* <option value="Cash/Money Order">Cash/Money Order</option> */}
-                      {paymentbatchtypes.map((batch, index) => (
-                        <option value={batch.paymentBatchTypeId} key={index}>
-                          {batch.paymentBatchTypeName}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </Flex>
-                </Col>
-                {paymentbatchtype !== 0 ? (
-                  <>
-                    <Col>Payment Batch</Col>
-                    <Col>
-                      <Flex>
-                        <Form.Select
-                          size="sm"
-                          value={paymentbatch}
-                          onChange={e =>
-                            setPaymentBatch(Number(e.target.value))
-                          }
-                          className="me-2"
-                        >
-                          <option value={0}>Select Payment Batch</option>
-                          {/* <option value="1">20220209-CashMoneyOrder</option> */}
-                          {paymentbatches.map((batch, index) => (
-                            <option value={batch.paymentBatchId} key={index}>
-                              {batch.batch}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </Flex>
-                    </Col>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      {/* <TitleCard title="Payment Reconciliation &gt; ACH"
+          <TitleCard
+            title="Payment Reconciliation &gt; Cash, Checks, & Money Orders"
             endEl={
               <Flex>
                 <Form.Select
                   size="sm"
-                  value={paymentbatch}
-                  onChange={e => setPaymentBatch(e.target.value)}
+                  value={paymentBatchType}
+                  onChange={e => setPaymentBatchType(Number(e.target.value))}
                   className="me-2"
                 >
-                  <option value="">Select Payment Batch</option>
-                  <option onClick={change} value="20220207-ACHPersonalChecking">20220207-ACHPersonalChecking</option>
+                  <option value={0}>Select Payment Batch Type</option>
+                  {paymentBatchTypes?.data?.map((batch, index) => (
+                    <option value={batch.paymentBatchTypeId} key={index}>
+                      {batch.paymentBatchTypeName}
+                    </option>
+                  ))}
                 </Form.Select>
+                {paymentBatchType > 0 ? (
+                  <Form.Select
+                    size="sm"
+                    value={paymentBatchId}
+                    onChange={e => setPaymentBatchId(Number(e.target.value))}
+                    className="me-2"
+                  >
+                    <option value={0}>Select Payment Batch</option>
+                    {paymentBatches?.data?.map((batch, index) => (
+                      <option value={batch.paymentBatchId} key={index}>
+                        {batch.batch}
+                      </option>
+                    ))}
+                  </Form.Select>
+                ) : (
+                  <></>
+                )}
               </Flex>
             }
-          /> */}
+          />
+        </Col>
+      </Row>
+
       <Card className="bg-100 shadow-none border p-card">
         <Row className="g-3">
-          <Col lg={{ span: 2, order: 2 }}>
-            {paymentbatch !== 0 ? (
-              // <TransactionHandler
-              //     reconcileData={reconcileData}
-              //     unReconcileData={unReconcileData}
-              //     flag={flag}
-              // />
-              <Card className="bg-transparent-50 shadow-none border border-200">
-                <Card.Body>
-                  <div>
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault1"
-                      label="View Matched"
-                      name="ReconcileRadio"
-                      checked={reconcileCheck}
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        setreconcileCheck(true);
-                      }}
-                      // defaultChecked
-                    />
-                    <Form.Check
-                      inline
-                      type="radio"
-                      id="flexRadioDefault2"
-                      label="View Un-Matched"
-                      checked={!reconcileCheck}
-                      name="ReconcileRadio"
-                      className="form-label-nogutter"
-                      onChange={() => {
-                        setreconcileCheck(false);
-                      }}
-                    />
-                  </div>
-                  <div className="border-dashed-bottom my-3" />
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    disabled={Bflag}
-                    onClick={() => matchOnClick()}
-                  >
-                    Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-primary'}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0 mb-lg-2"
-                    disabled={!Bflag}
-                    onClick={() => {
-                      unMatchOnClick();
-                    }}
-                  >
-                    Un-Match
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-warning'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-2"
-                    // onClick={() => resetOnClick()}
-                  >
-                    Reset
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={'falcon-success'}
-                    disabled={!flag}
-                    className="fs--1 fs-lg--2 fs-xxl--1 px-2 w-100 text-truncate mb-0"
-                    onClick={() => postOnClick()}
-                  >
-                    Post Transactions
-                  </Button>
-                </Card.Body>
-              </Card>
-            ) : (
-              <></>
-            )}
-          </Col>
-          <Col lg={{ span: 5, order: 1 }}>
-            {paymentbatch !== 0 ? (
-              <Payment data={loanData} chooseLoan={chooseLoan} />
-            ) : (
-              <></>
-            )}
-          </Col>
-          <Col lg={{ span: 5, order: 3 }}>
-            {paymentbatch !== 0 ? (
-              <Deposits data={depositData} chooseDeposit={chooseDeposit} />
-            ) : (
-              <></>
-            )}
-          </Col>
+          {paymentBatchId > 0 ? (
+            <>
+              <Col lg={{ span: 2, order: 2 }}>
+                <ReconciliationHandler
+                  reconciledAction={useReconciledData}
+                  unReconciledAction={useUnreconciledData}
+                  matchAction={matchOnClick}
+                  unMatchAction={unMatchOnClick}
+                  resetAction={resetOnClick}
+                  postAction={postOnClick}
+                  disabled={disabled}
+                  reconciledChecked={reconciledChecked}
+                />
+              </Col>
+              <Col lg={{ span: 5, order: 1 }}>
+                <Payment data={loanData} chooseLoan={chooseLoan} />
+              </Col>
+              <Col lg={{ span: 5, order: 3 }}>
+                <Deposits data={depositData} chooseDeposit={chooseDeposit} />
+              </Col>
+            </>
+          ) : (
+            <>
+              <Card.Body className="overflow-hidden p-lg-6">
+                <Row className="align-items-center justify-content-between">
+                  <Col sm={12} className=" my-5 text-center">
+                    <h3 className="mt-1">Nothing Selected!</h3>
+                    <p>
+                      Select a batch type and payment batch to review for
+                      reconciliation
+                    </p>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </>
+          )}
         </Row>
       </Card>
     </>

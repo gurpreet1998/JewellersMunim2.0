@@ -7,7 +7,7 @@ import Payment from './Payment';
 import Deposits from './Deposits';
 import { DebitCreditCardService } from '_services/accounting';
 import {
-  usePaymentBatchesData,
+  usePaymentBatchData,
   usePaymentBatchTypeSelectionData,
   useReconciledCardData,
   useUnreconciledCardData
@@ -25,7 +25,7 @@ const AccountDetails = () => {
   const [selectedLoan, setSelectedLoan] = useState([]);
 
   const { data: paymentBatchTypes } = usePaymentBatchTypeSelectionData();
-  const { data: paymentBatches } = usePaymentBatchesData(paymentBatchType);
+  const { data: paymentBatches } = usePaymentBatchData(paymentBatchType);
   const { data: reconciledCards } = useReconciledCardData(paymentBatchId);
   const { data: unreconciledCards } = useUnreconciledCardData(paymentBatchId);
 

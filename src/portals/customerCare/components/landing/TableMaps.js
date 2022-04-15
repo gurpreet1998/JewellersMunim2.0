@@ -1,9 +1,8 @@
-import NumberFormat from 'react-number-format';
 import React from 'react';
-// import moment from 'moment';
+import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
 
-export const todaysStatements = {
+export const disputesComplaintsTableColumns = {
   columns: [
     {
       accessor: 'lenderLoanNumber',
@@ -13,7 +12,7 @@ export const todaysStatements = {
         return (
           <Link
             to={{
-              pathname: `/portal/customercare/home/loan/${tableData.id}`
+              pathname: `/portal/customercare/loan/${tableData.loanId}`
             }}
             className="text-primary fw-semi-bold"
           >
@@ -30,14 +29,6 @@ export const todaysStatements = {
       accessor: 'disputeCategory',
       Header: 'Dispute Category'
     },
-    // {
-    //   accessor: 'dateofNextPayment',
-    //   Header: 'Next Due Date',
-    //   Cell: rowData => {
-    //     let dateStr = rowData.data[rowData.row.index].dateofNextPayment;
-    //     return moment(dateStr).format('MM/DD/YYYY');
-    //   }
-    // },
     {
       accessor: 'serviceAmount', //  todo: is this a static amount of does it update after a payment?
       Header: 'Service Amount',
@@ -85,7 +76,7 @@ export const todaysStatements = {
   ],
   data: [
     {
-      id: 1,
+      loanId: 1,
       loanAmount: '$3,500.00',
       serviceAmount: '$4,000.00',
       disputeCriticality: 'High',
@@ -97,7 +88,7 @@ export const todaysStatements = {
       applicationStatus: 'Pending'
     },
     {
-      id: 2,
+      loanId: 3,
       loanAmount: '$3,500.00',
       serviceAmount: '$4,000.00',
       disputeCriticality: 'High',
@@ -109,19 +100,7 @@ export const todaysStatements = {
       applicationStatus: 'Pending'
     },
     {
-      id: 3,
-      loanAmount: '$3,500.00',
-      serviceAmount: '$4,000.00',
-      disputeCriticality: 'High',
-      lenderLoanNumber: 'TRN082323342',
-      applicationType: 'Application',
-      disputeCategory: 'A',
-      salesAgent: '3/01/2022',
-      location: 'LA',
-      applicationStatus: 'Pending'
-    },
-    {
-      id: 4,
+      loanId: 4,
       loanAmount: '$3,500.00',
       serviceAmount: '$4,000.00',
       disputeCriticality: 'High',
@@ -135,7 +114,7 @@ export const todaysStatements = {
   ]
 };
 
-export const tomorrowsCardPayments = {
+export const hardStopTableColumns = {
   columns: [
     {
       accessor: 'paymentAmount',
@@ -172,7 +151,7 @@ export const tomorrowsCardPayments = {
   ]
 };
 
-export const dailyACHPaymentExceptions = {
+export const redFlagTableColumns = {
   columns: [
     {
       accessor: 'paymentAmount',
@@ -209,7 +188,7 @@ export const dailyACHPaymentExceptions = {
   ]
 };
 
-export const tomorrowsACHs = {
+export const paymentPastDueTableColumns = {
   columns: [
     {
       accessor: 'paymentAmount',
@@ -246,7 +225,7 @@ export const tomorrowsACHs = {
   ]
 };
 
-export const dailyCCPaymentExceptions = {
+export const nfsLoansTableColumns = {
   columns: [
     {
       accessor: 'paymentAmount',
@@ -293,7 +272,7 @@ export const searchResult = {
         return (
           <Link
             to={{
-              pathname: `/portal/accounting/home/loan/${tableData.loanID}`
+              pathname: `/portal/customercare/loan/${tableData.loanID}`
             }}
             className="text-primary fw-semi-bold"
           >

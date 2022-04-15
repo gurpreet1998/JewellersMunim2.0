@@ -1,13 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-
+import React, { useContext } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import CustomerCareHome from '../components/landing';
-// import CustomerLoanDetails from '../components/loan-details';
 import LoanDetails from 'components/common/loan-details';
-import { AuthContext } from 'context/Context';
-import { roleBased_Permission } from '_services/userService';
-// import BatchDetails from '../components/bank-reconciliations/lock-box/BatchDetails';
 import HardStops from '../components/loanApplications/hardStops';
 import DisputeAndComplaints from '../components/loans/disputesAndComplains';
 import RedFlags from '../components/loans/redFlags';
@@ -15,124 +10,104 @@ import NSF from '../components/loans/NSF';
 import Merchants from '../components/merchants';
 import Lenders from '../components/lenders';
 import Reports from '../components/reports';
+import { AuthContext } from 'context/Context';
+import {
+  fetchExtensionRole,
+  useRolePermissionsData
+} from 'hooks/useUserServiceData';
 
 export default function CustomerCarePortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
-  const [ExtensionRole, setExtensionRole] = useState('');
-  const [RolePermissionsObj, setRolePermissionsObj] = useState({});
-
-  const GetAccessRolesByAPI = extnRole => {
-    roleBased_Permission.GetPermissionsForRole(extnRole).then(res =>
-      setRolePermissionsObj({
-        ...RolePermissionsObj,
-        [extnRole]: { Access: [...res] }
-      })
-    );
-  };
-
-  const RoleBasedPermission = () => {
-    if (auth.isAuthenticated) {
-      const extension_Role = auth.account?.idToken?.extension_Role || '';
-
-      setExtensionRole(extension_Role);
-      GetAccessRolesByAPI(extension_Role);
-    } else {
-      console.log('Login Failed');
-    }
-  };
+  const extensionRole = fetchExtensionRole(auth);
+  const { data: menuItems } = useRolePermissionsData(extensionRole);
 
   /**
-   * - The `RolePermissionsObj?.[ExtensionRole]?.Access` provides a list
-   * of menu items/ routes based on permission settings
-   * - The `ExtensionRole` is the type of access your role has. E.g. Accountant
-   * @param RouteName: The keyword to determine access type. E.g. `AccountingHome`
+   * - The `fetchExtensionRole(auth)` provides a list of menu items/ routes
+   * - based on permission settings.
+   * - The `extensionRole` is the type of access your role has. E.g. Accountant
+   * @param routeName: The keyword to determine access type. E.g. `AccountingHome`
    * @returns {boolean}
    */
-  const checkForAccess = RouteName => {
+  const checkForAccess = routeName => {
     if (auth.isAuthenticated) {
-      return !!RolePermissionsObj?.[ExtensionRole]?.Access.includes(RouteName);
+      return !!menuItems?.data?.includes(routeName);
     }
-    return true;
+    return false;
   };
-
-  useEffect(() => {
-    console.log('CustomerCare Portal Initiated');
-    RoleBasedPermission();
-  }, [auth]);
 
   return (
     <>
-      {RolePermissionsObj?.[ExtensionRole]?.Access && (
+      {menuItems?.data && (
         <Switch>
           <Route path={`${url}/home`} exact>
-            {checkForAccess('CustomerCareHome', ExtensionRole) ? (
+            {checkForAccess('CustomerCareHome', extensionRole) ? (
               <CustomerCareHome />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
-          <Route path={`${url}/home/loan/:loanId`}>
-            {checkForAccess('CustomerCareHome', ExtensionRole) ? (
+          <Route path={`${url}/loan/:loanId`}>
+            {checkForAccess('CustomerCareHome', extensionRole) ? (
               <LoanDetails />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/loanapplications/hardstops`} exact>
-            {checkForAccess('HardStops', ExtensionRole) ? (
+            {checkForAccess('HardStops', extensionRole) ? (
               <HardStops />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/loans/dispute&complaints`} exact>
-            {checkForAccess('DisputeAndComplaints', ExtensionRole) ? (
+            {checkForAccess('DisputeAndComplaints', extensionRole) ? (
               <DisputeAndComplaints />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/loans/redflags`} exact>
-            {checkForAccess('RedFlags', ExtensionRole) ? (
+            {checkForAccess('RedFlags', extensionRole) ? (
               <RedFlags />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/loans/nsf`} exact>
-            {checkForAccess('NSF', ExtensionRole) ? (
+            {checkForAccess('NSF', extensionRole) ? (
               <NSF />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/merchants`} exact>
-            {checkForAccess('CustomerCareMerchants', ExtensionRole) ? (
+            {checkForAccess('CustomerCareMerchants', extensionRole) ? (
               <Merchants />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/lenders`} exact>
-            {checkForAccess('CustomerCareLenders', ExtensionRole) ? (
+            {checkForAccess('CustomerCareLenders', extensionRole) ? (
               <Lenders />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
 
           <Route path={`${url}/reports`} exact>
-            {checkForAccess('CustomerCareReports', ExtensionRole) ? (
+            {checkForAccess('CustomerCareReports', extensionRole) ? (
               <Reports />
             ) : (
-              <Redirect to="/errors/404" />
+              <Redirect to="/errors/401" />
             )}
           </Route>
         </Switch>

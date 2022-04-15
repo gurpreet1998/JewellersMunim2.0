@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import LoanDetails from 'components/common/loan-details';
 import AccountingHomeDashboard from '../components/landing';
 import PendingMerchantSettlements from '../components/pending-settlements/merchants';
@@ -46,7 +46,7 @@ export default function AccountingPortalRoutes({ match: { url } }) {
             )}
           </Route>
 
-          <Route path={`${url}/home/loan/:loanId`}>
+          <Route path={`${url}/loan/:loanId`}>
             {checkForAccess('AccountingHome', extensionRole) ? (
               <LoanDetails />
             ) : (

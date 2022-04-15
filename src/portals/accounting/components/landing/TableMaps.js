@@ -12,7 +12,7 @@ export const todaysStatementsTableColumns = [
       return (
         <Link
           to={{
-            pathname: `/portal/accounting/home/loan/${tableData.loanId}`
+            pathname: `/portal/accounting/loan/${tableData.loanId}`
           }}
           className="text-primary fw-semi-bold"
         >

@@ -264,26 +264,26 @@ export const CashCheckMoneyOrderService = {
   }
 };
 
-export const CashCheckMoneyOrderPaymentBatchService = {
-  getPaymentBatchType: function () {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/PaymentBatch/GetPaymentBatchType`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  },
-  getPaymentBatch: function (id) {
-    return new Promise(resolve => {
-      axiosinstance
-        .get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`)
-        .then(r => {
-          resolve(r.data);
-        });
-    });
-  }
-};
+// export const CashCheckMoneyOrderPaymentBatchService = {
+//   getPaymentBatchType: function () {
+//     return new Promise(resolve => {
+//       axiosinstance
+//         .get(`${API_URI}/PaymentBatch/GetPaymentBatchType`)
+//         .then(r => {
+//           resolve(r.data);
+//         });
+//     });
+//   },
+//   getPaymentBatch: function (id) {
+//     return new Promise(resolve => {
+//       axiosinstance
+//         .get(`${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${id}`)
+//         .then(r => {
+//           resolve(r.data);
+//         });
+//     });
+//   }
+// };
 
 // pending settlement services
 

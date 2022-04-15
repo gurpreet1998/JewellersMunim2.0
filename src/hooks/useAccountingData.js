@@ -106,18 +106,32 @@ export const usePaymentBatchTypeSelectionData = () => {
   );
 };
 
-const fetchPaymentBatches = ({ queryKey }) => {
+const fetchPaymentBatchType = () => {
+  return axiosinstance.get(`${API_URI}/PaymentBatch/GetPaymentBatchType`);
+};
+
+export const usePaymentBatchTypeData = () => {
+  return useQuery(
+    ['cash-check-money-order-payment-batch-type'],
+    fetchPaymentBatchType,
+    {
+      staleTime: 60000, // 1 min
+      refetchIntervalInBackground: true
+    }
+  );
+};
+
+const fetchPaymentBatch = ({ queryKey }) => {
   const paymentBatchTypeId = queryKey[1];
-  console.log('paymentBatchTypeId', paymentBatchTypeId);
   return axiosinstance.get(
     `${API_URI}/PaymentBatch/GetPaymentBatch?paymentBatchTypeId=${paymentBatchTypeId}`
   );
 };
 
-export const usePaymentBatchesData = paymentBatchTypeId => {
+export const usePaymentBatchData = paymentBatchTypeId => {
   return useQuery(
     ['debit-credit-payment-batch-type', paymentBatchTypeId],
-    fetchPaymentBatches,
+    fetchPaymentBatch,
     {
       staleTime: 60000, // 1 min
       refetchIntervalInBackground: true
@@ -163,3 +177,51 @@ const fetchBorrowerVerification = ({ queryKey }) => {
 export const useBorrowerVerificationData = loanId => {
   return useQuery(['borrower-verification', loanId], fetchBorrowerVerification);
 };
+
+const fetchReconciledCashCheckMoneyOrderData = ({ queryKey }) => {
+  const paymentBatchId = queryKey[1];
+  return axiosinstance.get(
+    `${API_URI}/Accounting/GetReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${paymentBatchId}`
+  );
+};
+
+export const useReconciledCashCheckMoneyOrderData = paymentBatchId => {
+  return useQuery(
+    ['cash-check-money-order-reconciled-data', paymentBatchId],
+    fetchReconciledCashCheckMoneyOrderData,
+    {
+      staleTime: 60000,
+      refetchIntervalInBackground: true
+    }
+  );
+};
+
+const fetchUnreconciledCashCheckMoneyOrderData = ({ queryKey }) => {
+  const paymentBatchId = queryKey[1];
+  return axiosinstance.get(
+    `${API_URI}/Accounting/GetUnReconciledDataForCashCheckAndMoneyOrder?paymentBatchId=${paymentBatchId}`
+  );
+};
+
+export const useUnreconciledCashCheckMoneyOrderData = paymentBatchId => {
+  return useQuery(
+    ['cash-check-money-order-unreconciled-data', paymentBatchId],
+    fetchUnreconciledCashCheckMoneyOrderData,
+    {
+      staleTime: 60000,
+      refetchIntervalInBackground: true
+    }
+  );
+};
+
+// const postMatchedCCMORecords = ({ queryKey }, data) => {
+//   const paymentBatchId = queryKey[1];
+//   return axiosinstance.post(
+//     `${API_URI}/Accounting/MatchRecordsForCashCheckAndMoneyOrder?paymentBatchId=${paymentBatchId}`,
+//     data
+//   );
+// };
+//
+// export const usePostMatchedCCMOData = () => {
+//   return useMutation(postMatchedCCMORecords);
+// };

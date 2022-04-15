@@ -5,6 +5,7 @@ import { Col, Row, Card } from 'react-bootstrap';
 import Checkbox from 'react-three-state-checkbox';
 import { loanService } from '_services/loanService';
 import { useParams } from 'react-router-dom';
+import FalconCardHeader from '../../FalconCardHeader';
 
 const ValidateCaller = props => {
   const { loanId } = useParams();
@@ -13,17 +14,17 @@ const ValidateCaller = props => {
 
   const [checked, setChecked] = useState(false);
   const [indeterminate, setIndeterminate] = useState(false);
-  // const [radioValue, setRadioValue] = useState('1');
 
   //const { loanId } = useParams();
   //const [borrowerverify, setBorrowerverify] = useState(loanId);
+
   useEffect(() => {
     loanService
       .getBorrowerVerification(loanId)
       .then(res => setValidateCaller(res));
   }, []);
 
-  console.log(validateCaller);
+  console.log('validateCaller', validateCaller);
 
   // const radios = [
   //   { name: 'Fail', value: '2' },
@@ -31,7 +32,6 @@ const ValidateCaller = props => {
   // ];
 
   //const [edit, setEdit] = useState(false);
-
   //const [modal, setModal] = useState(props.show);
 
   const inputsHandler = ({ target }) => {
@@ -39,12 +39,14 @@ const ValidateCaller = props => {
     setValidateCaller({ ...validateCaller, [name]: value });
   };
 
+  console.log(inputsHandler);
+
   const handleChange = name => {
     // i=F, c=F
     // i=T, c=F
     // i=F, c=T
     // * i=F, c=F
-    console.log(indeterminate, checked);
+    console.log('indeterminate', indeterminate, 'checked', checked);
     if (!indeterminate?.[name]) {
       if (checked?.[name]) {
         setChecked({ ...checked, [name]: false });
@@ -78,740 +80,457 @@ const ValidateCaller = props => {
     //setEdit(false);
     props.closeModal();
   };
+
   return (
     <>
-      <Card show={props.show} size="lg" className={'mt-3'}>
-        <Card.Header>
-          <Row>
-            {/* <Card.Title>Validate Caller</Card.Title>
-          <Row>
-            <Col>
-              {!edit && (
-                <>
-                  <Button onClick={() => editOnClick()}>Edit</Button>
-                </>
-              )}
-              {edit && (
-                <>
-                  <Button onClick={() => handleSubmit()}>Save</Button>
-                </>
-              )}
-            </Col> */}
-            <Col>
+      <Card show={props.show} className="h-lg-100 fs--1 mt-3">
+        <FalconCardHeader
+          title={'Validation'}
+          titleClass={'fw-normal text-800 border-bottom pb-2'}
+          endEl={
+            <>
               <FalconCloseButton
                 size="sm"
                 className="position-absolute top-0 end-0 me-2 mt-2"
                 onClick={() => handleCancel()}
               />
-            </Col>
-          </Row>
-        </Card.Header>
-        <Card.Body className="ml-3">
-          <>
-            <Row>
-              <Col
-                className={
-                  'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-                }
-              >
-                {/* <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Form.Check
-                        type="switch"
-                        id="custom-switch"
-                        // label="Check this switch"
-                      /> */
-                /*<label>Pass</label>&nbsp;
-                      <label>Fail</label>
-                    </div>
-                  </Col>
-                </Row> */}
-                <Row>
-                  {/* <Col sm={2} xxl={2} classname={'mx-3'}>
-                    <Form.Check aria-label="option 1" />
-                  </Col>
-                  <Col sm={2} xxl={2}>
-                    <Form.Check aria-label="option 1" />
-                  </Col> */}
-
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+            </>
+          }
+        />
+        <Card.Body>
+          <Row>
+            <Col
+              md={6}
+              lg={4}
+              className="border-0 border-md-end border-md-bottom border-lg-bottom-0"
+            >
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col xs={11} sm={12}>
+                  <div className={'d-flex pt-0 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.loan}
-                        name=""
                         indeterminate={indeterminate.loan}
                         onChange={() => handleChange('loan')}
                       />
-                      &nbsp;
-                      <label>Loan Number</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="loanNumber"
-                      onChange={inputsHandler}
-                      placeholder="Loan Number"
-                      defaultValue={validateCaller[0]?.loanNumber}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">Loan Number </p>
+                    <p>
+                      {validateCaller[0]?.loanNumber || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={false}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="loanNumber"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="Loan Number"*/}
+                    {/*  defaultValue={validateCaller[0]?.loanNumber}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.borrower}
-                        name=""
                         indeterminate={indeterminate.borrower}
                         onChange={() => handleChange('borrower')}
                       />
-                      &nbsp;
-                      <label>Borrower Name</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="borrowerName"
-                      onChange={inputsHandler}
-                      placeholder="Borrower Name"
-                      defaultValue={validateCaller[0]?.borrowerName}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">Borrower Name </p>
+                    <p>
+                      {validateCaller[0]?.borrowerName || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="borrowerName"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="Borrower Name"*/}
+                    {/*    defaultValue={validateCaller[0]?.borrowerName}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.authname}
-                        name=""
                         indeterminate={indeterminate.authname}
                         onChange={() => handleChange('authname')}
                       />
-                      &nbsp;
-                      <label>Authorized Party Name</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyName"
-                      onChange={inputsHandler}
-                      placeholder="Authorized Party Name"
-                      defaultValue={validateCaller[0]?.authorizedPartyName}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
+                    <p className="fw-semi-bold flex-grow-1">
+                      Authorized Contact{' '}
+                    </p>
+                    <p>
+                      {validateCaller[0]?.authorizedPartyName || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="authorizedPartyName"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="Authorized Party Name"*/}
+                    {/*    defaultValue={validateCaller[0]?.authorizedPartyName}*/}
+                    {/*/>*/}
+                  </div>
+                  <div
+                    className={'d-flex pt-2 border-dashed-bottom border-md-0'}
+                  >
+                    <div className="justify-content-start">
+                      <Checkbox
+                        className={'me-2'}
                         checked={checked.authrel}
-                        name=""
                         indeterminate={indeterminate.authrel}
                         onChange={() => handleChange('authrel')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Authorized Party Relationship</label>
+                      />
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyRelationship"
-                      onChange={inputsHandler}
-                      placeholder="Authorized Party Relationship"
-                      defaultValue={
-                        validateCaller[0]?.authorizedPartyRelationship
-                      }
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col
-                className={
-                  'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-                }
-              >
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">
+                      Authorized Contact Relationship
+                    </p>
+                    <p>
+                      {validateCaller[0]?.authorizedPartyRelationship || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="authorizedPartyRelationship"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="Authorized Party Relationship"*/}
+                    {/*    defaultValue={*/}
+                    {/*      validateCaller[0]?.authorizedPartyRelationship*/}
+                    {/*    }*/}
+                    {/*/>*/}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col
+              md={6}
+              lg={4}
+              className="border-0 border-md-bottom border-lg-bottom-0 border-lg-end"
+            >
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col xs={11} sm={12}>
+                  <div className={'d-flex pt-2 pt-md-0 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.street}
                         name=""
                         indeterminate={indeterminate.street}
                         onChange={() => handleChange('street')}
                       />
-                      &nbsp;
-                      <label>Street</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="street"
-                      onChange={inputsHandler}
-                      placeholder="Street"
-                      defaultValue={validateCaller[0]?.street}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.apt}
-                        name=""
-                        indeterminate={indeterminate.apt}
-                        onChange={() => handleChange('apt')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Apt/Unit #</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="addressType"
-                      onChange={inputsHandler}
-                      placeholder="Apt/Unit #"
-                      defaultValue={validateCaller[0]?.apt}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.city}
-                        name=""
-                        indeterminate={indeterminate.city}
-                        onChange={() => handleChange('city')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>City</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="city"
-                      onChange={inputsHandler}
-                      placeholder="City"
-                      defaultValue={validateCaller[0]?.city}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.state}
-                        name=""
-                        indeterminate={indeterminate.state}
-                        onChange={() => handleChange('state')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>State</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="state"
-                      onChange={inputsHandler}
-                      placeholder="State"
-                      defaultValue={validateCaller[0]?.state}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked.zip}
-                        name=""
-                        indeterminate={indeterminate.zip}
-                        onChange={() => handleChange('zip')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>Zip/Postal Code</label>
-                    </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="postalCode"
-                      onChange={inputsHandler}
-                      placeholder="Zip/Postal Code"
-                      defaultValue={validateCaller[0]?.postalCode}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col
-                className={
-                  'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-                }
-              >
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">Address </p>
+                    <p>
+                      <span className="d-block">
+                        {validateCaller[0]?.street || (
+                          <span className={'text-500 fst-italic'}>
+                            Street Address
+                          </span>
+                        )}{' '}
+                        <br />{' '}
+                        {validateCaller[0]?.city || (
+                          <span className={'text-500 fst-italic'}>City</span>
+                        )}
+                        ,{' '}
+                        {validateCaller[0]?.stateName || (
+                          <span className={'text-500 fst-italic'}>State</span>
+                        )}
+                        ,{' '}
+                        {validateCaller[0]?.zipCode || (
+                          <span className={'text-500 fst-italic'}>
+                            Zip Not Found
+                          </span>
+                        )}
+                      </span>
+                    </p>
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="street"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="Street"*/}
+                    {/*    defaultValue={validateCaller[0]?.street}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.idNumber}
                         name=""
                         indeterminate={indeterminate.idNumber}
                         onChange={() => handleChange('idNumber')}
                       />
-                      &nbsp;
-                      <label>ID Number</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="idNumber"
-                      onChange={inputsHandler}
-                      placeholder="ID Number"
-                      // style={{
-                      //   marginRight: '5px',
-                      //   marginLeft: '5px',
-                      //   marginBottom: '5px'
-                      // }}
-                      defaultValue={validateCaller[0]?.idNumber}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
+                    <p className="fw-semi-bold flex-grow-1">ID Number</p>
+                    <p>
+                      {validateCaller[0]?.idNumber || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="idNumber"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="ID Number"*/}
+                    {/*  defaultValue={validateCaller[0]?.idNumber}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
+                      <Checkbox
+                        className={'me-2'}
                         checked={checked.idType}
                         name=""
-                        indeterminate={indeterminate.idType}
+                        indeterminate={checked.idType}
                         onChange={() => handleChange('idType')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Type</label>
+                      />
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="idType"
-                      onChange={inputsHandler}
-                      placeholder="ID Type"
-                      // style={{
-                      //   marginRight: '5px',
-                      //   marginLeft: '5px',
-                      //   marginBottom: '5px'
-                      // }}
-                      defaultValue={validateCaller[0]?.idType}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
+                    <p className="fw-semi-bold flex-grow-1">ID Type</p>
+                    <p>
+                      {validateCaller[0]?.idType || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="idType"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="ID Type"*/}
+                    {/*  defaultValue={validateCaller[0]?.idType}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
+                      <Checkbox
+                        className={'me-2'}
                         checked={checked.idIssueDate}
                         name=""
-                        indeterminate={indeterminate.idIssueDate}
+                        indeterminate={checked.idIssueDate}
                         onChange={() => handleChange('idIssueDate')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Issue Date</label>
+                      />
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="idIssueDate"
-                      onChange={inputsHandler}
-                      placeholder="ID Issue Date"
-                      defaultValue={validateCaller[0]?.idIssueDate}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
-                      {/* <Checkbox
-                        style={{ marginTop: '3px' }}
+                    <p className="fw-semi-bold flex-grow-1">ID Issuance Date</p>
+                    <p>
+                      {validateCaller[0]?.idIssueDate || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/* todo: do we need a form input? or just the data? */}
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="idIssueDate"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="ID Issue Date"*/}
+                    {/*    defaultValue={validateCaller[0]?.idIssueDate}*/}
+                    {/*/>*/}
+                  </div>
+                  <div
+                    className={'d-flex pt-2 border-dashed-bottom border-md-0'}
+                  >
+                    <div className="justify-content-start">
+                      <Checkbox
+                        className={'me-2'}
                         checked={checked.idexpiry}
                         name=""
-                        indeterminate={indeterminate.idexpiry}
+                        indeterminate={checked.idexpiry}
                         onChange={() => handleChange('idexpiry')}
-                      /> */}
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <label>ID Expiry Date</label>
+                      />
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="idIssueExperiationDate"
-                      onChange={inputsHandler}
-                      placeholder="ID Expiry Date"
-                      icon="calendar-alt"
-                      // style={{
-                      //   marginRight: '5px',
-                      //   marginLeft: '5px',
-                      //   marginBottom: '5px'
-                      // }}
-                      defaultValue={validateCaller[0]?.idIssueExperiationDate}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-              <Col>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">
+                      ID Expiration Date
+                    </p>
+                    <p>
+                      {validateCaller[0]?.idIssueExperiationDate || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="idIssueExperiationDate"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="ID Expiry Date"*/}
+                    {/*    icon="calendar-alt"*/}
+                    {/*    defaultValue={validateCaller[0]?.idIssueExperiationDate}*/}
+                    {/*/>*/}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+            <Col className="pt-3 pt-lg-0">
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col xs={11} sm={12}>
+                  <div className={'d-flex pt-0 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.ssn}
                         name=""
                         indeterminate={indeterminate.ssn}
                         onChange={() => handleChange('ssn')}
                       />
-                      &nbsp;
-                      <label>SSN</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="ssn"
-                      onChange={inputsHandler}
-                      placeholder="SSN"
-                      defaultValue={validateCaller[0]?.ssn}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">SSN (Last 4)</p>
+                    <p>
+                      {validateCaller[0]?.ssn || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*    type="text"*/}
+                    {/*    disabled={true}*/}
+                    {/*    style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*    name="ssn"*/}
+                    {/*    onChange={inputsHandler}*/}
+                    {/*    placeholder="SSN"*/}
+                    {/*    defaultValue={validateCaller[0]?.ssn}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.dob}
                         name=""
                         indeterminate={indeterminate.dob}
                         onChange={() => handleChange('dob')}
                       />
-                      &nbsp;
-                      <label>DOB</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="dob"
-                      max="2017-04-01"
-                      onChange={inputsHandler}
-                      placeholder="DOB"
-                      // style={{
-                      //   marginRight: '5px',
-                      //   marginLeft: '5px',
-                      //   marginBottom: '5px'
-                      // }}
-                      defaultValue={validateCaller[0]?.dateOfBirth}
-                    />
-                  </Col>
-                </Row>
-                <br></br>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">DOB</p>
+                    <p>
+                      {validateCaller[0]?.dateOfBirth || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="dob"*/}
+                    {/*  max="2017-04-01"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="DOB"*/}
+                    {/*  defaultValue={validateCaller[0]?.dateOfBirth}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.email}
                         name=""
                         indeterminate={indeterminate.email}
                         onChange={() => handleChange('email')}
                       />
-                      &nbsp;
-                      <label>Email</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="authorizedPartyEmail"
-                      onChange={inputsHandler}
-                      placeholder="Email"
-                      defaultValue={validateCaller[0]?.authorizedPartyEmail}
-                    />
-                  </Col>
-                </Row>
-                {/* <Row>
-                  <Col>
-                    <label>Authorized Party Relationship</label>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      disabled={!edit}
-                      name="authorizedPartyRelationship"
-                      //
-                      onChange={inputsHandler}
-                      placeholder="Authorized Party Relationship"
-                      defaultValue={validateCaller?.authorizedPartyRelationship}
-                    />
-                  </Col>
-                </Row> */}
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">Email</p>
+                    <p>
+                      {validateCaller[0]?.email || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  //disabled={!edit}*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="authorizedPartyEmail"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="Email"*/}
+                    {/*  defaultValue={validateCaller[0]?.authorizedPartyEmail}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2 border-dashed-bottom'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
-                        checked={checked?.phonehome}
-                        name="phone"
-                        indeterminate={indeterminate?.phonehome}
+                        className={'me-2'}
+                        checked={checked.phonehome}
+                        name=""
+                        indeterminate={indeterminate.phonehome}
                         onChange={() => handleChange('phonehome')}
                       />
-                      &nbsp;
-                      <label>Phone Number (Home)</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="homeNumber"
-                      //
-                      onChange={inputsHandler}
-                      placeholder="Phone Number (Home)"
-                      // style={{
-                      //   marginRight: '5px',
-                      //   marginLeft: '25px',
-                      //   marginBottom: '5px'
-                      // }}
-                      defaultValue={validateCaller[0]?.homeNumber}
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <div style={{ display: 'flex' }}>
+                    <p className="fw-semi-bold flex-grow-1">
+                      Phone Number (Home)
+                    </p>
+                    <p>
+                      {validateCaller[0]?.phonehome || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="homeNumber"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="Phone Number (Home)"*/}
+                    {/*  defaultValue={validateCaller[0]?.homeNumber}*/}
+                    {/*/>*/}
+                  </div>
+                  <div className={'d-flex pt-2'}>
+                    <div className="justify-content-start">
                       <Checkbox
-                        style={{ marginTop: '3px' }}
+                        className={'me-2'}
                         checked={checked.phonemobile}
                         name=""
                         indeterminate={indeterminate.phonemobile}
                         onChange={() => handleChange('phonemobile')}
                       />
-                      &nbsp;
-                      <label>Phone Number (Mobile)</label>
                     </div>
-                  </Col>
-                  <Col>
-                    <input
-                      type="text"
-                      //disabled={!edit}
-                      disabled={true}
-                      style={{ background: 'transparent', border: 'none' }}
-                      name="homeNumber"
-                      //
-                      onChange={inputsHandler}
-                      placeholder="Phone Number (Mobile)"
-                      // style={{ marginRight: '5px', marginLeft: '25px' }}
-                      defaultValue={validateCaller[0]?.mobileNumber}
-                    />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </>
+                    <p className="fw-semi-bold flex-grow-1">
+                      Phone Number (Mobile)
+                    </p>
+                    <p>
+                      {validateCaller[0]?.phonemobile || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                    {/*<input*/}
+                    {/*  type="text"*/}
+                    {/*  disabled={true}*/}
+                    {/*  style={{ background: 'transparent', border: 'none' }}*/}
+                    {/*  name="mobileNumber"*/}
+                    {/*  onChange={inputsHandler}*/}
+                    {/*  placeholder="Phone Number (Mobile)"*/}
+                    {/*  defaultValue={validateCaller[0]?.mobileNumber}*/}
+                    {/*/>*/}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
         </Card.Body>
-        <Card.Footer>
-          {/* <Row> */}
-          {/* <Col
-              xxl={2}
-              sm={4}
-              className={
-                'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-              }
-            >
-              <Row>
-                <Col>
-                  <label>SSN</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="ssn"
-                    onChange={inputsHandler}
-                    placeholder="SSN"
-                    defaultValue={validateCaller?.ssn}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <label>DOB</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="dob"
-                    max="2017-04-01"
-                    onChange={inputsHandler}
-                    placeholder="DOB"
-                    // style={{
-                    //   marginRight: '5px',
-                    //   marginLeft: '5px',
-                    //   marginBottom: '5px'
-                    // }}
-                    defaultValue={validateCaller?.dob}
-                  />
-                </Col>
-              </Row>
-            </Col> */}
-          {/* <Col
-              xxl={2}
-              sm={4}
-              className={
-                'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-              }
-            >
-              <Row>
-                <Col>
-                  <label>ID Number</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="idNumber"
-                    onChange={inputsHandler}
-                    placeholder="ID Number"
-                    // style={{
-                    //   marginRight: '5px',
-                    //   marginLeft: '5px',
-                    //   marginBottom: '5px'
-                    // }}
-                    defaultValue={validateCaller?.idNumber}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <label>ID Type</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="idType"
-                    onChange={inputsHandler}
-                    placeholder="ID Type"
-                    // style={{
-                    //   marginRight: '5px',
-                    //   marginLeft: '5px',
-                    //   marginBottom: '5px'
-                    // }}
-                    defaultValue={validateCaller?.idType}
-                  />
-                </Col>
-              </Row> */}
-          {/* </Col> */}
-          {/* <Col
-              xxl={2}
-              sm={4}
-              className={
-                'border-bottom border-sm-0 border-xxl-0 border-xxl-end'
-              }
-            > */}
-          {/* <Row>
-                <Col>
-                  <label>ID Issue Date</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="idIssueDate"
-                    onChange={inputsHandler}
-                    placeholder="ID Issue Date"
-                    defaultValue={validateCaller?.idIssueDate}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <label>ID Expiry Date</label>
-                </Col>
-                <Col>
-                  <input
-                    type="text"
-                    disabled={true}
-                    name="idIssueExperiationDate"
-                    onChange={inputsHandler}
-                    placeholder="ID Expiry Date"
-                    icon="calendar-alt"
-                    // style={{
-                    //   marginRight: '5px',
-                    //   marginLeft: '5px',
-                    //   marginBottom: '5px'
-                    // }}
-                    defaultValue={validateCaller?.idIssueExperiationDate}
-                  />
-                </Col>
-              </Row> */}
-          {/* </Col> */}
-          {/* </Row> */}
-        </Card.Footer>
       </Card>
     </>
   );

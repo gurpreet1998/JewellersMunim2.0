@@ -4,7 +4,7 @@ import { Card, Col, Row } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import AdvanceTableWrapper from 'components/common/advance-table/AdvanceTableWrapper';
 import AdvanceTable from 'components/common/advance-table/AdvanceTable';
-import BasicCardHeader from 'components/common/BasicCardHeader';
+import FalconCardHeader from 'components/common/FalconCardHeader';
 
 export default class Payment extends React.Component {
   constructor(props) {
@@ -80,8 +80,11 @@ export default class Payment extends React.Component {
         perPage={100}
         rowCount={this.state.data.length}
       >
-        <Card>
-          <BasicCardHeader name={'Payments'} />
+        <Card className={'h-100'}>
+          <FalconCardHeader
+            title={'Payments'}
+            titleClass={'fw-normal text-800'}
+          />
           <Card.Body
             className="p-0"
             style={{ maxHeight: '17rem', overflow: 'auto' }}

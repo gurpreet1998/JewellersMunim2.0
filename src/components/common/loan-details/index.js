@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { Card, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import NumberFormat from 'react-number-format';
@@ -65,40 +66,33 @@ const LoanDetails = () => {
         <FalconCardHeader
           title={
             <>
-              <Row className={'justify-content-md-center'}>
+              <Row>
                 <Flex alignItems="center" className="position-relative">
                   <IconButton
-                    className="me-2 mb-1"
+                    className="me-1"
                     variant="falcon-default"
                     size="sm"
                     icon="arrow-left"
                     transform="shrink-4"
                     onClick={history.goBack}
                   >
-                    <span className={'d-none d-sm-inline-flex'}>Return</span>
+                    {/*<span className={'d-none d-lg-inline-flex'}>Return</span>*/}
                   </IconButton>
-
                   {isLoading ? (
                     <LoadingDots color={'#748194'} width={40} height={20} />
                   ) : (
                     <>
-                      <Col>
-                        <div className="ms-2 border-start ps-2">
-                          <h5 className="fw-medium fs--1 mb-0 text-600">
-                            <span className={'d-none d-sm-inline-flex'}>
-                              Loan Number:&nbsp;
-                            </span>
-                            {loan?.data?.loanNumber}
-                          </h5>
-                        </div>
-                      </Col>
-                      <Col>
-                        <div className="">
-                          <h5 className="text-800 mb-1 fw-semi-bold text-nowrap">
-                            {loan?.data?.borrowerName}
-                          </h5>
-                        </div>
-                      </Col>
+                      <div className="ms-1 border-start ps-1 flex-grow-1">
+                        <h5 className="fw-medium fs--1 fs-md-0 mb-0 text-600">
+                          <span className={'d-none d-lg-inline-flex'}>
+                            Loan:&nbsp;
+                          </span>
+                          {loan?.data?.loanNumber}
+                        </h5>
+                      </div>
+                      <h5 className="text-800 fs-0 fs-md-1 mb-1 fw-semi-bold flex-grow-1">
+                        {loan?.data?.borrowerName}
+                      </h5>
                     </>
                   )}
                 </Flex>
@@ -107,11 +101,9 @@ const LoanDetails = () => {
           }
           endEl={
             <>
-              <h5 className="fw-medium fs--1 mb-0 text-600">
-                <span className={'d-none d-sm-inline-flex'}>
-                  Loan Status:&nbsp;
-                </span>
-                <SoftBadge pill bg={statusColor} className="fs--2">
+              <h5 className="fw-medium fs--1 fs-md-0 mb-0 text-600">
+                {/*<span className={'d-none d-lg-inline-flex'}>Status:&nbsp;</span>*/}
+                <SoftBadge pill bg={statusColor} className="fs--2 fs-md--1">
                   {isLoading
                     ? 'Loading...'
                     : loan?.data?.loanStatus || 'Not found'}
@@ -130,42 +122,37 @@ const LoanDetails = () => {
             <Col
               md={6}
               lg={3}
-              className="mt-0 border-0 border-md-end border-md-bottom border-lg-bottom-0"
+              className="border-0 border-md-end border-md-bottom border-lg-bottom-0"
             >
-              <Row>
-                <Col xs={5} sm={4} lg={6}>
-                  <p className="fw-semi-bold mb-2">Current Due</p>
-                  <p className="fw-semi-bold mb-2 mb-md-3 mb-lg-0">
-                    Next Due Date
-                  </p>
-                </Col>
-                <Col>
-                  <p className="mb-2">
-                    {bucketData?.data?.current !== null ? (
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col sm={10} lg={11}>
+                  <div className={'d-flex'}>
+                    <p className="fw-semi-bold flex-grow-1 pe-3">Current Due</p>
+                    <p>
                       <NumberFormat
-                        value={bucketData?.data?.current}
+                        value={
+                          bucketData?.data?.current !== null
+                            ? bucketData?.data?.current
+                            : 0
+                        }
                         displayType={'text'}
                         thousandSeparator={true}
                         prefix={'$'}
                         decimalScale={2}
                         fixedDecimalScale={true}
                       />
-                    ) : (
-                      <NumberFormat
-                        value={0}
-                        displayType={'text'}
-                        thousandSeparator={true}
-                        prefix={'$'}
-                        decimalScale={2}
-                        fixedDecimalScale={true}
-                      />
-                    )}
-                  </p>
-                  <p className="mb-2 mb-md-3 mb-lg-0">
-                    {loan?.data?.nextDueDate !== null
-                      ? formatDateStr(loan?.data?.nextDueDate)
-                      : 'Not Found'}
-                  </p>
+                    </p>
+                  </div>
+                  <div className={'d-flex'}>
+                    <p className="fw-semi-bold flex-grow-1 pe-3">
+                      Next Due Date
+                    </p>
+                    <p>
+                      {loan?.data?.nextDueDate !== null
+                        ? formatDateStr(loan?.data?.nextDueDate)
+                        : 'Not Found'}
+                    </p>
+                  </div>
                 </Col>
               </Row>
             </Col>
@@ -174,63 +161,109 @@ const LoanDetails = () => {
               lg={3}
               className="border-0 border-md-bottom border-lg-bottom-0 border-lg-end"
             >
-              <Row>
-                <Col xs={5} sm={4} lg={6}>
-                  <p className="fw-semi-bold mb-2 text-truncate">
-                    Preferred Name
-                  </p>
-                  <p className="fw-semi-bold mb-2 text-truncate">
-                    Authorized Contact
-                  </p>
-                  <p className="fw-semi-bold mb-2 mb-md-3 mb-lg-0 text-truncate">
-                    Relationship
-                  </p>
-                </Col>
-                <Col>
-                  <p className="mb-2">
-                    {loan?.data?.preferredName !== null
-                      ? loan?.data?.preferredName
-                      : 'Not Found'}
-                  </p>
-                  <p className="mb-2">
-                    {loan?.data?.authorizedParty !== null
-                      ? loan?.data?.authorizedParty
-                      : 'Not Found'}
-                  </p>
-                  <p className="mb-2 mb-md-3 mb-lg-0">
-                    {/* todo: API still needed for authorizedPartyRelated */}
-                    {loan?.data?.authorizedPartyRelated !== undefined
-                      ? loan?.data?.authorizedPartyRelated
-                      : 'Not Found'}
-                  </p>
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col sm={10} lg={11}>
+                  <div
+                    className={classNames({
+                      'd-none d-md-flex': !loan?.data?.preferredName
+                    })}
+                  >
+                    <p className="fw-semi-bold flex-grow-1 pe-3">
+                      Preferred Name
+                    </p>
+                    <p>
+                      {loan?.data?.preferredName !== null ? (
+                        loan?.data?.preferredName
+                      ) : (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                  </div>
+                  <div
+                    className={classNames({
+                      'd-none d-md-flex':
+                        !loan?.data?.authorizedParty !== undefined
+                    })}
+                  >
+                    <p className="fw-semi-bold flex-grow-1 pe-3">
+                      Authorized Contact
+                    </p>
+                    <p>
+                      {/* todo: data is not clean, passes blank spaces for authorizedParty
+                            loan?.data?.authorizedParty !== null || */}
+                      {loan?.data?.authorizedParty !== undefined ? (
+                        loan?.data?.authorizedParty
+                      ) : (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                      <span className={'ps-1 fs--2 text-500 fst-italic'}>
+                        {loan?.data?.authorizedPartyRelated !== undefined
+                          ? `(Rel: ${loan?.data?.authorizedPartyRelated})`
+                          : ''}
+                      </span>
+                    </p>
+                  </div>
                 </Col>
               </Row>
             </Col>
-            <Col md={6} lg={3} className="border-0 border-md-end">
-              <Row className={'mt-md-3 mt-lg-0'}>
-                <Col xs={5} sm={4} lg={5} xl={4}>
-                  <p className="fw-semi-bold mb-2 text-truncate">Merchant</p>
-                  <p className="fw-semi-bold mb-0 text-truncate">Location</p>
-                </Col>
-                <Col>
-                  <p className="mb-2">{loan?.data?.merchant || 'Not Found'}</p>
-                  <p className="mb-0">{loan?.data?.location || 'Not Found'}</p>
+            <Col
+              md={6}
+              lg={3}
+              className="border-0 border-md-end pt-0 pt-md-3 pt-lg-0"
+            >
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col sm={10} lg={11}>
+                  <div className={'d-flex'}>
+                    <p className="fw-semi-bold flex-grow-1 pe-3">Merchant</p>
+                    <p className={'text-truncate'}>
+                      {loan?.data?.merchant || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                  </div>
+                  <div className={'d-flex'}>
+                    <p className="fw-semi-bold flex-grow-1 pe-3">Location</p>
+                    <p>
+                      {loan?.data?.location || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                  </div>
                 </Col>
               </Row>
             </Col>
-            <Col md={6} lg={3}>
-              <Row className="mt-md-3 mt-lg-0">
-                <Col xs={5} sm={4} lg={6}>
-                  <p className="fw-semi-bold mb-2 text-truncate">
-                    Secondary Status
-                  </p>
-                  <p className="fw-semi-bold mb-2 text-truncate">
-                    Next Contact Date
-                  </p>
-                </Col>
-                <Col>
-                  <p className="mb-2">Placeholder</p>
-                  <p className="mb-2">Placeholder </p>
+            <Col md={6} lg={3} className={'pt-0 pt-md-3 pt-lg-0'}>
+              <Row className={'d-flex justify-content-center px-2'}>
+                <Col sm={10} lg={11}>
+                  <div
+                    className={classNames({
+                      'd-none d-md-flex': !loan?.data?.secondaryLoanStatus
+                    })}
+                  >
+                    <p className="fw-semi-bold flex-grow-1 pe-3">
+                      Secondary Status
+                    </p>
+                    <p>
+                      {/* todo: still need secondaryLoanStatus in the API */}
+                      {loan?.data?.secondaryLoanStatus || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                  </div>
+                  <div
+                    className={classNames({
+                      'd-none d-md-flex': !loan?.data?.nextContactDate
+                    })}
+                  >
+                    <p className="fw-semi-bold flex-grow-1 pe-3">
+                      Next Contact Date
+                    </p>
+                    <p>
+                      {loan?.data?.nextContactDate || (
+                        <span className={'text-500 fst-italic'}>Not Found</span>
+                      )}
+                    </p>
+                  </div>
                 </Col>
               </Row>
             </Col>

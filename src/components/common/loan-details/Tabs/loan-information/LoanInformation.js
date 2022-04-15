@@ -2,19 +2,14 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, Row, Col, Table } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
-// import { AuthContext } from 'context/Context';
 import LoadingSpinner from '../../../../loading-spinner/LoadingSpinner';
 import { useLoanBucketData, useLoanInformationData } from 'hooks/useLoanData';
 import { formatDateStr } from 'helpers/utils';
 
 export default function LoanInformation() {
   const { loanId } = useParams();
-  // const context = useContext(AuthContext);
-  // const currentRole = context.account.idToken.extension_Role;
-
   const { isLoading: loanInfoIsLoading, data: loanInfo } =
     useLoanInformationData(loanId);
-
   const { isLoading: loanBucketIsLoading, data: loanBucket } =
     useLoanBucketData(loanId);
 
@@ -27,150 +22,125 @@ export default function LoanInformation() {
             lg={4}
             className="mt-0 border-0 border-md-end border-md-bottom border-lg-bottom-0"
           >
-            <Row>
+            <Row className={'d-flex justify-content-center px-2'}>
               {loanInfoIsLoading ? (
                 <LoadingSpinner messageText={'Loading...'} />
               ) : (
                 <>
-                  <Col xs={5} sm={6}>
-                    <p className="fw-semi-bold mb-2">Origination Date</p>
-                    <p className="fw-semi-bold mb-2">Original Loan</p>
-                    <p className="fw-semi-bold mb-2">Original Term</p>
-                    <p className="fw-semi-bold mb-2">APR</p>
-                    <p className="fw-semi-bold mb-2">Interest Rate</p>
-                    <p className="fw-semi-bold mb-2">Daily Interest</p>
-                    <p className="fw-semi-bold mb-2">Current Principal</p>
-                    <p className="fw-semi-bold mb-2 mb-md-3 mb-lg-0">
-                      Monthly Payment
-                    </p>
-                  </Col>
-                  <Col>
-                    <p className="mb-2">
-                      {formatDateStr(loanInfo?.data?.originationDate)}
-                    </p>
-                    <p className="mb-2">
-                      {loanInfo?.data?.originalLoanAmount !== 0 ? (
-                        <>
-                          <NumberFormat
-                            value={loanInfo?.data?.originalLoanAmount}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <NumberFormat
-                            value={0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      )}
-                    </p>
-                    <p className="mb-2">
-                      <p className="mb-1 flex-1">
+                  <Col xs={11} sm={12}>
+                    <div className={'d-flex pt-0 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Origination Date
+                      </p>
+                      <p>{formatDateStr(loanInfo?.data?.originationDate)}</p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Original Loan</p>
+                      <p>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.originalLoanAmount !== 0
+                              ? loanInfo?.data?.originalLoanAmount
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+                    <div className={'d-flex  pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Original Term</p>
+                      <p>
                         {loanInfo?.data?.originalTerms}{' '}
                         {loanInfo?.data?.originalTerms > 1 ? 'Months' : 'Month'}
                       </p>
-                    </p>
-                    <p className="mb-2">
-                      <NumberFormat
-                        value={loanInfo?.data?.apr}
-                        displayType={'text'}
-                        suffix={'%'}
-                        decimalScale={2}
-                      />
-                    </p>
-                    <p className="mb-2">
-                      <NumberFormat
-                        value={loanInfo?.data?.interestRate}
-                        displayType={'text'}
-                        suffix={'%'}
-                        decimalScale={2}
-                      />
-                    </p>
-                    <p className="mb-2">
-                      {loanInfo?.data?.dailyInterestAmount !== 0 ? (
-                        <>
-                          <NumberFormat
-                            value={loanInfo?.data?.dailyInterestAmount}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          {' '}
-                          <NumberFormat
-                            value={0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      )}
-                    </p>
-                    <p className={'mb-2'}>
-                      {loanInfo?.data?.currentPrincipal !== 0 ? (
-                        <>
-                          <NumberFormat
-                            value={loanInfo?.data?.currentPrincipal || 0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <NumberFormat
-                            value={0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      )}
-                    </p>
-                    <p className={'mb-2 mb-md-3 mb-lg-0'}>
-                      {loanInfo?.data?.monthlyPaymentAmount !== 0 ? (
-                        <>
-                          <NumberFormat
-                            value={loanInfo?.data?.monthlyPaymentAmount}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <NumberFormat
-                            value={0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      )}
-                    </p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">APR</p>
+                      <p>
+                        <NumberFormat
+                          value={loanInfo?.data?.apr}
+                          displayType={'text'}
+                          suffix={'%'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Interest Rate</p>
+                      <p>
+                        <NumberFormat
+                          value={loanInfo?.data?.interestRate}
+                          displayType={'text'}
+                          suffix={'%'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Daily Interest</p>
+                      <p>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.dailyInterestAmount !== 0
+                              ? loanInfo?.data?.dailyInterestAmount
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Current Principal
+                      </p>
+                      <p>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.current !== null
+                              ? loanInfo?.data?.current
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+
+                    <div
+                      className={'d-flex pt-2 border-dashed-bottom border-md-0'}
+                    >
+                      <p className="fw-semi-bold flex-grow-1">
+                        Monthly Payment
+                      </p>
+                      <p className={'mb-2 mb-md-3 mb-lg-0'}>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.monthlyPaymentAmount !== 0
+                              ? loanInfo?.data?.monthlyPaymentAmount
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
                   </Col>
                 </>
               )}
@@ -181,72 +151,89 @@ export default function LoanInformation() {
             lg={4}
             className="border-0 border-md-bottom border-lg-bottom-0 border-lg-end"
           >
-            <Row>
+            <Row className={'d-flex justify-content-center px-2'}>
               {loanInfoIsLoading ? (
                 <LoadingSpinner messageText={'Loading...'} />
               ) : (
                 <>
-                  <Col xs={5} sm={6}>
-                    <p className="fw-semi-bold mb-2">Date Interest Paid To</p>
-                    <p className="fw-semi-bold mb-2">Interest Days</p>
-                    <p className="fw-semi-bold mb-2">Unapplied Interest</p>
-                    <p className="fw-semi-bold mb-2">Current Interest Owed</p>
-                    <p className="fw-semi-bold mb-2">Days Past Due</p>
-                    <p className="fw-semi-bold mb-2">Count of Open Late Fees</p>
-                    <p className="fw-semi-bold mb-2">Count of Other Fees</p>
-                    <p className="fw-semi-bold mb-2 mb-md-3 mb-lg-0">
-                      Count of Reversed Late Fees
-                    </p>
-                  </Col>
-                  <Col>
-                    <p className={'mb-2'}>
-                      {formatDateStr(loanInfo?.data?.interestPaidToDate) ||
-                        'Not Found'}
-                    </p>
-                    <p className={'mb-2'}>{loanInfo?.data?.interestDays}</p>
-                    <p className={'mb-2'}>
-                      {loanInfo?.data?.unappliedInterestAmt}
-                    </p>
-                    <p className={'mb-2'}>
-                      {loanInfo?.data?.currentInterestOwed !== 0 ? (
-                        <>
-                          <NumberFormat
-                            value={loanInfo?.data?.currentInterestOwed}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <NumberFormat
-                            value={0}
-                            displayType={'text'}
-                            thousandSeparator={true}
-                            prefix={'$'}
-                            decimalScale={2}
-                            fixedDecimalScale={true}
-                          />
-                        </>
-                      )}
-                    </p>
-                    <p className={'mb-2'}>
-                      {loanInfo?.data?.daysPastDue}{' '}
-                      {loanInfo?.data?.daysPastDue > 1 ? 'Days' : 'Day'}
-                    </p>
-                    <p className={'mb-2'}>{loanInfo?.data?.openLateFees}</p>
-                    <p className={'mb-2'}>{loanInfo?.data?.otherFees}</p>
-                    <p className={'mb-2 mb-md-3 mb-lg-0'}>
-                      {loanInfo?.data?.lateFeesReversed}
-                    </p>
+                  <Col xs={11} sm={12}>
+                    <div className={'d-flex pt-2 pt-md-0 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Date Interest Paid To
+                      </p>
+                      <p>{loanInfo?.data?.interestPaidToDate || 'Not Found'}</p>
+                    </div>
+
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Interest Days</p>
+                      <p>{loanInfo?.data?.interestDays}</p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Unapplied Interest
+                      </p>
+                      <p>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.unappliedInterestAmt !== 0
+                              ? loanInfo?.data?.unappliedInterestAmt
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Current Interest Owed
+                      </p>
+                      <p>
+                        <NumberFormat
+                          value={
+                            loanInfo?.data?.currentInterestOwed !== 0
+                              ? loanInfo?.data?.currentInterestOwed
+                              : 0
+                          }
+                          displayType={'text'}
+                          thousandSeparator={true}
+                          prefix={'$'}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                        />
+                      </p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">Days Past Due</p>
+                      <p>{loanInfo?.data?.daysPastDue}</p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Count of Open Late Fees
+                      </p>
+                      <p>{loanInfo?.data?.openLateFees}</p>
+                    </div>
+                    <div className={'d-flex pt-2 border-dashed-bottom'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Count of Other Fees
+                      </p>
+                      <p>{loanInfo?.data?.otherFees}</p>
+                    </div>
+                    <div className={'d-flex pt-2'}>
+                      <p className="fw-semi-bold flex-grow-1">
+                        Count of Reversed Late Fees
+                      </p>
+                      <p>{loanInfo?.data?.lateFeesReversed}</p>
+                    </div>
                   </Col>
                 </>
               )}
             </Row>
           </Col>
-          <Col md={6} lg={4} className="pt-3 pt-lg-0">
+          <Col lg={4} className="pt-3 pt-lg-0">
             <Row className={'px-3'}>
               {loanBucketIsLoading ? (
                 <LoadingSpinner messageText={'Loading...'} />
