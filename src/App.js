@@ -6,6 +6,7 @@ import AuthProvider from 'api/authentication/auth-provider';
 import Layout from 'layouts/Layout';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import Error404 from 'components/errors/Error404';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router basename={process.env.PUBLIC_URL}>
-        <Layout />
+        <Error404 />
       </Router>
       {process.env.NODE_ENV === 'development' ? (
         <>
