@@ -14,7 +14,7 @@ const ErrorLayout = ({ match: { url } }) => {
     <Section className="py-0">
       <Row className="flex-center min-vh-100 py-6">
         <Col sm={11} md={9} lg={7} xl={6} className="col-xxl-5">
-          <Logo width={220} />
+          <Logo width={160} />
           <Switch>
             <Route path={`${url}/401`} component={Error401} />
             <Route path={`${url}/404`} component={Error404} />

@@ -8,13 +8,13 @@ const Registration = () => {
   return (
     <AuthCardLayout
       leftSideContent={
-        <p className="pt-3 text-white">
+        <p className="pt-3 text-dark">
           Have an account?
           <br />
           <Button
             as={Link}
             variant="outline-light"
-            className="mt-2 px-4"
+            className="mt-2 px-4 text-dark bg-light"
             to="/authentication/card/login"
           >
             Log In
