@@ -26,9 +26,9 @@ const AuthCardLayout = ({ leftSideContent, children, footer = true }) => {
                     <div className="z-index-1 position-relative dark">
                       <Logo className={'py-0 py-md-4'} width={180} />
                       <h4 className="fs-1 fs-sm-2 fs-md-1 fs-lg-2 text-600 mb-0">
-                        Empowering{' '}
-                        <span className={'text-primary'}>Choice</span> in
-                        Consumer Lending
+                        Modernizing{' '}
+                        <span className={'text-primary'}>Jewellery Store</span>{' '}
+                        in a Cloud-First World
                       </h4>
                     </div>
                   </div>
