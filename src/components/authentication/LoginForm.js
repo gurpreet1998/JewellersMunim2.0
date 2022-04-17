@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
     // Handler
     const handleSubmit = e => {
       e.preventDefault();
-      toast.success(`Redirecting to Choice Portal's Secure Login`);
+      toast.success(`Redirecting to Jeweller's Munim Secure Login`);
     };
 
     return (

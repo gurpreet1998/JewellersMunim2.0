@@ -1,4 +1,4 @@
-export const version = '3.0.0-alpha1';
+export const version = '1.0.0';
 export const navbarBreakPoint = 'xl'; // Vertical navbar breakpoint
 export const topNavbarBreakpoint = 'lg';
 export const settings = {
