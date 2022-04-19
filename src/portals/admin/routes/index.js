@@ -8,6 +8,7 @@ import Merchants from '../components/merchants';
 import Lenders from '../components/lenders';
 import SponsorBanks from '../components/sponsor banks';
 import Home from '../components/home';
+import Users from 'portals/admin/components/users';
 
 export default function AdminPortalRoutes({ match: { url } }) {
   const auth = useContext(AuthContext);
@@ -67,6 +68,13 @@ export default function AdminPortalRoutes({ match: { url } }) {
           <Route path={`${url}/overview`} exact>
             {checkForAccess('Overview', extensionRole) ? (
               <Overview />
+            ) : (
+              <Redirect to="/errors/404" />
+            )}
+          </Route>
+          <Route path={`${url}/users`} exact>
+            {checkForAccess('Users', extensionRole) ? (
+              <Users />
             ) : (
               <Redirect to="/errors/404" />
             )}

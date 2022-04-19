@@ -7,7 +7,7 @@ import NavbarTop from 'components/navbar/top/NavbarTop';
 import NavbarVertical from 'components/navbar/vertical/NavbarVertical';
 import AccountingStats from 'portals/accounting/components/landing';
 import HomeDashboard from 'portals/merchant/components/landing';
-import Users from 'portals/admin/components/users';
+import Home from 'portals/admin/components/home';
 import MainRoutes from './MainRoutes';
 
 import AppContext, { AuthContext } from 'context/Context';
@@ -76,7 +76,7 @@ function ShowDesiredLandingPage() {
         return <Route path="/" exact component={AccountingStats} />;
 
       case 'Admin':
-        return <Route path="/" exact component={Users} />;
+        return <Route path="/" exact component={Home} />;
 
       case 'Customer-Care':
         return <Route path="/" exact component={CustomerCareHome} />;

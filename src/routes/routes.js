@@ -76,7 +76,7 @@ export const adminPortalRoutes = {
     {
       name: 'Users',
       keyword: 'users',
-      to: '/',
+      to: '/portal/admin/users',
       active: true,
       icon: 'user-plus'
     },
